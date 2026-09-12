@@ -97,13 +97,13 @@ The diagrams are **conceptual MongoDB/Mongoose design specifications**. They des
 
 Orange identifies the User model, green identifies the other collections, and cyan identifies embedded schemas. Crow’s-foot connectors show cardinalities: a bar means one, a circle permits zero, and a fork means many.
 
-![Five MongoDB collections and their relationships](01-erd-collections.png)
+![Five MongoDB collections and their relationships](src/assets/ERD/01-erd-collections.svg)
 
-[Open collection ERD as PNG](01-erd-collections.png) · [Edit collection ERD as SVG](01-erd-collections.svg)
+[Open collection ERD](src/assets/ERD/01-erd-collections.svg)
 
-![Embedded Cloudinary asset, review, and certificate snapshot schemas](02-erd-embedded-schemas.png)
+![Embedded Cloudinary asset, review, and certificate snapshot schemas](src/assets/ERD/02-erd-embedded-schemas.svg)
 
-[Open embedded-schema ERD as PNG](02-erd-embedded-schemas.png) · [Edit embedded-schema ERD as SVG](02-erd-embedded-schemas.svg)
+[Open embedded-schema ERD](src/assets/ERD/02-erd-embedded-schemas.svg)
 
 ### Collections and relationships
 
@@ -281,16 +281,16 @@ Eight wireframe sheets cover all **14 frontend URL patterns** and **13 page comp
 
 These are low-fidelity layouts defining content, navigation, and actions. The notes beneath each screen describe behavior to implement, including permissions and important UI states.
 
-| Sheet                            | Screens and routes                                                                                        | Files                                                                                               |
-| -------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| 08 — Discover and join           | Explore `/`; campaign details `/campaigns/:id`                                                            | [PNG](08-wireframes-discovery-details.png) · [SVG](08-wireframes-discovery-details.svg)             |
-| 09 — Accounts                    | Signup `/signup`; login `/login`; profile `/profile`                                                      | [PNG](09-wireframes-accounts.png) · [SVG](09-wireframes-accounts.svg)                               |
-| 10 — Organizations               | Public profile `/organizations/:id`; settings `/organizer/organization`                                   | [PNG](10-wireframes-organizations.png) · [SVG](10-wireframes-organizations.svg)                     |
-| 11 — Manage campaigns            | Dashboard `/organizer/campaigns`; create `/organizer/campaigns/new`; edit `/organizer/campaigns/:id/edit` | [PNG](11-wireframes-campaign-management.png) · [SVG](11-wireframes-campaign-management.svg)         |
-| 12 — Attendance and certificates | Participants `/organizer/campaigns/:id/participants`                                                      | [PNG](12-wireframes-attendance-certificates.png) · [SVG](12-wireframes-attendance-certificates.svg) |
-| 13 — Volunteer dashboard         | My activities `/my/registrations`; my certificates `/my/certificates`                                     | [PNG](13-wireframes-volunteer.png) · [SVG](13-wireframes-volunteer.svg)                             |
-| 14 — Admin moderation            | Organization and campaign tabs at `/admin`                                                                | [PNG](14-wireframes-admin.png) · [SVG](14-wireframes-admin.svg)                                     |
-| 15 — Mobile layouts              | Responsive discovery `/` and campaign details `/campaigns/:id`                                            | [PNG](15-wireframes-mobile.png) · [SVG](15-wireframes-mobile.svg)                                   |
+| Sheet                            | Screens and routes                                                                                        | Files                                                                  |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| 08 — Discover and join           | Explore `/`; campaign details `/campaigns/:id`                                                            | [SVG](src/assets/wireframes/08-wireframes-discovery-details.svg)       |
+| 09 — Accounts                    | Signup `/signup`; login `/login`; profile `/profile`                                                      | [SVG](src/assets/wireframes/09-wireframes-accounts.svg)                |
+| 10 — Organizations               | Public profile `/organizations/:id`; settings `/organizer/organization`                                   | [SVG](src/assets/wireframes/10-wireframes-organizations.svg)           |
+| 11 — Manage campaigns            | Dashboard `/organizer/campaigns`; create `/organizer/campaigns/new`; edit `/organizer/campaigns/:id/edit` | [SVG](src/assets/wireframes/11-wireframes-campaign-management.svg)     |
+| 12 — Attendance and certificates | Participants `/organizer/campaigns/:id/participants`                                                      | [SVG](src/assets/wireframes/12-wireframes-attendance-certificates.svg) |
+| 13 — Volunteer dashboard         | My activities `/my/registrations`; my certificates `/my/certificates`                                     | [SVG](src/assets/wireframes/13-wireframes-volunteer.svg)               |
+| 14 — Admin moderation            | Organization and campaign tabs at `/admin`                                                                | [SVG](src/assets/wireframes/14-wireframes-admin.svg)                   |
+| 15 — Mobile layouts              | Responsive discovery `/` and campaign details `/campaigns/:id`                                            | [SVG](src/assets/wireframes/15-wireframes-mobile.svg)                  |
 
 ### Discover activities and view details
 
@@ -298,19 +298,19 @@ The home page has keyword search and governorate, area, category, and Bahrain-da
 
 Guests who choose to register go to login. A volunteer can reserve a place immediately when eligible. Show a registered/cancel state after success; show full, closed, pending review, cancelled, or removed states where applicable. Volunteers already registered retain access to their participation record when publication status changes.
 
-![Desktop discovery and campaign detail wireframes](08-wireframes-discovery-details.png)
+![Desktop discovery and campaign detail wireframes](src/assets/wireframes/08-wireframes-discovery-details.svg)
 
 ### Signup, login, and profile
 
 Signup asks for full name, email, password, optional city, and volunteer/organizer role. Volunteer signup leads to discovery; organizer signup leads to organization setup. Login shows a clear invalid-credentials error. The profile form edits name and city; email and role are read-only.
 
-![Signup, login, and profile wireframes](09-wireframes-accounts.png)
+![Signup, login, and profile wireframes](src/assets/wireframes/09-wireframes-accounts.svg)
 
 ### Organization profile and setup
 
 The public organization page shows the approved logo, description, Bahrain address, contact information, and upcoming public campaigns. The organizer form creates or edits that information and allows an optional logo to be uploaded, replaced, or removed. Saving submits the organization for review; display pending status or rejection feedback beside the form.
 
-![Organization profile and settings wireframes](10-wireframes-organizations.png)
+![Organization profile and settings wireframes](src/assets/wireframes/10-wireframes-organizations.svg)
 
 ### Organizer dashboard and campaign form
 
@@ -318,7 +318,7 @@ The dashboard lists the organizer’s campaigns with status, registration count,
 
 Deletion requires confirmation and applies only to eligible never-published draft/rejected campaigns with no registrations. Cancellation preserves published campaign records. Editing a published campaign before its start triggers another review; existing registrations remain.
 
-![Organizer dashboard and campaign editor wireframes](11-wireframes-campaign-management.png)
+![Organizer dashboard and campaign editor wireframes](src/assets/wireframes/11-wireframes-campaign-management.svg)
 
 ### Participants, attendance, and certificates
 
@@ -326,25 +326,25 @@ The owner views the participant list and records attendance after the campaign e
 
 An attendee without a certificate has a “Grant certificate” action. During generation, show “Generating…” and disable duplicate actions. Failed generation exposes “Retry”; successful issuance shows “Granted.” Attendance becomes locked while a certificate is processing or issued. Cancelled registrations are excluded from attendance and certificate eligibility.
 
-![Participant attendance and certificate action wireframes](12-wireframes-attendance-certificates.png)
+![Participant attendance and certificate action wireframes](src/assets/wireframes/12-wireframes-attendance-certificates.svg)
 
 ### Volunteer activities and certificates
 
 My activities separates upcoming and past participation. Upcoming registrations can be cancelled before the activity starts. Past records show campaign status, attendance, and certificate availability. My certificates lists issued certificates with preview and download controls. The PDF preview is embedded within this page and has no separate frontend route.
 
-![Volunteer activities and certificate preview wireframes](13-wireframes-volunteer.png)
+![Volunteer activities and certificate preview wireframes](src/assets/wireframes/13-wireframes-volunteer.svg)
 
 ### Admin review
 
 One admin page has organization and campaign tabs. A queue and status filter sit beside a detail panel containing the submitted content and image. The admin can approve or reject the current revision and must explain rejection. Removing a published campaign requires a reason and preserves historical records; removal is disabled for the pending example shown here.
 
-![Organization and campaign admin review wireframes](14-wireframes-admin.png)
+![Organization and campaign admin review wireframes](src/assets/wireframes/14-wireframes-admin.svg)
 
 ### Mobile behavior and shared states
 
 Mobile navigation collapses into a menu. Campaign cards and form fields stack into one column; dashboard rows become labeled cards. A filter panel holds the discovery filters while keyword search stays visible. Keep the registration action easy to reach without covering content.
 
-![Mobile discovery and campaign details wireframes](15-wireframes-mobile.png)
+![Mobile discovery and campaign details wireframes](src/assets/wireframes/15-wireframes-mobile.svg)
 
 | Situation                     | Required UI behavior                                                                                |
 | ----------------------------- | --------------------------------------------------------------------------------------------------- |
@@ -375,17 +375,17 @@ The backend runs in `tatawwu-backend`; React runs in `tatawwu-frontend`. In depl
 
 ### Backend route charts
 
-![Authentication, profile, and organization routes](03-backend-auth-organizations.png)
+![Authentication, profile, and organization routes](src/assets/routes/03-backend-auth-organizations.svg)
 
-[Open PNG](03-backend-auth-organizations.png) · [Editable SVG](03-backend-auth-organizations.svg)
+[Open route chart](src/assets/routes/03-backend-auth-organizations.svg)
 
-![Campaign, registration, and attendance routes](04-backend-campaigns-registration.png)
+![Campaign, registration, and attendance routes](src/assets/routes/04-backend-campaigns-registration.svg)
 
-[Open PNG](04-backend-campaigns-registration.png) · [Editable SVG](04-backend-campaigns-registration.svg)
+[Open route chart](src/assets/routes/04-backend-campaigns-registration.svg)
 
-![Certificate and admin moderation routes](05-backend-certificates-admin.png)
+![Certificate and admin moderation routes](src/assets/routes/05-backend-certificates-admin.svg)
 
-[Open PNG](05-backend-certificates-admin.png) · [Editable SVG](05-backend-certificates-admin.svg)
+[Open route chart](src/assets/routes/05-backend-certificates-admin.svg)
 
 ### Backend route reference
 
@@ -479,9 +479,9 @@ Every URI below includes the `/api` prefix. The controller names identify the in
 
 ### Frontend route chart
 
-![Frontend routes, page components, and access](06-frontend-routes.png)
+![Frontend routes, page components, and access](src/assets/routes/06-frontend-routes.svg)
 
-[Open PNG](06-frontend-routes.png) · [Editable SVG](06-frontend-routes.svg)
+[Open frontend route chart](src/assets/routes/06-frontend-routes.svg)
 
 ### Frontend route reference
 
@@ -506,9 +506,9 @@ Every URI below includes the `/api` prefix. The controller names identify the in
 
 The image follows the example's conventions: **orange** is the `App` root, **green** is a page with a frontend route, and **yellow** is a wrapper or nested component without its own route. Arrows connect direct parents and children. Public, volunteer, organizer, and admin group labels organize the drawing; they do not add page routes.
 
-![React component hierarchy](07-component-hierarchy.png)
+![React component hierarchy](src/assets/components/07-component-hierarchy.svg)
 
-[Open PNG](07-component-hierarchy.png) · [Editable SVG](07-component-hierarchy.svg)
+[Open component hierarchy](src/assets/components/07-component-hierarchy.svg)
 
 ### Readable hierarchy
 
