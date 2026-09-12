@@ -78,7 +78,7 @@
 <rect x="1590" y="280" width="1440" height="76" rx="0" fill="#f3f6f7" stroke="#829299" stroke-width="1"/>
 <text x="1616.00" y="328.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="27" font-weight="700" fill="#223038">Tatawwu&#x27;</text>
 <text x="2495.58" y="326.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="400" fill="#223038">My campaigns     My organization     Profile     Sign out</text>
-<text x="1625.00" y="420.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="32" font-weight="700" fill="#223038">Create campaign</text>
+<text x="1625.00" y="420.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="32" font-weight="700" fill="#223038">Edit draft campaign</text>
 <rect x="1625" y="453" width="240" height="127" rx="4" fill="#edf1f2" stroke="#a4b1b7" stroke-width="1.3"/>
 <polyline points="1625,453 1865,580" fill="none" stroke="#c9d2d6" stroke-width="1" stroke-linejoin="round"/>
 <polyline points="1865,453 1625,580" fill="none" stroke="#c9d2d6" stroke-width="1" stroke-linejoin="round"/>
@@ -97,7 +97,7 @@
 <text x="2579.00" y="674.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="400" fill="#60717a">Environment v</text>
 <text x="1625.00" y="737.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#223038">Description and volunteer responsibilities</text>
 <rect x="1625" y="749" width="1370" height="84" rx="4" fill="#ffffff" stroke="#829299" stroke-width="1.3"/>
-<text x="1639.00" y="780.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="400" fill="#60717a">Explain what volunteers will do and what they should bring.</text>
+<text x="1639.00" y="780.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="400" fill="#60717a">Help collect litter and sort recyclables. Follow the team briefing; equipment is provided.</text>
 <text x="1625.00" y="876.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="700" fill="#223038">Country: Bahrain</text>
 <text x="1625.00" y="921.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#223038">Governorate</text>
 <rect x="1625" y="933" width="665" height="52" rx="4" fill="#ffffff" stroke="#829299" stroke-width="1.3"/>
@@ -122,17 +122,17 @@
 <text x="2569.00" y="1176.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="400" fill="#60717a">30</text>
 <text x="1625.00" y="1240.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#60717a">All activity times are Bahrain time (UTC+3).</text>
 <rect x="1625" y="1289" width="260" height="52" rx="4" fill="#d6eee3" stroke="#829299" stroke-width="1.3"/>
-<text x="1700.21" y="1320.46" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#223038">Save draft</text>
+<text x="1682.63" y="1320.46" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#223038">Save changes</text>
 <rect x="1909" y="1289" width="410" height="52" rx="4" fill="#edf1f3" stroke="#c0cbd0" stroke-width="1.3"/>
 <text x="2008.73" y="1320.46" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#8a979e">Submit for approval</text>
 <rect x="2342" y="1289" width="170" height="52" rx="4" fill="#ffffff" stroke="#829299" stroke-width="1.3"/>
 <text x="2401.85" y="1320.46" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#223038">Back</text>
 <rect x="70" y="1480" width="1440" height="124.0" rx="7" fill="#f1f5f6" stroke="#c4cfd4" stroke-width="1"/>
 <text x="90.00" y="1521.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="700" fill="#17242b">FLOW &amp; ACCESS</text>
-<text x="90.00" y="1560.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">Create and edit share a single form. Save first, then submit the saved draft. An approved organization is required for submission. Rejected</text>
-<text x="90.00" y="1588.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">campaigns can be edited and resubmitted.</text>
+<text x="90.00" y="1560.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">Create uses an empty form; edit is prefilled with the selected campaign, as shown. Only the owner sees create/edit/delete controls. Save</text>
+<text x="90.00" y="1588.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">changes before submitting; submission requires an approved organization.</text>
 <rect x="1590" y="1480" width="1440" height="124.0" rx="7" fill="#f1f5f6" stroke="#c4cfd4" stroke-width="1"/>
 <text x="1610.00" y="1521.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="700" fill="#17242b">IMPORTANT STATES</text>
-<text x="1610.00" y="1560.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">Edits to an approved campaign trigger another review. Keep registrations while review is pending. After activity start, content editing</text>
-<text x="1610.00" y="1588.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">closes. Confirm deletion and cancellation.</text>
+<text x="1610.00" y="1560.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">Approved campaign edits trigger another review and retain registrations. Editing closes at the activity start. Confirm deletion or</text>
+<text x="1610.00" y="1588.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">cancellation; delete only eligible never-published campaigns. Rejected drafts can be edited and resubmitted.</text>
 </svg>

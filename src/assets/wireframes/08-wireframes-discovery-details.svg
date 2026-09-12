@@ -13,7 +13,7 @@
 <rect x="70" y="280" width="1440" height="1000" rx="6" fill="#ffffff" stroke="#829299" stroke-width="2"/>
 <rect x="70" y="280" width="1440" height="76" rx="0" fill="#f3f6f7" stroke="#829299" stroke-width="1"/>
 <text x="96.00" y="328.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="27" font-weight="700" fill="#223038">Tatawwu&#x27;</text>
-<text x="1149.76" y="326.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="400" fill="#223038">Explore Bahrain     Log in     Sign up</text>
+<text x="1142.38" y="326.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="400" fill="#223038">Explore Bahrain     Sign in     Sign up</text>
 <text x="105.00" y="429.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="36" font-weight="700" fill="#223038">Volunteer in Bahrain.</text>
 <text x="105.00" y="471.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#60717a">Find a local activity and make time for your community.</text>
 <text x="105.00" y="527.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#223038">Search activities</text>
@@ -74,7 +74,7 @@
 <rect x="1590" y="280" width="1440" height="1000" rx="6" fill="#ffffff" stroke="#829299" stroke-width="2"/>
 <rect x="1590" y="280" width="1440" height="76" rx="0" fill="#f3f6f7" stroke="#829299" stroke-width="1"/>
 <text x="1616.00" y="328.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="27" font-weight="700" fill="#223038">Tatawwu&#x27;</text>
-<text x="2455.91" y="326.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="400" fill="#223038">Explore     My activities     Certificates     Profile     Sign out</text>
+<text x="2341.88" y="326.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="400" fill="#223038">Explore     Favorites     My activities     Certificates     Profile     Sign out</text>
 <rect x="1625" y="386" width="1370" height="225" rx="4" fill="#edf1f2" stroke="#a4b1b7" stroke-width="1.3"/>
 <polyline points="1625,386 2995,611" fill="none" stroke="#c9d2d6" stroke-width="1" stroke-linejoin="round"/>
 <polyline points="2995,386 1625,611" fill="none" stroke="#c9d2d6" stroke-width="1" stroke-linejoin="round"/>
@@ -96,6 +96,16 @@
 <text x="1625.00" y="1012.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="25" font-weight="700" fill="#223038">Volunteer responsibilities</text>
 <text x="1625.00" y="1053.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="400" fill="#223038">Arrive on time, follow the organizer’s briefing, and work with your</text>
 <text x="1625.00" y="1080.72" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="400" fill="#223038">assigned team.</text>
+<rect x="1625" y="1145" width="300" height="52" rx="4" fill="#ffffff" stroke="#829299" stroke-width="1.3"/>
+<text x="1685.19" y="1176.46" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#223038">Save to favorites</text>
+<rect x="1947" y="1145" width="290" height="52" rx="4" fill="#ffffff" stroke="#829299" stroke-width="1.3"/>
+<text x="2000.91" y="1176.46" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#223038">Copy activity link</text>
+<rect x="1625" y="1219" width="218" height="40" rx="4" fill="#ffffff" stroke="#829299" stroke-width="1.3"/>
+<text x="1635.67" y="1244.46" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#223038">Email organization</text>
+<rect x="1860" y="1219" width="218" height="40" rx="4" fill="#ffffff" stroke="#829299" stroke-width="1.3"/>
+<text x="1879.92" y="1244.46" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#223038">Call organization</text>
+<rect x="2095" y="1219" width="275" height="40" rx="4" fill="#ffffff" stroke="#829299" stroke-width="1.3"/>
+<text x="2109.11" y="1244.46" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#223038">WhatsApp organization</text>
 <rect x="2480" y="818" width="515" height="414" rx="4" fill="#f3f6f7" stroke="#829299" stroke-width="1.3"/>
 <text x="2503.00" y="864.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="24" font-weight="700" fill="#223038">Activity information</text>
 <text x="2503.00" y="918.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#223038">19 September 2026</text>
@@ -110,6 +120,6 @@
 <text x="90.00" y="1440.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">Browse → activity details → register. Guests are sent to sign in; volunteers can join immediately when the activity is open and has capacity.</text>
 <rect x="1590" y="1360" width="1440" height="124.0" rx="7" fill="#f1f5f6" stroke="#c4cfd4" stroke-width="1"/>
 <text x="1610.00" y="1401.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="700" fill="#17242b">IMPORTANT STATES</text>
-<text x="1610.00" y="1440.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">Registration control changes to Registered / Cancel, Full, Registration closed, Pending review, Cancelled, or Removed. Existing participants</text>
-<text x="1610.00" y="1468.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">retain historical access.</text>
+<text x="1610.00" y="1440.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">Registration changes to Registered / Cancel, Full, Closed, Pending review, Cancelled, or Removed. Favorites toggle to Remove; sharing</text>
+<text x="1610.00" y="1468.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="400" fill="#52636b">confirms Link copied. Contact links open external tools; hide missing optional numbers.</text>
 </svg>

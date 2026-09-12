@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="3360" height="3400" viewBox="0 0 3360 3400">
+<svg xmlns="http://www.w3.org/2000/svg" width="3360" height="3660" viewBox="0 0 3360 3660">
 <title>Tatawwu Bahrain — project design specification</title>
 <rect width="100%" height="100%" fill="#ffffff"/>
 <rect x="65" y="60" width="10" height="56" rx="0" fill="#ff6b3d" stroke="none" stroke-width="1"/>
 <text x="96.00" y="101.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="42" font-weight="700" fill="#17242b">Component hierarchy / React</text>
 <text x="98.00" y="148.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="400" fill="#52636b">Orange = App · Green = routed page · Yellow = wrapper or child component · Arrows = direct children</text>
 <text x="3256.60" y="91.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="24" font-weight="700" fill="#52636b">07</text>
-<polyline points="70,3338 3290,3338" fill="none" stroke="#c8d2d7" stroke-width="1" stroke-linejoin="round"/>
-<text x="70.00" y="3370.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="400" fill="#52636b">TATAWWU&#x27;  /  BAHRAIN  /  ENGLISH  /  MERN + JWT + CLOUDINARY</text>
-<text x="3012.36" y="3370.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="400" fill="#52636b">DESIGN SPECIFICATION · 12 SEP 2026</text>
+<polyline points="70,3598 3290,3598" fill="none" stroke="#c8d2d7" stroke-width="1" stroke-linejoin="round"/>
+<text x="70.00" y="3630.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="400" fill="#52636b">TATAWWU&#x27;  /  BAHRAIN  /  ENGLISH  /  MERN + JWT + CLOUDINARY</text>
+<text x="3012.36" y="3630.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="400" fill="#52636b">DESIGN SPECIFICATION · 12 SEP 2026</text>
 <rect x="1240" y="210" width="880" height="66" rx="4" fill="#ff6b3d" stroke="#52636b" stroke-width="1.6"/>
 <text x="1650.59" y="250.18" font-family="DejaVu Sans, Arial, sans-serif" font-size="27" font-weight="700" fill="#17242b">App</text>
 <rect x="1415" y="320" width="530" height="66" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
@@ -34,7 +34,7 @@
 <polyline points="1674.0,669.0 1680,680 1686.0,669.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <polyline points="1680,606 1680,640 3060,640 3060,680" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <polyline points="3054.0,669.0 3060,680 3066.0,669.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
-<rect x="65" y="840" width="1920" height="870" rx="12" fill="#f7faf8" stroke="#d5dfd9" stroke-width="1"/>
+<rect x="65" y="840" width="1920" height="900" rx="12" fill="#f7faf8" stroke="#d5dfd9" stroke-width="1"/>
 <text x="90.00" y="881.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="700" fill="#52636b">PUBLIC &amp; GUEST PAGES</text>
 <rect x="95" y="925" width="340" height="112" rx="4" fill="#06c879" stroke="#52636b" stroke-width="1.6"/>
 <text x="187.78" y="970.98" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="700" fill="#17242b">ExplorePage</text>
@@ -53,12 +53,12 @@
 <polyline points="1019.0,914.0 1025,925 1031.0,914.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <rect x="1235" y="925" width="340" height="112" rx="4" fill="#06c879" stroke="#52636b" stroke-width="1.6"/>
 <text x="1331.37" y="970.98" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="700" fill="#17242b">SignupPage</text>
-<text x="1368.47" y="1002.02" font-family="DejaVu Sans Mono, monospace" font-size="17" font-weight="400" fill="#17242b">/signup</text>
+<text x="1363.25" y="1002.02" font-family="DejaVu Sans Mono, monospace" font-size="17" font-weight="400" fill="#17242b">/sign-up</text>
 <polyline points="1680,750 1680,800 1405,800 1405,925" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <polyline points="1399.0,914.0 1405,925 1411.0,914.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <rect x="1615" y="925" width="340" height="112" rx="4" fill="#06c879" stroke="#52636b" stroke-width="1.6"/>
 <text x="1720.43" y="970.98" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="700" fill="#17242b">LoginPage</text>
-<text x="1753.69" y="1002.02" font-family="DejaVu Sans Mono, monospace" font-size="17" font-weight="400" fill="#17242b">/login</text>
+<text x="1743.25" y="1002.02" font-family="DejaVu Sans Mono, monospace" font-size="17" font-weight="400" fill="#17242b">/sign-in</text>
 <polyline points="1680,750 1680,800 1785,800 1785,925" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <polyline points="1779.0,914.0 1785,925 1791.0,914.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <rect x="130" y="1100" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
@@ -77,18 +77,30 @@
 <text x="565.88" y="1136.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">CloudinaryImage</text>
 <polyline points="645,1037 645,1070 487,1070 487,1132 510,1132" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <polyline points="499.0,1138.0 510,1132 499.0,1126.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
-<rect x="510" y="1220" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
-<text x="537.39" y="1256.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">OrganizationSummary</text>
-<polyline points="645,1037 645,1070 487,1070 487,1252 510,1252" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
-<polyline points="499.0,1258.0 510,1252 499.0,1246.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
-<rect x="510" y="1340" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
-<text x="563.74" y="1376.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">BahrainDateTime</text>
-<polyline points="645,1037 645,1070 487,1070 487,1372 510,1372" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
-<polyline points="499.0,1378.0 510,1372 499.0,1366.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="510" y="1190" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="537.39" y="1226.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">OrganizationSummary</text>
+<polyline points="645,1037 645,1070 487,1070 487,1222 510,1222" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="499.0,1228.0 510,1222 499.0,1216.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="510" y="1280" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="523.85" y="1316.62" font-family="DejaVu Sans, Arial, sans-serif" font-size="18" font-weight="700" fill="#17242b">OrganizationContactLinks</text>
+<polyline points="645,1037 645,1070 487,1070 487,1312 510,1312" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="499.0,1318.0 510,1312 499.0,1306.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="510" y="1370" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="563.74" y="1406.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">BahrainDateTime</text>
+<polyline points="645,1037 645,1070 487,1070 487,1402 510,1402" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="499.0,1408.0 510,1402 499.0,1396.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <rect x="510" y="1460" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
 <text x="556.49" y="1496.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">RegistrationAction</text>
 <polyline points="645,1037 645,1070 487,1070 487,1492 510,1492" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <polyline points="499.0,1498.0 510,1492 499.0,1486.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="510" y="1550" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="576.04" y="1586.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">FavoriteButton</text>
+<polyline points="645,1037 645,1070 487,1070 487,1582 510,1582" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="499.0,1588.0 510,1582 499.0,1576.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="510" y="1640" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="588.66" y="1676.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">ShareButton</text>
+<polyline points="645,1037 645,1070 487,1070 487,1672 510,1672" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="499.0,1678.0 510,1672 499.0,1666.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <rect x="890" y="1100" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
 <text x="917.39" y="1136.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">OrganizationSummary</text>
 <polyline points="1025,1037 1025,1070 867,1070 867,1132 890,1132" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
@@ -97,6 +109,10 @@
 <text x="960.48" y="1286.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">CampaignGrid</text>
 <polyline points="1025,1037 1025,1070 867,1070 867,1282 890,1282" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <polyline points="879.0,1288.0 890,1282 879.0,1276.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="890" y="1660" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="903.85" y="1696.62" font-family="DejaVu Sans, Arial, sans-serif" font-size="18" font-weight="700" fill="#17242b">OrganizationContactLinks</text>
+<polyline points="1025,1037 1025,1070 867,1070 867,1692 890,1692" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="879.0,1698.0 890,1692 879.0,1686.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <rect x="1270" y="1100" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
 <text x="1351.69" y="1136.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">SignupForm</text>
 <polyline points="1405,1037 1405,1070 1247,1070 1247,1132 1270,1132" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
@@ -129,6 +145,14 @@
 <text x="195.88" y="1626.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">CloudinaryImage</text>
 <polyline points="415,1412 430,1412 430,1622 420,1622" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <polyline points="431.0,1616.0 420,1622 431.0,1628.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="150" y="1670" width="270" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="206.04" y="1706.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">FavoriteButton</text>
+<polyline points="415,1412 445,1412 445,1702 420,1702" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="431.0,1696.0 420,1702 431.0,1708.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="895" y="1570" width="290" height="65" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="961.04" y="1606.96" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#17242b">FavoriteButton</text>
+<polyline points="1185,1392 1205,1392 1205,1602 1185,1602" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="1196.0,1596.0 1185,1602 1196.0,1608.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <rect x="2300" y="850" width="530" height="75" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
 <text x="2484.92" y="893.32" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="700" fill="#17242b">RequireAuth</text>
 <polyline points="1680,750 1680,800 2565,800 2565,850" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
@@ -176,6 +200,31 @@
 <text x="549.15" y="2320.14" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="700" fill="#17242b">CertificatePreview</text>
 <polyline points="660,2072 660,2110 490,2110 490,2315 510,2315" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <polyline points="499.0,2321.0 510,2315 499.0,2309.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="90" y="2430" width="350" height="112" rx="4" fill="#06c879" stroke="#52636b" stroke-width="1.6"/>
+<text x="176.99" y="2475.98" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="700" fill="#17242b">FavoritesPage</text>
+<text x="197.16" y="2507.02" font-family="DejaVu Sans Mono, monospace" font-size="17" font-weight="400" fill="#17242b">/my/favorites</text>
+<polyline points="465,1882 465,1920 65,1920 65,2486 90,2486" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="79.0,2492.0 90,2486 79.0,2480.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="115" y="2610" width="300" height="70" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="193.71" y="2650.14" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="700" fill="#17242b">FavoriteList</text>
+<polyline points="265,2542 265,2610" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="259.0,2599.0 265,2610 271.0,2599.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="115" y="2750" width="300" height="70" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="177.22" y="2790.14" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="700" fill="#17242b">CampaignCard</text>
+<polyline points="265,2680 265,2750" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="259.0,2739.0 265,2750 271.0,2739.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="115" y="2880" width="300" height="70" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="174.77" y="2920.14" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="700" fill="#17242b">FavoriteButton</text>
+<polyline points="265,2820 265,2880" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="259.0,2869.0 265,2880 271.0,2869.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="505" y="2750" width="300" height="70" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="553.15" y="2790.14" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="700" fill="#17242b">CloudinaryImage</text>
+<polyline points="415,2785 505,2785" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="494.0,2791.0 505,2785 494.0,2779.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<rect x="505" y="2880" width="300" height="70" rx="4" fill="#ffd342" stroke="#52636b" stroke-width="1.6"/>
+<text x="534.97" y="2920.14" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="700" fill="#17242b">UnavailableFavorite</text>
+<polyline points="415,2645 845,2645 845,2915 805,2915" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
+<polyline points="816.0,2909.0 805,2915 816.0,2921.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <rect x="950" y="1960" width="335" height="160" rx="4" fill="#06c879" stroke="#52636b" stroke-width="1.6"/>
 <text x="969.90" y="2029.30" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="700" fill="#17242b">OrganizationSettingsPage</text>
 <text x="997.47" y="2059.70" font-family="DejaVu Sans Mono, monospace" font-size="17" font-weight="400" fill="#17242b">/organizer/organization</text>
@@ -251,20 +300,20 @@
 <text x="2754.95" y="2650.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="700" fill="#17242b">CloudinaryImage</text>
 <polyline points="2860,2520 2860,2610" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
 <polyline points="2854.0,2599.0 2860,2610 2866.0,2599.0" fill="none" stroke="#79848a" stroke-width="2.1" stroke-linejoin="round"/>
-<rect x="90" y="2790" width="1010" height="160.39999999999998" rx="7" fill="#f1f5f6" stroke="#c4cfd4" stroke-width="1"/>
-<text x="110.00" y="2831.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="700" fill="#17242b">PAGE AND ROUTE COUNTS</text>
-<text x="110.00" y="2872.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">14 URL patterns map to 13 routed page components. CampaignEditorPage serves both</text>
-<text x="110.00" y="2902.80" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">create and edit. CertificatePreview is a nested component, not a separate frontend</text>
-<text x="110.00" y="2933.60" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">route.</text>
-<rect x="1170" y="2790" width="1010" height="160.39999999999998" rx="7" fill="#f1f5f6" stroke="#c4cfd4" stroke-width="1"/>
-<text x="1190.00" y="2831.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="700" fill="#17242b">HOW TO READ THIS DIAGRAM</text>
-<text x="1190.00" y="2872.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">Arrows connect direct parent and child components. Yellow components have no</text>
-<text x="1190.00" y="2902.80" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">client-side route. Shared components may appear more than once to show each parent</text>
-<text x="1190.00" y="2933.60" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">relationship.</text>
-<rect x="2250" y="2790" width="1020" height="160.39999999999998" rx="7" fill="#f1f5f6" stroke="#c4cfd4" stroke-width="1"/>
-<text x="2270.00" y="2831.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="700" fill="#17242b">BAHRAIN AND ACCESS</text>
-<text x="2270.00" y="2872.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">Country is fixed to BH; activity time displays in Asia/Bahrain. Role guards organize</text>
-<text x="2270.00" y="2902.80" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">frontend navigation. Express checks authentication, roles and record ownership on</text>
-<text x="2270.00" y="2933.60" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">every protected request.</text>
-<text x="96.00" y="3222.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">Shared controls: Button · FormField · GovernorateSelect · AreaFilter · StatusBadge · ConfirmDialog · LoadingState · EmptyState · ErrorState</text>
+<rect x="90" y="3060" width="1010" height="160.39999999999998" rx="7" fill="#f1f5f6" stroke="#c4cfd4" stroke-width="1"/>
+<text x="110.00" y="3101.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="700" fill="#17242b">PAGE AND ROUTE COUNTS</text>
+<text x="110.00" y="3142.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">15 URL patterns map to 14 routed page components. CampaignEditorPage serves both</text>
+<text x="110.00" y="3172.80" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">create and edit. CertificatePreview is a nested component, not a separate frontend</text>
+<text x="110.00" y="3203.60" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">route.</text>
+<rect x="1170" y="3060" width="1010" height="160.39999999999998" rx="7" fill="#f1f5f6" stroke="#c4cfd4" stroke-width="1"/>
+<text x="1190.00" y="3101.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="700" fill="#17242b">HOW TO READ THIS DIAGRAM</text>
+<text x="1190.00" y="3142.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">Arrows connect direct parent and child components. Yellow components have no</text>
+<text x="1190.00" y="3172.80" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">client-side route. Shared components may appear more than once to show each parent</text>
+<text x="1190.00" y="3203.60" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">relationship.</text>
+<rect x="2250" y="3060" width="1020" height="160.39999999999998" rx="7" fill="#f1f5f6" stroke="#c4cfd4" stroke-width="1"/>
+<text x="2270.00" y="3101.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="700" fill="#17242b">BAHRAIN AND ACCESS</text>
+<text x="2270.00" y="3142.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">Country is fixed to BH; activity time displays in Asia/Bahrain. Role guards organize</text>
+<text x="2270.00" y="3172.80" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">frontend navigation. Express checks authentication, roles and record ownership on</text>
+<text x="2270.00" y="3203.60" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">every protected request.</text>
+<text x="96.00" y="3492.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#52636b">Shared controls: Button · FormField · GovernorateSelect · AreaFilter · StatusBadge · ConfirmDialog · LoadingState · EmptyState · ErrorState</text>
 </svg>

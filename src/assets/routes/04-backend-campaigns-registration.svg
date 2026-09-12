@@ -3,7 +3,7 @@
 <rect width="100%" height="100%" fill="#151a20"/>
 <rect x="65" y="60" width="10" height="56" rx="0" fill="#ff6b3d" stroke="none" stroke-width="1"/>
 <text x="96.00" y="101.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="42" font-weight="700" fill="#f1f5f6">Backend routes / campaigns &amp; participation</text>
-<text x="98.00" y="148.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="400" fill="#b6c2c9">Express &amp; Postman · Success responses · All URI paths include the /api prefix</text>
+<text x="98.00" y="148.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="400" fill="#b6c2c9">Express &amp; Postman · Success responses · Paths are relative to the backend server URL · Protected requests use Bearer JWT</text>
 <text x="2696.60" y="91.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="24" font-weight="700" fill="#b6c2c9">04</text>
 <polyline points="70,1884 2730,1884" fill="none" stroke="#3f5059" stroke-width="1" stroke-linejoin="round"/>
 <text x="70.00" y="1916.00" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" font-weight="400" fill="#b6c2c9">TATAWWU&#x27;  /  BAHRAIN  /  ENGLISH  /  MERN + JWT + CLOUDINARY</text>
@@ -30,7 +30,7 @@
 <rect x="730" y="354" width="230" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="404.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">200</text>
 <rect x="960" y="354" width="710" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="404.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/campaigns</text>
+<text x="975.00" y="404.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/campaigns</text>
 <rect x="1670" y="354" width="650" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="404.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">Search and filter Bahrain activities</text>
 <rect x="2320" y="354" width="410" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
@@ -42,7 +42,7 @@
 <rect x="730" y="442" width="230" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="492.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">200</text>
 <rect x="960" y="442" width="710" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="492.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/campaigns/:id</text>
+<text x="975.00" y="492.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/campaigns/:id</text>
 <rect x="1670" y="442" width="650" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="492.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">Get visible campaign details</text>
 <rect x="2320" y="442" width="410" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
@@ -54,7 +54,7 @@
 <rect x="730" y="530" width="230" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="580.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">201</text>
 <rect x="960" y="530" width="710" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="580.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/campaigns</text>
+<text x="975.00" y="580.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/campaigns</text>
 <rect x="1670" y="530" width="650" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="580.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">Create draft with optional cover</text>
 <rect x="2320" y="530" width="410" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
@@ -66,7 +66,7 @@
 <rect x="730" y="618" width="230" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="668.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">200</text>
 <rect x="960" y="618" width="710" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="668.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/campaigns/:id</text>
+<text x="975.00" y="668.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/campaigns/:id</text>
 <rect x="1670" y="618" width="650" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="668.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">Edit campaign or cover before start</text>
 <rect x="2320" y="618" width="410" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
@@ -78,7 +78,7 @@
 <rect x="730" y="706" width="230" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="756.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">204</text>
 <rect x="960" y="706" width="710" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="756.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/campaigns/:id</text>
+<text x="975.00" y="756.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/campaigns/:id</text>
 <rect x="1670" y="706" width="650" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="756.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">Delete eligible unpublished campaign</text>
 <rect x="2320" y="706" width="410" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
@@ -90,7 +90,7 @@
 <rect x="730" y="794" width="230" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="844.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">200</text>
 <rect x="960" y="794" width="710" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="844.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/campaigns/:id/submit</text>
+<text x="975.00" y="844.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/campaigns/:id/submit</text>
 <rect x="1670" y="794" width="650" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="844.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">Submit for admin approval</text>
 <rect x="2320" y="794" width="410" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
@@ -102,7 +102,7 @@
 <rect x="730" y="882" width="230" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="932.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">200</text>
 <rect x="960" y="882" width="710" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="932.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/campaigns/:id/cancel</text>
+<text x="975.00" y="932.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/campaigns/:id/cancel</text>
 <rect x="1670" y="882" width="650" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="932.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">Cancel campaign; retain history</text>
 <rect x="2320" y="882" width="410" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
@@ -114,7 +114,7 @@
 <rect x="730" y="970" width="230" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="1020.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">200</text>
 <rect x="960" y="970" width="710" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="1020.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/campaigns/:id/complete</text>
+<text x="975.00" y="1020.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/campaigns/:id/complete</text>
 <rect x="1670" y="970" width="650" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="1020.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">Complete after attendance is recorded</text>
 <rect x="2320" y="970" width="410" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
@@ -128,7 +128,7 @@
 <rect x="730" y="1110" width="230" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="1160.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">201 / 200</text>
 <rect x="960" y="1110" width="710" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="1160.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/campaigns/:id/registrations</text>
+<text x="975.00" y="1160.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/campaigns/:id/registrations</text>
 <rect x="1670" y="1110" width="650" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="1160.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">Join or reactivate registration</text>
 <rect x="2320" y="1110" width="410" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
@@ -140,7 +140,7 @@
 <rect x="730" y="1198" width="230" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="1248.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">200</text>
 <rect x="960" y="1198" width="710" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="1248.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/registrations/me</text>
+<text x="975.00" y="1248.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/registrations/me</text>
 <rect x="1670" y="1198" width="650" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="1248.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">List own activities and attendance</text>
 <rect x="2320" y="1198" width="410" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
@@ -152,7 +152,7 @@
 <rect x="730" y="1286" width="230" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="1336.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">200</text>
 <rect x="960" y="1286" width="710" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="1336.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/registrations/:id</text>
+<text x="975.00" y="1336.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/registrations/:id</text>
 <rect x="1670" y="1286" width="650" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="1336.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">Cancel own registration before start</text>
 <rect x="2320" y="1286" width="410" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
@@ -164,7 +164,7 @@
 <rect x="730" y="1374" width="230" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="1424.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">200</text>
 <rect x="960" y="1374" width="710" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="1424.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/campaigns/:id/registrations</text>
+<text x="975.00" y="1424.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/campaigns/:id/registrations</text>
 <rect x="1670" y="1374" width="650" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="1424.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">List participants and certificate states</text>
 <rect x="2320" y="1374" width="410" height="88" rx="0" fill="#202b34" stroke="#53616c" stroke-width="1"/>
@@ -176,7 +176,7 @@
 <rect x="730" y="1462" width="230" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="745.00" y="1512.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">200</text>
 <rect x="960" y="1462" width="710" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
-<text x="975.00" y="1512.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/api/registrations/:id/attendance</text>
+<text x="975.00" y="1512.14" font-family="DejaVu Sans Mono, monospace" font-size="21" font-weight="400" fill="#edf2f5">/registrations/:id/attendance</text>
 <rect x="1670" y="1462" width="650" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
 <text x="1685.00" y="1512.48" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#edf2f5">Mark attended or absent after end</text>
 <rect x="2320" y="1462" width="410" height="88" rx="0" fill="#1c242c" stroke="#53616c" stroke-width="1"/>
