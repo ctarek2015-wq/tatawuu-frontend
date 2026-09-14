@@ -3,11 +3,14 @@ const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/campaigns`;
 const index = async () => {
   try {
     const res = await fetch(BASE_URL);
+    if (!res.ok) {
+      throw new Error(`Unable to load campaigns ${res.status}.`);
+    }
     const data = await res.json();
     return data;
-  } catch (err) {
-    console.log(err);
-    throw new Error(err);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
 
@@ -16,9 +19,8 @@ const show = async (id) => {
     const res = await fetch(`${BASE_URL}/${id}`);
     const data = await res.json();
     return data;
-  } catch (err) {
-    console.log(err);
-    throw new Error(err);
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -50,11 +52,14 @@ const update = async (id, formData) => {
       },
       body: JSON.stringify(formData),
     });
+    if (!res.ok) {
+      throw new Error(`Unable to update campaign ${res.status}.`);
+    }
     const data = await res.json();
     return data;
-  } catch (err) {
-    console.log(err);
-    throw new Error(err);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
 
