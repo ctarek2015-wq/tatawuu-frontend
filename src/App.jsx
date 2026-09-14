@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router";
 import { index, create, update, remove } from "./services/campaignService.js";
 import AdminDashboard from "./pages/private/admin/dashboard/AdminDashboard.jsx";
 import * as organizationService from "./services/organizationService.js";
+import OrganizerDashboard from "./pages/private/Organizer/dashboard/OrganizerDashboard.jsx";
 
 //components
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
@@ -90,12 +91,9 @@ function App() {
         <Route path="/sign-up" element={<SignUpForm />} />
         <Route path="/sign-in" element={<SignInForm />} />
         <Route
-          path="/organizations"
+          path="/"
           element={<OrganizationList organizations={organizations} />}
         />
-        {user && user.role === "admin" && (
-          <Route path="/admin" element={<AdminDashboard />} />
-        )}
       </Routes>
       {loading && <p>Loading campaigns...</p>}
     </>
