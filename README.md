@@ -1,6 +1,6 @@
 # Tatawwu’ — Volunteering in Bahrain
 
-![Tatawwu wordmark: volunteering in Bahrain](assets/tatawwu-logo.svg)
+![Tatawwu wordmark: volunteering in Bahrain](src/assets/tatawwu-logo.svg)
 
 Tatawwu’ brings charitable, volunteer, and humanitarian campaigns in Bahrain into one place. Volunteers can discover activities, save favorites, share campaign links, and track participation. Organizers can publish activities and certificates for the participants after admin review the campaigns.
 
