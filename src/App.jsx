@@ -1,7 +1,9 @@
 import { useState, useContext } from "react";
 import { UserContext } from "./contexts/UserContext.jsx";
 import { Routes, Route } from "react-router";
+// src/App.jsx
 
+import { useState, useEffect } from "react";
 //components
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
 import Landing from "./components/Landing/Landing.jsx";
