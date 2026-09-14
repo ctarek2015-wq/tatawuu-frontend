@@ -91,7 +91,7 @@ function App() {
         <Route path="/sign-up" element={<SignUpForm />} />
         <Route path="/sign-in" element={<SignInForm />} />
         <Route
-          path="/"
+          path="/organizations"
           element={<OrganizationList organizations={organizations} />}
         />
       </Routes>
