@@ -4,10 +4,11 @@ import { Routes, Route } from "react-router";
 
 //services
 import { index, create, update, remove } from "./services/campaignService.js";
-import AdminDashboard from "./pages/private/admin/dashboard/AdminDashboard.jsx";
 import * as organizationService from "./services/organizationService.js";
-import OrganizerDashboard from "./pages/private/Organizer/dashboard/OrganizerDashboard.jsx";
 
+import AdminDashboard from "./pages/private/admin/dashboard/AdminDashboard.jsx";
+import OrganizerDashboard from "./pages/private/Organizer/dashboard/OrganizerDashboard.jsx";
+import VolunteerDashboard from "./pages/private/volunteer/dashboard/VolunteerDashboard.jsx";
 //components
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
 import Landing from "./components/Landing/Landing.jsx";
@@ -76,13 +77,14 @@ function App() {
   const handleUpdateOrganization = async (id, formData) => {
     const updatedOrganization = await update(id, formData);
     setOrganization(
-      Organization.map((o) => (o.id === id ? updatedOrganization : o)),
+      organizations.map((o) => (o.id === id ? updatedOrganization : o)),
     );
   };
   const handleRemoveOrganization = async (id) => {
     await remove(id);
     setOrganization(organizations.filter((o) => o.id !== id));
   };
+
   return (
     <>
       <NavBar />
@@ -94,6 +96,15 @@ function App() {
           path="/"
           element={<OrganizationList organizations={organizations} />}
         />
+        {user && user.role === "Admin" && (
+          <Route path="/admin" element={<AdminDashboard />} />
+        )}
+        {user && user.role === "Organizer" && (
+          <Route path="/organizer" element={<OrganizerDashboard />} />
+        )}
+        {user && user.role === "Volunteer" && (
+          <Route path={`/${user.username}`} element={<VolunteerDashboard />} />
+        )}
       </Routes>
       {loading && <p>Loading campaigns...</p>}
     </>
