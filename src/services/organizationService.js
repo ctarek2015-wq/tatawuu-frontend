@@ -1,5 +1,5 @@
 const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/organizations`;
-const create = async (orgFormData) => {
+const create = async (FormData) => {
   try {
     const res = await fetch(BASE_URL, {
       method: "POST",
@@ -7,19 +7,19 @@ const create = async (orgFormData) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(orgFormData),
+      body: JSON.stringify(FormData),
     });
-    return res.json();
+    const data = await res.join();
+    return data;
   } catch (error) {
     console.log(error);
   }
 };
 const index = async () => {
   try {
-    const res = await fetch(BASE_URL, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    });
-    return res.json();
+    const res = await fetch(BASE_URL);
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.log(error);
   }
@@ -27,25 +27,29 @@ const index = async () => {
 
 const show = async (id) => {
   try {
-    const res = await fetch(`${BASE_URL}/${id}`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    });
-    return res.json();
+    const res = await fetch(`${BASE_URL}/${id}`);
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.log(error);
   }
 };
-const update = async (req, res) => {
+const update = async (id, formData) => {
   try {
     const res = await fetch(`${BASE_URL}/${id}`, {
       method: "PUT",
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(formData),
     });
-  } catch (error) {
-    console.log(error);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
   }
 };
-
 const deleteOrg = async (orgId) => {
   try {
     await fetch(`${BASE_URL}/${orgId}`, {
@@ -54,6 +58,8 @@ const deleteOrg = async (orgId) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.log(error);
   }
