@@ -58,7 +58,7 @@ const update = async (id, formData) => {
   }
 };
 
-const destroy = async (id) => {
+const remove = async (id) => {
   try {
     const res = await fetch(`${BASE_URL}/${id}`, {
       method: "DELETE",
@@ -74,4 +74,4 @@ const destroy = async (id) => {
   }
 };
 
-export { index, show, create, update, destroy };
+export { index, show, create, update, remove };
