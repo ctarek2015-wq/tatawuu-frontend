@@ -23,9 +23,19 @@ const NavBar = () => {
               Sign Out
             </Link>
           </li>
-          {user.role === "admin" && (
+          {user.role === "Admin" && (
             <li>
               <Link to="/admin">Admin Dashboard</Link>
+            </li>
+          )}
+          {user.role === "Organizer" && (
+            <li>
+              <Link to="/organizer">Organizer Dashboard</Link>
+            </li>
+          )}
+          {user.role === "Volunteer" && (
+            <li>
+              <Link to={`/${user.username}`}>{user.username} Dashboard</Link>
             </li>
           )}
         </ul>
