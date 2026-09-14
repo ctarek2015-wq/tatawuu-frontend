@@ -13,8 +13,7 @@ import SignInForm from "./components/SignInForm/SignInForm.jsx";
 import "./App.css";
 
 function App() {
-  const { user } = useContext(UserContext);
-  const [loading, setLoading] = useState(false);
+  const { user, loading, setLoading } = useContext(UserContext);
   const [campaigns, setCampaigns] = useState([]);
 
   useEffect(() => {
