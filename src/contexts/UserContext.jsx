@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 
 const UserContext = createContext();
+const DataContext = createContext();
 
 const getUserFromToken = () => {
   const token = localStorage.getItem("token");
@@ -10,12 +11,19 @@ const getUserFromToken = () => {
   return JSON.parse(atob(token.split(".")[1]));
 };
 
-function UserProvider({ children }) {
+function ContextProvider({ children }) {
   const [user, setUser] = useState(getUserFromToken());
   const [loading, setLoading] = useState(false);
+  const [campaigns, setCampaigns] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
 
-  const value = { user, setUser, loading, setLoading };
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  const value1 = { user, setUser, loading, setLoading };
+  const value2 = { campaigns, setCampaigns, organizations, setOrganizations };
+  return (
+    <UserContext.Provider value={value1}>
+      <DataContext.Provider value={value2}>{children}</DataContext.Provider>
+    </UserContext.Provider>
+  );
 }
 
-export { UserProvider, UserContext };
+export { ContextProvider, UserContext, DataContext };

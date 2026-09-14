@@ -1,4 +1,5 @@
 const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/organizations`;
+
 const create = async (FormData) => {
   try {
     const res = await fetch(BASE_URL, {
@@ -9,19 +10,24 @@ const create = async (FormData) => {
       },
       body: JSON.stringify(FormData),
     });
-    const data = await res.join();
+    const data = await res.json();
     return data;
   } catch (error) {
     console.log(error);
   }
 };
+
 const index = async () => {
   try {
     const res = await fetch(BASE_URL);
+    if (!res.ok) {
+      throw new Error(`Unable to load organizations ${res.status}.`);
+    }
     const data = await res.json();
     return data;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 
@@ -34,6 +40,7 @@ const show = async (id) => {
     console.log(error);
   }
 };
+
 const update = async (id, formData) => {
   try {
     const res = await fetch(`${BASE_URL}/${id}`, {
@@ -44,15 +51,20 @@ const update = async (id, formData) => {
       },
       body: JSON.stringify(formData),
     });
+    if (!res.ok) {
+      throw new Error(`Unable to update organization ${res.status}.`);
+    }
     const data = await res.json();
     return data;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
+
 const deleteOrg = async (orgId) => {
   try {
-    await fetch(`${BASE_URL}/${orgId}`, {
+    const res = await fetch(`${BASE_URL}/${orgId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
