@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { UserContext } from "./contexts/UserContext.jsx";
 import { Routes, Route } from "react-router";
 import { index, create, update, remove } from "./services/campaignService.js";
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard.jsx";
 import * as organizationService from "./services/organizationService";
 
 //components
@@ -57,6 +58,9 @@ function App() {
         <Route path="/" element={user ? <Dashboard /> : <Landing />} />
         <Route path="/sign-up" element={<SignUpForm />} />
         <Route path="/sign-in" element={<SignInForm />} />
+        {user.role === "admin" && (
+          <Route path="/admin" element={<AdminDashboard />} />
+        )}
       </Routes>
       {loading && <p>Loading campaigns...</p>}
     </>
