@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router";
 
 //services
 import { index, create, update, remove } from "./services/campaignService.js";
-import AdminDashboard from "./components/AdminDashboard/AdminDashboard.jsx";
+import AdminDashboard from "./pages/private/admin/dashboard/AdminDashboard.jsx";
 import * as organizationService from "./services/organizationService.js";
 
 //components
