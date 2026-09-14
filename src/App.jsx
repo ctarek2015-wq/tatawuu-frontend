@@ -93,7 +93,7 @@ function App() {
           path="/organizations"
           element={<OrganizationList organizations={organizations} />}
         />
-        {user.role === "admin" && (
+        {user && user.role === "admin" && (
           <Route path="/admin" element={<AdminDashboard />} />
         )}
       </Routes>
