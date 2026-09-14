@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
-import { UserContext } from "../../contexts/UserContext.jsx";
+import { UserContext } from "../../../contexts/UserContext.jsx";
 import { useNavigate } from "react-router";
-import { signUp } from "../../services/authService";
+import { signUp } from "../../../services/authService";
 
 const SignUpForm = () => {
   const { setUser } = useContext(UserContext);
@@ -11,9 +11,10 @@ const SignUpForm = () => {
     username: "",
     password: "",
     passwordConf: "",
+    role: "",
   });
 
-  const { username, password, passwordConf } = formData;
+  const { username, password, passwordConf, role } = formData;
 
   const handleChange = ({ target: { name, value } }) => {
     setMessage("");
@@ -34,7 +35,7 @@ const SignUpForm = () => {
   };
 
   const isFormInvalid = () => {
-    return !(username && password && password === passwordConf);
+    return !(username && password && password === passwordConf && role);
   };
 
   return (
@@ -74,6 +75,37 @@ const SignUpForm = () => {
             onChange={handleChange}
             required
           />
+        </div>
+
+        <div>
+          <label>Role:</label>
+          <input
+            type="radio"
+            id="Admin"
+            name="role"
+            value="Admin"
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="Admin">Admin</label>
+          <input
+            type="radio"
+            id="Volunteer"
+            name="role"
+            value="Volunteer"
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="Volunteer">Volunteer</label>
+          <input
+            type="radio"
+            id="Organizer"
+            name="role"
+            value="Organizer"
+            onChange={handleChange}
+            required
+          />
+          <label htmlFor="Organizer">Organizer</label>
         </div>
         <div>
           <button disabled={isFormInvalid()}>Sign Up</button>

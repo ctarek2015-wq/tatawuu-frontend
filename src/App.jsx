@@ -8,8 +8,8 @@ import * as organizationService from "./services/organizationService";
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
 import Landing from "./components/Landing/Landing.jsx";
 import NavBar from "./components/NavBar/NavBar.jsx";
-import SignUpForm from "./components/SignUpForm/SignUpForm.jsx";
-import SignInForm from "./components/SignInForm/SignInForm.jsx";
+import SignUpForm from "./pages/public/SignUpForm/SignUpForm.jsx";
+import SignInForm from "./pages/public/SignInForm/SignInForm.jsx";
 // styles
 import "./App.css";
 
@@ -55,7 +55,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={user ? <Dashboard /> : <Landing />} />
-        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/sign-up" element={<SignUpForm />} />
         <Route path="/sign-in" element={<SignInForm />} />
       </Routes>
       {loading && <p>Loading campaigns...</p>}
