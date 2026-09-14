@@ -1,6 +1,7 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "./contexts/UserContext.jsx";
 import { Routes, Route } from "react-router";
+import { index } from "./services/campaignService.js";
 
 //components
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
@@ -13,6 +14,24 @@ import "./App.css";
 
 function App() {
   const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  const [campaigns, setCampaigns] = useState([]);
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      setLoading(true);
+      try {
+        const data = await index();
+        setCampaigns(data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCampaigns();
+  }, []);
 
   return (
     <>
@@ -22,6 +41,7 @@ function App() {
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/sign-in" element={<SignInForm />} />
       </Routes>
+      {loading && <p>Loading campaigns...</p>}
     </>
   );
 }
