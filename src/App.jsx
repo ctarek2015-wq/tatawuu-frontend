@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { UserContext } from "./contexts/UserContext.jsx";
 import { Routes, Route } from "react-router";
 import { index, create, update, remove } from "./services/campaignService.js";
+import * as organizationService from "./services/organizationService";
 
 //components
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
@@ -16,7 +17,7 @@ function App() {
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
-
+  const [organization, setorganization] = useState([]);
   useEffect(() => {
     const fetchCampaigns = async () => {
       setLoading(true);
