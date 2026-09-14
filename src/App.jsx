@@ -10,6 +10,10 @@ import Landing from "./components/Landing/Landing.jsx";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import SignUpForm from "./components/SignUpForm/SignUpForm.jsx";
 import SignInForm from "./components/SignInForm/SignInForm.jsx";
+//context
+import { UserContext } from "./contexts/UserContext";
+//services
+
 // styles
 import "./App.css";
 
