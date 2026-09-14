@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext.jsx";
 
@@ -23,6 +23,11 @@ const NavBar = () => {
               Sign Out
             </Link>
           </li>
+          {user.role === "admin" && (
+            <li>
+              <Link to="/admin">Admin Dashboard</Link>
+            </li>
+          )}
         </ul>
       ) : (
         <ul>

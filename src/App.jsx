@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router";
 
 //services
 import { index, create, update, remove } from "./services/campaignService.js";
+import AdminDashboard from "./pages/private/admin/dashboard/AdminDashboard.jsx";
 import * as organizationService from "./services/organizationService.js";
 
 //components
@@ -92,6 +93,9 @@ function App() {
           path="/organizations"
           element={<OrganizationList organizations={organizations} />}
         />
+        {user && user.role === "admin" && (
+          <Route path="/admin" element={<AdminDashboard />} />
+        )}
       </Routes>
       {loading && <p>Loading campaigns...</p>}
     </>

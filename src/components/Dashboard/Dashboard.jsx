@@ -1,22 +1,9 @@
-import { useContext, useEffect } from "react";
-import { currentUser } from "../../services/userService";
+import { useContext } from "react";
 
 import { UserContext } from "../../contexts/UserContext";
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
-
-  useEffect(() => {
-    const getCurrentUser = async () => {
-      try {
-        const signedInUser = await currentUser();
-        console.log(signedInUser);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getCurrentUser();
-  }, [user]);
 
   return (
     <main>
