@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "./contexts/UserContext.jsx";
 import { Routes, Route } from "react-router";
-import { index } from "./services/campaignService.js";
+import { index, create, update, remove } from "./services/campaignService.js";
 
 //components
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
@@ -32,6 +32,23 @@ function App() {
 
     fetchCampaigns();
   }, []);
+
+  // handlers for campaigns
+
+  const handleAddCampaign = async (formData) => {
+    const newCampaign = await create(formData);
+    setCampaigns([newCampaign, ...campaigns]);
+  };
+
+  const handleUpdateCampaign = async (id, formData) => {
+    const updatedCampaign = await update(id, formData);
+    setCampaigns(campaigns.map((c) => (c.id === id ? updatedCampaign : c)));
+  };
+
+  const handleRemoveCampaign = async (id) => {
+    await remove(id);
+    setCampaigns(campaigns.filter((c) => c.id !== id));
+  };
 
   return (
     <>
