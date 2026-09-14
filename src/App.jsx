@@ -1,5 +1,5 @@
-import { useState, useContext, useEffect } from "react";
-import { UserContext } from "./contexts/UserContext.jsx";
+import { useContext, useEffect } from "react";
+import { UserContext, DataContext } from "./contexts/UserContext.jsx";
 import { Routes, Route } from "react-router";
 
 //services
@@ -21,8 +21,8 @@ import "./App.css";
 
 function App() {
   const { user, loading, setLoading } = useContext(UserContext);
-  const [campaigns, setCampaigns] = useState([]);
-  const [organizations, setOrganization] = useState([]);
+  const { campaigns, setCampaigns, organizations, setOrganizations } =
+    useContext(DataContext);
   useEffect(() => {
     const fetchCampaigns = async () => {
       setLoading(true);
@@ -38,11 +38,11 @@ function App() {
     fetchCampaigns();
   }, []);
   useEffect(() => {
-    const fetchOraganization = async () => {
+    const fetchOrganization = async () => {
       setLoading(true);
       try {
         const data = await organizationService.index();
-        setOrganization(data);
+        setOrganizations(data);
       } catch (err) {
         console.log(err);
       } finally {
@@ -50,7 +50,7 @@ function App() {
       }
     };
 
-    fetchOraganization();
+    fetchOrganization();
   }, []);
 
   // handlers for campaigns
@@ -72,17 +72,17 @@ function App() {
   //handlers for organization
   const handleAddOrganization = async (formData) => {
     const newOrganization = await create(formData);
-    setOrganization([newOrganization, ...organizations]);
+    setOrganizations([newOrganization, ...organizations]);
   };
   const handleUpdateOrganization = async (id, formData) => {
     const updatedOrganization = await update(id, formData);
-    setOrganization(
+    setOrganizations(
       organizations.map((o) => (o.id === id ? updatedOrganization : o)),
     );
   };
   const handleRemoveOrganization = async (id) => {
     await remove(id);
-    setOrganization(organizations.filter((o) => o.id !== id));
+    setOrganizations(organizations.filter((o) => o.id !== id));
   };
 
   return (
@@ -93,7 +93,7 @@ function App() {
         <Route path="/sign-up" element={<SignUpForm />} />
         <Route path="/sign-in" element={<SignInForm />} />
         <Route
-          path="/organizations"
+          path="/"
           element={<OrganizationList organizations={organizations} />}
         />
         {user && user.role === "Admin" && (
