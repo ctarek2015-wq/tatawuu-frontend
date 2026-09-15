@@ -1,6 +1,57 @@
+import { useState } from 'react';
 import CampaignGrid from "../CampaignGrid/CampaignGrid";
 
 const ExplorePage = ({ campaigns }) => {
+
+
+
+    const [searchTerm, setSearchTerm] = useState('');
+    const [governorate, setGovernorate] = useState('');
+    const [area, setArea] = useState('');
+    const [category, setCategory] = useState('');
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
+
+
+const governoratesList = ['Capital', 'Muharraq', 'Northern', 'Southern'];
+
+
+const categoriesList = ['Environment', 'Education', 'Health', 'Social Welfare', 'Food Packing'];
+
+
+
+const filteredCampaigns = campaigns.filter(campaign => {
+
+    const matchesSearch = searchTerm === '' || 
+            campaign.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            campaign.organization?.name?.toLowerCase().includes(searchTerm.toLowerCase());
+
+
+        const matchesGovernorate = governorate === '' || campaign.governorate === governorate;
+
+        const matchesArea = area === '' || campaign.area?.toLowerCase().includes(area.toLowerCase());
+
+        const matchesCategory = category === '' || campaign.category === category;
+
+        const matchesFromDate = !fromDate || new Date(campaign.date) >= new Date(fromDate);
+        const matchesToDate = !toDate || new Date(campaign.date) <= new Date(toDate);
+
+        return matchesSearch && matchesGovernorate && matchesArea && matchesCategory && matchesFromDate && matchesToDate;
+    });
+
+
+
+    const handleClearFilters = () => {
+        setSearchTerm('');
+        setGovernorate('');
+        setArea('');
+        setCategory('');
+        setFromDate('');
+        setToDate('');
+    };
+
+
+
 
     return (
         <>
@@ -13,19 +64,48 @@ const ExplorePage = ({ campaigns }) => {
           <h6>Search activity</h6>
 
 
-         <div class="filters">
-          <input type="text" placeholder="Search by activity or organization" />
-          <button  >search</button>
+         <div className="filters">
+               <input 
+                    type="text" 
+                    placeholder="Search by activity or organization" 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />         
+                 <button  >search</button>
 
 
           <h6>Governorate</h6>
-           <input type="text"  />
+          <select 
+                    value={governorate} 
+                    onChange={(e) => setGovernorate(e.target.value)}
+                >
+                    <option value="">All governorates</option>
+                    {governoratesList.map((gov) => (
+                        <option key={gov} value={gov}>{gov} Governorate</option>
+                    ))}
+                </select>
 
            <h6>Area</h6>
-           <input type="text" placeholder="Area name" />
+            <input 
+                    type="text" 
+                    placeholder="Area name" 
+                    value={area}
+                    onChange={(e) => setArea(e.target.value)}
+                />
+
+
 
            <h6>Category</h6>
-           <input type="text"  />
+               <select 
+                    value={category} 
+                    onChange={(e) => setCategory(e.target.value)}
+                >
+                    <option value="">All categories</option>
+                    {categoriesList.map((cat) => (
+                        <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                </select>
+
 
            <h6>From Date</h6>
            <input type="date"  />
@@ -37,20 +117,19 @@ const ExplorePage = ({ campaigns }) => {
           </div>
 
 
-          <button>Clear Filters</button>
+         <button onClick={handleClearFilters}>Clear Filters</button>
 
           <h2>Upcommings Activity</h2>
 
 
 
 
-            <CampaignGrid campaigns={campaigns} />
+            <CampaignGrid campaigns={filteredCampaigns} />
 
 
-
-           <button disabled>Previous</button>
+            <button disabled>Previous</button>
             <span>1</span>
-            <button>Next</button>
+            <button>Next</button> 
 
         </>
     )

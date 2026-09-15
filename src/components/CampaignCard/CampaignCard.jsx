@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 const CampaignCard = ({ campaign }) => {
   if (!campaign) return null; 
   
@@ -41,7 +43,7 @@ const CampaignCard = ({ campaign }) => {
                         <span>{campaign.availablePlaces || campaign.capacity} places available</span>
 
 
-                       <button>View activity</button>
+                       <Link to={`/campaigns/${campaign._id}`}>View activity</Link>
 
 
                  </div>
