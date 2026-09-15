@@ -1,11 +1,13 @@
 import { useContext } from "react";
 import { DataContext } from "../../../../contexts/UserContext";
 
+import * as organizationService from "../../../../services/organizationService.js";
+
 const OrganizationReview = () => {
   const { organizations, setOrganizations } = useContext(DataContext);
   return (
     <section>
-      <h2 id="organization-queue-heading">Submitted items</h2>
+      <h2>Waiting for Review</h2>
       {organizations.length === 0 ? (
         <p>No organizations match this status.</p>
       ) : (
@@ -17,16 +19,8 @@ const OrganizationReview = () => {
               <li key={id}>
                 <h3>{organization.name || "Unnamed organization"}</h3>
                 <p>{organization.status || "Unknown status"}</p>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setOrganizations(
-                      organizations.filter((org) => (org._id || org.id) !== id),
-                    )
-                  }
-                >
-                  Review
-                </button>
+                <button type="button">Approve</button>
+                <button type="button">Reject</button>
               </li>
             );
           })}
