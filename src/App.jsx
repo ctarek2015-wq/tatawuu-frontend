@@ -12,6 +12,7 @@ import VolunteerDashboard from "./pages/private/volunteer/dashboard/VolunteerDas
 //components
 import Dashboard from "./components/Dashboard/Dashboard.jsx";
 import Landing from "./components/Landing/Landing.jsx";
+import ExplorePage from './components/ExplorePage/ExplorePage.jsx'
 import NavBar from "./components/NavBar/NavBar.jsx";
 import SignUpForm from "./pages/public/SignUpForm/SignUpForm.jsx";
 import SignInForm from "./pages/public/SignInForm/SignInForm.jsx";
@@ -94,7 +95,7 @@ function App() {
     <>
       <NavBar />
       <Routes>
-        <Route path="/" element={user ? <Dashboard /> : <Landing />} />
+        <Route path="/" element={<ExplorePage campaigns={campaigns} />} />
         <Route path="/sign-up" element={<SignUpForm />} />
         <Route path="/sign-in" element={<SignInForm />} />
         <Route
