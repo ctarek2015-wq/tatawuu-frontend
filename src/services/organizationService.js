@@ -1,6 +1,6 @@
 const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/organizations`;
 
-const create = async (FormData) => {
+const create = async (formData) => {
   try {
     const res = await fetch(BASE_URL, {
       method: "POST",
@@ -8,26 +8,54 @@ const create = async (FormData) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(FormData),
+      body: JSON.stringify(formData),
     });
     const data = await res.json();
+    if (!res.ok) {
+      console.log("Create failed:", data.error);
+      return null;
+    }
     return data;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
 
 const index = async () => {
   try {
     const res = await fetch(BASE_URL);
-    if (!res.ok) {
-      throw new Error(`Unable to load organizations ${res.status}.`);
-    }
     const data = await res.json();
+    if (!res.ok) {
+      console.log("Index failed:", data.error);
+      return null;
+    }
     return data;
   } catch (error) {
     console.log(error);
-    throw error;
+    return null;
+  }
+};
+
+const showMine = async () => {
+  try {
+    const res = await fetch(`${BASE_URL}/mine`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    if (res.status === 404) {
+      return null;
+    }
+    const data = await res.json();
+    if (!res.ok) {
+      console.log("ShowMine failed:", data.error);
+      return null;
+    }
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 };
 
@@ -35,9 +63,14 @@ const show = async (id) => {
   try {
     const res = await fetch(`${BASE_URL}/${id}`);
     const data = await res.json();
+    if (!res.ok) {
+      console.log("Show failed:", data.error);
+      return null;
+    }
     return data;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
 
@@ -51,14 +84,15 @@ const update = async (id, formData) => {
       },
       body: JSON.stringify(formData),
     });
-    if (!res.ok) {
-      throw new Error(`Unable to update organization ${res.status}.`);
-    }
     const data = await res.json();
+    if (!res.ok) {
+      console.log("Update failed:", data.error);
+      return null;
+    }
     return data;
-  } catch (error) {
-    console.log(error);
-    throw error;
+  } catch (err) {
+    console.log(err);
+    return null;
   }
 };
 
@@ -70,11 +104,16 @@ const deleteOrg = async (orgId) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    const data = await res.json();
-    return data;
+    if (!res.ok) {
+      const data = await res.json().catch(() => null);
+      console.log("Delete failed:", data?.error);
+      return null;
+    }
+    return true;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
 
-export { index, show, create, update, deleteOrg as delete };
+export { index, showMine, show, create, update, deleteOrg as delete };

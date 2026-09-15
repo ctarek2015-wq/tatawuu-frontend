@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import OrganizationForm from "./OrganizationForm";
 import OrganizationView from "./OrganizationView";
 import {
-  index,
+  showMine,
   create,
   update,
 } from "../../../../services/organizationService";
@@ -18,7 +18,7 @@ const emptyOrg = {
   contactPhone: "",
   whatsappNumber: "",
   website: "",
-  status: "draft",
+  status: "Draft",
 };
 
 const normalize = (org) => ({ ...emptyOrg, ...org, id: org.id || org._id });
@@ -32,9 +32,9 @@ export default function OrganizationProfile() {
 
   useEffect(() => {
     const loadOrganization = async () => {
-      const orgs = await index();
-      if (orgs && orgs.length > 0) {
-        setOrganization(normalize(orgs[0]));
+      const org = await showMine();
+      if (org) {
+        setOrganization(normalize(org));
         setMode("view");
       }
       setLoading(false);
@@ -45,11 +45,7 @@ export default function OrganizationProfile() {
   const handleSubmit = async (formData) => {
     setSubmitting(true);
     setSaveError("");
-    const payload = {
-      ...organization,
-      ...formData,
-      status: "pending_approval",
-    };
+    const payload = { ...organization, ...formData, status: "Pending" };
 
     const saved = organization.id
       ? await update(organization.id, payload)

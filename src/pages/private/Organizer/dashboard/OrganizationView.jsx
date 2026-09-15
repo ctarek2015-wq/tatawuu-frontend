@@ -1,8 +1,11 @@
 const statusLabels = {
-  draft: "Draft",
-  pending_approval: "Pending approval",
-  approved: "Approved",
-  rejected: "Rejected",
+  Draft: "Draft",
+  Pending: "Pending approval",
+  Approved: "Approved",
+  Rejected: "Rejected",
+  Removed: "Removed",
+  Completed: "Completed",
+  Cancelled: "Cancelled",
 };
 
 export default function OrganizationView({ organization, onEdit }) {
