@@ -14,7 +14,7 @@ const ExplorePage = ({ campaigns }) => {
 
 
          <div class="filters">
-          <input type="text"  />
+          <input type="text" placeholder="Search by activity or organization" />
           <button  >search</button>
 
 
@@ -22,7 +22,7 @@ const ExplorePage = ({ campaigns }) => {
            <input type="text"  />
 
            <h6>Area</h6>
-           <input type="text"  />
+           <input type="text" placeholder="Area name" />
 
            <h6>Category</h6>
            <input type="text"  />
@@ -44,9 +44,13 @@ const ExplorePage = ({ campaigns }) => {
 
 
 
-
             <CampaignGrid campaigns={campaigns} />
 
+
+
+           <button disabled>Previous</button>
+            <span>1</span>
+            <button>Next</button>
 
         </>
     )

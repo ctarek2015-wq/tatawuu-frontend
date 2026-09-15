@@ -1,7 +1,50 @@
 const CampaignCard = ({ campaign }) => {
-    return (
+  if (!campaign) return null; 
+  
+
+      const formatDate = (dateString) => {
+        if (!dateString) return "";
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    };
+
+
+
+  return (
         <>
 
+                <div className="campaign-card">
+
+
+
+                         <div className="campaign-cover">
+                            {campaign.coverImage ? (
+                             <img src={campaign.coverImage} alt={campaign.title} />
+                             ) : (
+                              <span>Campaign cover</span>
+                                   )}
+                          </div>
+
+
+                    <h3>{campaign.title}</h3>
+
+                      <p>{campaign.organization?.name}</p>
+
+            <p>{campaign.area} - {campaign.governorate}</p>
+
+
+             <p>
+                {formatDate(campaign.startDate)} • {campaign.startTime} - {campaign.endTime} Bahrain time
+            </p>
+
+
+                        <span>{campaign.availablePlaces || campaign.capacity} places available</span>
+
+
+                       <button>View activity</button>
+
+
+                 </div>
         </>
     )
 }
