@@ -117,7 +117,7 @@ function App() {
           <Route path={`/${user.username}`} element={<VolunteerDashboard />} />
         )}
       </Routes>
-      {loading && <p>Loading campaigns...</p>}
+      {loading && <p>Loading ...</p>}
     </>
   );
 }

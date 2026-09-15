@@ -1,39 +1,9 @@
-import { useEffect, useState, useContext, act } from "react";
-import { DataContext, UserContext } from "../../../../contexts/UserContext.jsx";
-import CampaignReviewQueue from "./CampaignReview.jsx";
-import OrganizationReviewQueue from "./OrganizationReview.jsx";
-import * as campaignService from "../../../../services/campaignService.js";
-import * as organizationService from "../../../../services/organizationService.js";
-
-const getId = (item) => item?._id || item?.id;
-const isPending = (item) => item?.status?.toLowerCase() === "pending";
+import { useState } from "react";
+import CampaignReview from "./CampaignReview.jsx";
+import OrganizationReview from "./OrganizationReview.jsx";
 
 const AdminDashboard = () => {
-  const { campaigns, setCampaigns, organizations, setOrganizations } =
-    useContext(DataContext);
-  const { loading, setLoading } = useContext(UserContext);
-
   const [activeTab, setActiveTab] = useState("organizations");
-
-  useEffect(() => {
-    const loadReviewItems = async () => {
-      setLoading(true);
-
-      try {
-        const campaignData = await campaignService.index();
-        const organizationData = await organizationService.index();
-
-        setCampaigns(campaignData.filter(isPending));
-        setOrganizations(organizationData.filter(isPending));
-      } catch (loadError) {
-        console.log(loadError);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadReviewItems();
-  }, []);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -50,22 +20,11 @@ const AdminDashboard = () => {
           Campaigns
         </button>
       </div>
-      {loading ? (
-        <p>Loading items...</p>
+
+      {activeTab === "organizations" ? (
+        <OrganizationReview />
       ) : (
-        <>
-          {activeTab === "organizations" ? (
-            <OrganizationReviewQueue
-              organizations={organizations}
-              setOrganizations={setOrganizations}
-            />
-          ) : (
-            <CampaignReviewQueue
-              campaigns={campaigns}
-              setCampaigns={setCampaigns}
-            />
-          )}
-        </>
+        <CampaignReview />
       )}
     </main>
   );

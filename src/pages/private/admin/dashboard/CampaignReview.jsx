@@ -1,31 +1,55 @@
-const CampaignReview = ({ campaigns, setCampaigns }) => (
-  <section aria-labelledby="campaign-queue-heading">
-    <h2 id="campaign-queue-heading">Submitted items</h2>
-    {campaigns.length === 0 ? (
-      <p>No campaigns match this status.</p>
-    ) : (
-      <ul>
-        {campaigns.map((campaign) => {
-          const id = campaign._id || campaign.id;
+import { useContext, useEffect } from "react";
+import { DataContext, UserContext } from "../../../../contexts/UserContext";
 
-          return (
-            <li key={id}>
-              <h3>{campaign.title || "Untitled campaign"}</h3>
-              <p>{campaign.status || "Unknown status"}</p>
-              <button
-                type="button"
-                onClick={() =>
-                  setCampaigns(campaigns.filter((c) => (c._id || c.id) !== id))
-                }
-              >
-                Review
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    )}
-  </section>
-);
+import * as campaignService from "../../../../services/campaignService.js";
+
+const CampaignReview = () => {
+  const { campaigns, setCampaigns } = useContext(DataContext);
+  const { loading, setLoading } = useContext(UserContext);
+
+  const handleApprove = async (id) => {
+    await campaignService.update(id, { status: "Approved" });
+  };
+
+  const handleReject = async (id) => {
+    await campaignService.update(id, { status: "Rejected" });
+  };
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      const data = await campaignService.index();
+      setCampaigns(data);
+    };
+    fetchCampaigns();
+  }, [setCampaigns]);
+
+  return (
+    <section>
+      <h2>Waiting for Review</h2>
+      {campaigns.length === 0 ? (
+        <p>No campaigns match this status.</p>
+      ) : (
+        <ul>
+          {campaigns.map((campaign) => {
+            const id = campaign._id;
+
+            return (
+              <li key={id}>
+                <h3>{campaign.title}</h3>
+                <p>{campaign.status}</p>
+                <button type="button" onClick={() => handleApprove(id)}>
+                  Approve
+                </button>
+                <button type="button" onClick={() => handleReject(id)}>
+                  Reject
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </section>
+  );
+};
 
 export default CampaignReview;
