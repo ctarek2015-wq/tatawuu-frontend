@@ -9,7 +9,7 @@ const create = async (FormData) => {
       },
       body: JSON.stringify(FormData),
     });
-    const data = await res.join();
+    const data = await res.json();
     return data;
   } catch (error) {
     console.log(error);
