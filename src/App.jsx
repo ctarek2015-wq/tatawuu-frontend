@@ -20,6 +20,7 @@ import CampaignList from "./pages/public/Campaign/CampaignList.jsx";
 
 // styles
 import "./App.css";
+import CampaignDetail from "./components/Campain/CampaignDetail.jsx";
 
 function App() {
   const { user, loading, setLoading } = useContext(UserContext);
@@ -101,9 +102,10 @@ function App() {
           element={<OrganizationList organizations={organizations} />}
         />
         <Route
-          path="/campaigns"
-          element={<CampaignList campaigns={campaigns} />}
+          path={"/campaigns" || "/organizations/:orgId/campaigns"}
+          element={<CampaignList />}
         />
+        <Route path="/campaigns/:id" element={<CampaignDetail />} />
         {user && user.role === "Admin" && (
           <Route path="/admin" element={<AdminDashboard />} />
         )}
