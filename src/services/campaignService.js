@@ -14,13 +14,35 @@ const index = async () => {
   }
 };
 
-const show = async (id) => {
+const showMine = async () => {
   try {
-    const res = await fetch(`${BASE_URL}/${id}`);
+    const res = await fetch(`${BASE_URL}/mine`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    if (!res.ok) {
+      throw new Error(`Unable to load your campaigns ${res.status}.`);
+    }
     const data = await res.json();
     return data;
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+};
+
+const show = async (id) => {
+  try {
+    const res = await fetch(`${BASE_URL}/${id}`);
+    if (!res.ok) {
+      throw new Error(`Unable to load campaign ${res.status}.`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
 
@@ -35,10 +57,13 @@ const create = async (formData) => {
       body: JSON.stringify(formData),
     });
     const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || `Unable to create campaign ${res.status}.`);
+    }
     return data;
   } catch (err) {
     console.log(err);
-    throw new Error(err);
+    throw err;
   }
 };
 
@@ -52,10 +77,10 @@ const update = async (id, formData) => {
       },
       body: JSON.stringify(formData),
     });
-    if (!res.ok) {
-      throw new Error(`Unable to update campaign ${res.status}.`);
-    }
     const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || `Unable to update campaign ${res.status}.`);
+    }
     return data;
   } catch (error) {
     console.log(error);
@@ -71,12 +96,17 @@ const remove = async (id) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    const data = await res.json();
-    return data;
+    if (!res.ok) {
+      const data = await res.json().catch(() => null);
+      throw new Error(
+        data?.error || `Unable to delete campaign ${res.status}.`,
+      );
+    }
+    return true;
   } catch (err) {
     console.log(err);
-    throw new Error(err);
+    throw err;
   }
 };
 
-export { index, show, create, update, remove };
+export { index, showMine, show, create, update, remove };
