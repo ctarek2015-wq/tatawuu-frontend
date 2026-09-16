@@ -1206,3 +1206,591 @@ button:focus-visible {
     flex-direction: column;
   }
 }
+/* ==========================================================================
+   ORGANIZATION FORM
+   ========================================================================== */
+
+.org-form-page {
+  min-height: 100vh;
+  background: var(--beige);
+  padding: calc(var(--nav-height) + 1rem) 1.5rem 5rem;
+}
+
+.org-form-card {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 14px;
+  padding: 2.4rem 2.4rem 2.6rem;
+  box-shadow: 0 14px 34px rgba(44, 24, 16, 0.08);
+}
+
+.org-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.org-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.org-form-section + .org-form-section {
+  padding-top: 2rem;
+  border-top: 1px solid var(--beige-dark);
+}
+
+.org-form-section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--burgundy);
+}
+
+.org-form-note {
+  font-size: 0.85rem;
+  color: var(--text-mid);
+  font-weight: 300;
+}
+
+.org-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem 1.2rem;
+}
+
+.field-span-2 {
+  grid-column: 1 / -1;
+}
+
+/* base field look (shared shape with auth forms / filter bar) */
+.org-form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.org-form .field input,
+.org-form .field select,
+.org-form .field textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--text-dark);
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 6px;
+  padding: 0.7rem 0.85rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.org-form .field textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
+}
+
+.org-form .field input:focus,
+.org-form .field select:focus,
+.org-form .field textarea:focus {
+  outline: none;
+  border-color: var(--burgundy);
+  box-shadow: 0 0 0 3px rgba(141, 0, 0, 0.09);
+}
+
+.map-field,
+.logo-field {
+  background: var(--beige);
+  border: 1px solid var(--beige-darker);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.org-form-disclaimer {
+  text-align: center;
+  font-style: italic;
+}
+
+.org-form-actions {
+  display: flex;
+  gap: 0.9rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--beige-dark);
+  padding-top: 1.4rem;
+}
+
+.org-form-actions .btn-primary-dark,
+.org-form-actions .btn-soft {
+  flex: 1;
+  text-align: center;
+}
+
+.org-form-actions .btn-primary-dark:disabled,
+.org-form-actions .btn-soft:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 700px) {
+  .org-form-page {
+    padding: calc(var(--nav-height) + 0.75rem) 1rem 3.5rem;
+  }
+
+  .org-form-card {
+    padding: 1.8rem 1.4rem 2rem;
+  }
+  .org-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .field-span-2 {
+    grid-column: auto;
+  }
+  .org-form-actions {
+    flex-direction: column;
+  }
+}
+/* ==========================================================================
+   ORGANIZATION PROFILE
+   ========================================================================== */
+
+.org-profile-page {
+  min-height: 100vh;
+  background: var(--beige);
+  padding: calc(var(--nav-height) + 1.5rem) 1.5rem 5rem;
+}
+
+/* when the form is showing, OrganizationForm already brings its own
+   top padding/background — so don't double it up */
+.org-profile-page.org-profile-page-form {
+  padding: 0 0 5rem;
+  background: var(--beige);
+}
+
+.org-profile-page.org-profile-page-form .org-profile-header,
+.org-profile-page.org-profile-page-form .org-profile-message {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: calc(var(--nav-height) + 1.5rem) 1.5rem 0;
+}
+
+.org-profile-header {
+  max-width: 760px;
+  margin: 0 auto 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.org-profile-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+  color: var(--text-dark);
+}
+
+.org-profile-back {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+  white-space: nowrap;
+}
+.org-profile-back:hover {
+  border-bottom-color: var(--burgundy);
+}
+
+.org-profile-message {
+  max-width: 760px;
+  margin: 0 auto 1.4rem;
+}
+
+.org-profile-empty {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 14px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 14px 34px rgba(44, 24, 16, 0.08);
+}
+
+.org-profile-empty-text {
+  font-size: 0.95rem;
+  color: var(--text-mid);
+  margin-bottom: 1.4rem;
+}
+
+@media (max-width: 700px) {
+  .org-profile-page {
+    padding: calc(var(--nav-height) + 1rem) 1rem 3.5rem;
+  }
+  .org-profile-page.org-profile-page-form .org-profile-header,
+  .org-profile-page.org-profile-page-form .org-profile-message {
+    padding: calc(var(--nav-height) + 1rem) 1rem 0;
+  }
+  .org-profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .org-profile-empty {
+    padding: 2.2rem 1.4rem;
+  }
+}
+/* ==========================================================================
+   ORGANIZATION VIEW
+   ========================================================================== */
+
+.org-view-card {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 14px;
+  padding: 2.4rem 2.4rem 2.6rem;
+  box-shadow: 0 14px 34px rgba(44, 24, 16, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.org-view-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.org-view-logo {
+  width: 88px;
+  height: 88px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--beige-darker);
+  flex-shrink: 0;
+}
+
+.org-view-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  background: var(--beige-dark);
+}
+
+.org-view-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.org-view-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  color: var(--text-dark);
+}
+
+.org-view-status {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(141, 0, 0, 0.08);
+  color: var(--burgundy);
+}
+
+.org-view-status-approved {
+  background: rgba(45, 122, 62, 0.1);
+  color: #2d7a3e;
+}
+
+.org-view-status-pending {
+  background: rgba(184, 150, 12, 0.12);
+  color: var(--gold);
+}
+
+.org-view-status-rejected {
+  background: rgba(141, 0, 0, 0.1);
+  color: var(--burgundy);
+}
+
+.org-view-review {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  background: var(--beige);
+  border: 1px solid var(--beige-darker);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  line-height: 1.6;
+}
+.org-view-review strong {
+  color: var(--text-dark);
+}
+
+.org-view-description {
+  font-size: 0.93rem;
+  color: var(--text-mid);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.org-view-address {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--beige-dark);
+}
+
+.org-view-map {
+  border: 1px solid var(--beige-darker);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.org-view-contacts {
+  background: var(--beige);
+  border: 1px solid var(--beige-darker);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+}
+
+.org-view-actions {
+  display: flex;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--beige-dark);
+}
+
+.org-view-actions .btn-primary-dark {
+  flex: 1;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .org-view-card {
+    padding: 1.8rem 1.4rem 2rem;
+  }
+  .org-view-header {
+    gap: 1rem;
+  }
+  .org-view-logo {
+    width: 72px;
+    height: 72px;
+  }
+}
+/* ==========================================================================
+   ORGANIZER DASHBOARD
+   ========================================================================== */
+
+.dash-page {
+  min-height: 100vh;
+  background: var(--beige);
+  padding: calc(var(--nav-height) + 1.5rem) 1.5rem 5rem;
+}
+
+.dash-grid {
+  max-width: 640px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.dash-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 12px;
+  padding: 1.6rem 1.6rem;
+  text-decoration: none;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+
+.dash-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(141, 0, 0, 0.12);
+  border-color: var(--burgundy);
+}
+
+.dash-card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-dark);
+}
+
+.dash-card-arrow {
+  font-size: 1.2rem;
+  color: var(--burgundy);
+  transition: transform 0.2s;
+}
+
+.dash-card:hover .dash-card-arrow {
+  transform: translateX(4px);
+}
+
+html[dir="rtl"] .dash-card:hover .dash-card-arrow {
+  transform: translateX(-4px) scaleX(-1);
+}
+
+html[dir="rtl"] .dash-card-arrow {
+  display: inline-block;
+  transform: scaleX(-1);
+}
+
+@media (max-width: 600px) {
+  .dash-page {
+    padding: calc(var(--nav-height) + 1rem) 1rem 3.5rem;
+  }
+  .dash-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   ORGANIZATION DETAIL
+   ========================================================================== */
+
+.org-detail-page {
+  min-height: 100vh;
+  background: var(--beige);
+  padding: calc(var(--nav-height) + 1.5rem) 1.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.org-detail-card {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 14px;
+  padding: 2.4rem 2.4rem 2.6rem;
+  box-shadow: 0 14px 34px rgba(44, 24, 16, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.org-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+}
+
+.org-detail-logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--beige-darker);
+  flex-shrink: 0;
+}
+
+.org-detail-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  background: var(--beige-dark);
+}
+
+.org-detail-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.org-detail-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--text-dark);
+}
+
+.org-detail-address {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+}
+
+.org-detail-description {
+  font-size: 0.94rem;
+  color: var(--text-mid);
+  line-height: 1.8;
+  font-weight: 300;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--beige-dark);
+}
+
+.org-detail-map {
+  border: 1px solid var(--beige-darker);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.org-detail-contacts {
+  background: var(--beige);
+  border: 1px solid var(--beige-darker);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+}
+
+.org-detail-campaigns {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.org-detail-campaigns-title {
+  text-align: left;
+  margin: 0 0 1.6rem;
+}
+
+html[dir="rtl"] .org-detail-campaigns-title {
+  text-align: right;
+}
+
+@media (max-width: 700px) {
+  .org-detail-page {
+    padding: calc(var(--nav-height) + 1rem) 1rem 3.5rem;
+    gap: 2rem;
+  }
+  .org-detail-card {
+    padding: 1.8rem 1.4rem 2rem;
+  }
+  .org-detail-logo {
+    width: 80px;
+    height: 80px;
+  }
+}

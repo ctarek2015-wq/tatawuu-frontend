@@ -35,19 +35,53 @@ const OrganizationProfile = () => {
     setEditing(false);
   };
 
-  if (loading) return <p>{t("Loading organization...")}</p>;
+  if (loading) {
+    return (
+      <main className="org-profile-page">
+        <p className="state-msg">{t("Loading organization...")}</p>
+      </main>
+    );
+  }
 
   return (
-    <main>
-      <h1>{t("My organization")}</h1>
-      <Link to="/organizer">{t("Organizer dashboard")}</Link>
-      <p>{tError(message)}</p>
+    <main
+      className={
+        editing ? "org-profile-page org-profile-page-form" : "org-profile-page"
+      }
+    >
+      <div className="org-profile-header">
+        <h1 className="org-profile-title">{t("My organization")}</h1>
+        <Link className="org-profile-back" to="/organizer">
+          {t("Organizer dashboard")}
+        </Link>
+      </div>
+
+      {message && (
+        <p className="state-msg state-error org-profile-message" role="alert">
+          {tError(message)}
+        </p>
+      )}
+
       {editing ? (
-        <OrganizationForm organization={organization} onSubmit={handleSubmit} onCancel={() => setEditing(false)} />
+        <OrganizationForm
+          organization={organization}
+          onSubmit={handleSubmit}
+          onCancel={() => setEditing(false)}
+        />
       ) : organization ? (
-        <OrganizationView organization={organization} onEdit={() => setEditing(true)} />
+        <OrganizationView
+          organization={organization}
+          onEdit={() => setEditing(true)}
+        />
       ) : (
-        <button onClick={() => setEditing(true)}>{t("Create organization")}</button>
+        <div className="org-profile-empty">
+          <p className="org-profile-empty-text">
+            {t("You haven't set up your organization yet.")}
+          </p>
+          <button className="btn-primary-dark" onClick={() => setEditing(true)}>
+            {t("Create organization")}
+          </button>
+        </div>
       )}
     </main>
   );
