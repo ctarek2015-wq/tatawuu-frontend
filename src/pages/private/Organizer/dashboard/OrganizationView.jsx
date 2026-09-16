@@ -1,58 +1,18 @@
-const statusLabels = {
-  Draft: "Draft",
-  Pending: "Pending approval",
-  Approved: "Approved",
-  Rejected: "Rejected",
-  Removed: "Removed",
-  Completed: "Completed",
-  Cancelled: "Cancelled",
+import OrganizationContacts from "../../../../components/OrganizationContacts/OrganizationContacts.jsx";
+
+const OrganizationView = ({ organization, onEdit }) => {
+  return (
+    <section>
+      <h2>{organization.name}</h2>
+      <p>Status: {organization.status}</p>
+      {organization.reviewReason && <p>Review feedback: {organization.reviewReason}</p>}
+      {organization.logo && <img src={organization.logo} alt={`${organization.name} logo`} width="160" />}
+      <p>{organization.description}</p>
+      <p>{organization.address}, {organization.area}, {organization.governorate}, Bahrain</p>
+      <OrganizationContacts organization={organization} />
+      <button onClick={onEdit}>Edit organization</button>
+    </section>
+  );
 };
 
-export default function OrganizationView({ organization, onEdit }) {
-  const statusLabel = statusLabels[organization.status] || organization.status;
-
-  return (
-    <div>
-      <div>
-        <span>{statusLabel}</span>
-        <button type="button" onClick={onEdit}>
-          Edit
-        </button>
-      </div>
-
-      <h3>{organization.name}</h3>
-      <p>{organization.description}</p>
-
-      <dl>
-        <dt>Country</dt>
-        <dd>Bahrain</dd>
-        <dt>Governorate</dt>
-        <dd>{organization.governorate}</dd>
-        <dt>Area</dt>
-        <dd>{organization.area}</dd>
-        <dt>Address</dt>
-        <dd>{organization.address}</dd>
-        <dt>Contact email</dt>
-        <dd>{organization.contactEmail}</dd>
-        {organization.website && (
-          <>
-            <dt>Website</dt>
-            <dd>{organization.website}</dd>
-          </>
-        )}
-        {organization.contactPhone && (
-          <>
-            <dt>Phone</dt>
-            <dd>{organization.contactPhone}</dd>
-          </>
-        )}
-        {organization.whatsappNumber && (
-          <>
-            <dt>WhatsApp</dt>
-            <dd>{organization.whatsappNumber}</dd>
-          </>
-        )}
-      </dl>
-    </div>
-  );
-}
+export default OrganizationView;

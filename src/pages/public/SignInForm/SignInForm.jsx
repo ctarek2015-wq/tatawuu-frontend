@@ -1,102 +1,52 @@
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router";
-
-import { signIn } from "../../../services/authService";
-
-import { UserContext } from "../../../contexts/UserContext";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router";
+import * as authService from "../../../services/authService.js";
+import { UserContext } from "../../../contexts/UserContext.js";
 
 const SignInForm = () => {
-  const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    role: "",
-  });
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ username: "", password: "", role: "Volunteer" });
+  const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
 
-  const handleChange = (evt) => {
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+  const handleChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
-  console.log(formData);
 
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setSaving(true);
+    setError("");
     try {
-      const signedInUser = await signIn(formData);
-      setUser(signedInUser);
-      navigate("/");
+      const user = await authService.signIn(formData);
+      setUser(user);
+      if (user.role === "Organizer") navigate("/organizer/campaigns");
+      else if (user.role === "Admin") navigate("/admin");
+      else navigate("/");
     } catch (err) {
-      console.log(err.message);
+      setError(err.message);
+    } finally {
+      setSaving(false);
     }
   };
 
-  return (
-    <main>
-      <h1>Sign In</h1>
-      <form autoComplete="off" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Username:</label>
-          <input
-            type="text"
-            autoComplete="off"
-            id="username"
-            value={formData.username}
-            name="username"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            autoComplete="off"
-            id="password"
-            value={formData.password}
-            name="password"
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div>
-          <label>Role:</label>
-          <input
-            type="radio"
-            id="Admin"
-            name="role"
-            value="Admin"
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="Admin">Admin</label>
-          <input
-            type="radio"
-            id="Volunteer"
-            name="role"
-            value="Volunteer"
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="Volunteer">Volunteer</label>
-          <input
-            type="radio"
-            id="Organizer"
-            name="role"
-            value="Organizer"
-            onChange={handleChange}
-            required
-          />
-          <label htmlFor="Organizer">Organizer</label>
-        </div>
-
-        <div>
-          <button>Sign In</button>
-          <button onClick={() => navigate("/")}>Cancel</button>
-        </div>
-      </form>
-    </main>
-  );
+  return <main>
+    <h1>Sign in</h1>
+    {error && <p role="alert">{error}</p>}
+    <form onSubmit={handleSubmit}>
+      <label>Username <input name="username" autoComplete="username" value={formData.username} onChange={handleChange} required /></label>
+      <label>Password <input type="password" name="password" autoComplete="current-password" value={formData.password} onChange={handleChange} required /></label>
+      <label>Role <select name="role" value={formData.role} onChange={handleChange} required>
+        <option>Admin</option>
+        <option>Organizer</option>
+        <option>Volunteer</option>
+      </select></label>
+      <button disabled={saving}>{saving ? "Signing in..." : "Sign in"}</button>
+      <button type="button" onClick={() => navigate("/")}>Cancel</button>
+    </form>
+    <p><Link to="/sign-up">Create an account</Link></p>
+  </main>;
 };
 
 export default SignInForm;

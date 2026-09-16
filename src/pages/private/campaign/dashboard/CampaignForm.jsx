@@ -1,191 +1,188 @@
-import { useState } from "react";
-
-const categories = [
-  "Health",
-  "Education",
-  "Environment",
-  "Culture",
-  "Community Support",
-  "Food Support",
-];
-const governorates = ["Capital", "Northern", "Southern", "Muharraq", "Riffa"];
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router";
+import ImagePicker from "../../../../components/ImagePicker/ImagePicker.jsx";
+import { categories, governorates } from "../../../../utils/options.js";
+import { toDateInput, toUTC } from "../../../../utils/dates.js";
+import * as campaignService from "../../../../services/campaignService.js";
+import * as organizationService from "../../../../services/organizationService.js";
+import * as uploadService from "../../../../services/uploadService.js";
 
 const emptyCampaign = {
   title: "",
   description: "",
   category: categories[0],
   governorate: governorates[0],
+  area: "",
+  venue: "",
   address: "",
-  startDate: "",
-  endDate: "",
   startsAt: "",
   endsAt: "",
   capacity: "",
+  coverImage: "",
+  coverImagePublicId: "",
 };
 
-export default function CampaignForm({
-  initialData,
-  onCancel,
-  onSubmit,
-  submitting,
-}) {
-  const [formData, setFormData] = useState({
-    ...emptyCampaign,
-    ...initialData,
-  });
-  const [errors, setErrors] = useState({});
+const CampaignForm = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState(emptyCampaign);
+  const [campaign, setCampaign] = useState(null);
+  const [organization, setOrganization] = useState(null);
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const fetchForm = async () => {
+      setLoading(true);
+      setMessage("");
+      setFile(null);
+      setCampaign(null);
+      try {
+        const organizationData = await organizationService.showMine();
+        setOrganization(organizationData);
+        if (id) {
+          const data = await campaignService.showOwn(id);
+          setCampaign(data);
+          setFormData({
+            title: data.title,
+            description: data.description,
+            category: data.category,
+            governorate: data.governorate,
+            area: data.area,
+            venue: data.venue,
+            address: data.address,
+            startsAt: toDateInput(data.startsAt),
+            endsAt: toDateInput(data.endsAt),
+            capacity: data.capacity,
+            coverImage: data.coverImage || "",
+            coverImagePublicId: data.coverImagePublicId || "",
+          });
+        } else {
+          setCampaign(null);
+          setFormData(emptyCampaign);
+        }
+      } catch (err) {
+        setMessage(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchForm();
+  }, [id]);
 
   const handleChange = (evt) => {
-    const { name, value } = evt.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [evt.target.name]: evt.target.value });
   };
 
-  const validate = () => {
-    const next = {};
-    if (!formData.title.trim()) next.title = "Title is required.";
-    if (!formData.description.trim())
-      next.description = "Description is required.";
-    if (!formData.address.trim()) next.address = "Address is required.";
-    if (!formData.startDate) next.startDate = "Start date is required.";
-    if (!formData.endDate) next.endDate = "End date is required.";
-    if (!formData.startsAt) next.startsAt = "Start time is required.";
-    if (!formData.endsAt) next.endsAt = "End time is required.";
-    if (!formData.capacity || Number(formData.capacity) <= 0) {
-      next.capacity = "Capacity must be a positive number.";
-    }
-    setErrors(next);
-    return Object.keys(next).length === 0;
+  const handleRemoveImage = () => {
+    setFile(null);
+    setFormData({ ...formData, coverImage: "", coverImagePublicId: "" });
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
-    if (!validate()) return;
-    onSubmit({ ...formData, capacity: Number(formData.capacity) });
+    setMessage("");
+    const startsAt = toUTC(formData.startsAt);
+    const endsAt = toUTC(formData.endsAt);
+    if (new Date(startsAt) <= new Date()) {
+      setMessage("Choose a start date in the future.");
+      return;
+    }
+    if (new Date(endsAt) <= new Date(startsAt)) {
+      setMessage("The end date must be after the start date.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const data = { ...formData, startsAt, endsAt, capacity: Number(formData.capacity) };
+      if (file) {
+        const image = await uploadService.upload(file);
+        data.coverImage = image.url;
+        data.coverImagePublicId = image.publicId;
+      }
+      if (id) {
+        await campaignService.update(id, data);
+      } else {
+        await campaignService.create(data);
+      }
+      navigate("/organizer/campaigns");
+    } catch (err) {
+      setMessage(err.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
+
+  if (loading) return <p>Loading campaign form...</p>;
+  if (!organization) {
+    return <main><p>{message || "Create an organization before adding a campaign."}</p><Link to="/organizer/organization">My organization</Link></main>;
+  }
+  if (id && !campaign) return <main><p>{message}</p><Link to="/organizer/campaigns">My campaigns</Link></main>;
+  if (campaign && (new Date(campaign.startsAt) <= new Date() || ["Cancelled", "Completed", "Removed"].includes(campaign.status))) {
+    return <main><p>This campaign can no longer be edited.</p><Link to="/organizer/campaigns">My campaigns</Link></main>;
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Title
-        <input name="title" value={formData.title} onChange={handleChange} />
-        {errors.title && <span>{errors.title}</span>}
-      </label>
-
-      <label>
-        Description
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-        {errors.description && <span>{errors.description}</span>}
-      </label>
-
-      <label>
-        Category
-        <select
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-        >
-          {categories.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
-      </label>
-
+    <main>
+      <h1>{id ? "Edit campaign" : "New campaign"}</h1>
       <p>Country: Bahrain</p>
-
-      <label>
-        Governorate
-        <select
-          name="governorate"
-          value={formData.governorate}
-          onChange={handleChange}
-        >
-          {governorates.map((g) => (
-            <option key={g} value={g}>
-              {g}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <label>
-        Address
-        <input
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-        />
-        {errors.address && <span>{errors.address}</span>}
-      </label>
-
-      <label>
-        Start date
-        <input
-          type="date"
-          name="startDate"
-          value={formData.startDate}
-          onChange={handleChange}
-        />
-        {errors.startDate && <span>{errors.startDate}</span>}
-      </label>
-
-      <label>
-        End date
-        <input
-          type="date"
-          name="endDate"
-          value={formData.endDate}
-          onChange={handleChange}
-        />
-        {errors.endDate && <span>{errors.endDate}</span>}
-      </label>
-
-      <label>
-        Starts at
-        <input
-          type="datetime-local"
-          name="startsAt"
-          value={formData.startsAt}
-          onChange={handleChange}
-        />
-        {errors.startsAt && <span>{errors.startsAt}</span>}
-      </label>
-
-      <label>
-        Ends at
-        <input
-          type="datetime-local"
-          name="endsAt"
-          value={formData.endsAt}
-          onChange={handleChange}
-        />
-        {errors.endsAt && <span>{errors.endsAt}</span>}
-      </label>
-
-      <label>
-        Capacity
-        <input
-          type="number"
-          name="capacity"
-          value={formData.capacity}
-          onChange={handleChange}
-        />
-        {errors.capacity && <span>{errors.capacity}</span>}
-      </label>
-
-      <div>
-        <button type="submit" disabled={submitting}>
-          {submitting ? "Saving..." : "Save campaign"}
-        </button>
-        <button type="button" onClick={onCancel} disabled={submitting}>
-          Cancel
-        </button>
-      </div>
-    </form>
+      <p>All dates and times are in Bahrain time.</p>
+      <p>{message}</p>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Title
+          <input required name="title" value={formData.title} onChange={handleChange} />
+        </label>
+        <label>
+          Description
+          <textarea required name="description" value={formData.description} onChange={handleChange} />
+        </label>
+        <label>
+          Category
+          <select name="category" value={formData.category} onChange={handleChange}>
+            {categories.map((category) => <option key={category} value={category}>{category}</option>)}
+          </select>
+        </label>
+        <label>
+          Governorate
+          <select name="governorate" value={formData.governorate} onChange={handleChange}>
+            {governorates.map((governorate) => <option key={governorate} value={governorate}>{governorate}</option>)}
+          </select>
+        </label>
+        <label>
+          Area
+          <input required name="area" value={formData.area} onChange={handleChange} />
+        </label>
+        <label>
+          Venue
+          <input required name="venue" value={formData.venue} onChange={handleChange} />
+        </label>
+        <label>
+          Address
+          <input required name="address" value={formData.address} onChange={handleChange} />
+        </label>
+        <label>
+          Starts at (Bahrain time)
+          <input required type="datetime-local" name="startsAt" value={formData.startsAt} onChange={handleChange} />
+        </label>
+        <label>
+          Ends at (Bahrain time)
+          <input required type="datetime-local" name="endsAt" value={formData.endsAt} onChange={handleChange} />
+        </label>
+        <label>
+          Capacity
+          <input required min="1" step="1" type="number" name="capacity" value={formData.capacity} onChange={handleChange} />
+        </label>
+        <ImagePicker label="Campaign cover" url={formData.coverImage} onFileChange={setFile} onRemove={handleRemoveImage} />
+        {!id && <p>Your campaign is saved as a draft. Submit it for review from My campaigns.</p>}
+        {campaign?.status === "Approved" && <p>Editing this campaign sends it for review again.</p>}
+        <button disabled={submitting} type="submit">{submitting ? "Saving..." : "Save campaign"}</button>
+        <Link to="/organizer/campaigns">Cancel</Link>
+      </form>
+    </main>
   );
-}
+};
+
+export default CampaignForm;

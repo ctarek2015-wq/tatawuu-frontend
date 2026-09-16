@@ -1,13 +1,14 @@
-import OrganizationProfile from "./OrganizationProfile";
-import CampaignManager from "../../campaign/dashboard/CampaignManager";
+import { Link } from "react-router";
 
 const OrganizerDashboard = () => {
   return (
-    <div>
-      <h1>Organizer Dashboard</h1>
-      <OrganizationProfile />
-      <CampaignManager />
-    </div>
+    <main>
+      <h1>Organizer dashboard</h1>
+      <ul>
+        <li><Link to="/organizer/organization">My organization</Link></li>
+        <li><Link to="/organizer/campaigns">My campaigns</Link></li>
+      </ul>
+    </main>
   );
 };
 
