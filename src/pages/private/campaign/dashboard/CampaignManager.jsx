@@ -1,132 +1,112 @@
-import { useState, useEffect } from "react";
-import CampaignForm from "./CampaignForm";
-import {
-  showMine,
-  create,
-  update,
-  remove,
-} from "../../../../services/campaignService";
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
+import { formatDateTime } from "../../../../utils/dates.js";
+import * as campaignService from "../../../../services/campaignService.js";
+import * as organizationService from "../../../../services/organizationService.js";
 
-const toDateInput = (iso) => (iso ? iso.slice(0, 10) : "");
-const toDateTimeInput = (iso) => (iso ? iso.slice(0, 16) : "");
-
-const toFormValues = (campaign) => ({
-  ...campaign,
-  startDate: toDateInput(campaign.startDate),
-  endDate: toDateInput(campaign.endDate),
-  startsAt: toDateTimeInput(campaign.startsAt),
-  endsAt: toDateTimeInput(campaign.endsAt),
-});
-
-export default function CampaignManager() {
+const CampaignManager = () => {
   const [campaigns, setCampaigns] = useState([]);
-  const [mode, setMode] = useState("list");
-  const [selected, setSelected] = useState(null);
+  const [organization, setOrganization] = useState(null);
+  const [status, setStatus] = useState("All");
   const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [busy, setBusy] = useState(false);
 
-  const loadCampaigns = async () => {
-    setLoading(true);
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      try {
+        const [campaignData, organizationData] = await Promise.all([
+          campaignService.showMine(),
+          organizationService.showMine(),
+        ]);
+        setCampaigns(campaignData);
+        setOrganization(organizationData);
+      } catch (err) {
+        setMessage(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCampaigns();
+  }, []);
+
+  const handleSubmit = async (id) => {
+    setBusy(true);
+    setMessage("");
     try {
-      const data = await showMine();
-      setCampaigns(data || []);
+      const updated = await campaignService.submit(id);
+      setCampaigns(campaigns.map((campaign) => campaign._id === id ? updated : campaign));
     } catch (err) {
-      setError("Couldn't load your campaigns.");
+      setMessage(err.message);
     } finally {
-      setLoading(false);
+      setBusy(false);
     }
   };
 
-  useEffect(() => {
-    loadCampaigns();
-  }, []);
-
-  const handleCreate = () => {
-    setSelected(null);
-    setMode("create");
-  };
-
-  const handleEdit = (campaign) => {
-    setSelected(campaign);
-    setMode("edit");
-  };
-
-  const handleCancel = () => {
-    setSelected(null);
-    setMode("list");
+  const handleCancel = async (id) => {
+    setBusy(true);
+    setMessage("");
+    try {
+      const updated = await campaignService.cancel(id);
+      setCampaigns(campaigns.map((campaign) => campaign._id === id ? updated : campaign));
+    } catch (err) {
+      setMessage(err.message);
+    } finally {
+      setBusy(false);
+    }
   };
 
   const handleDelete = async (id) => {
+    setBusy(true);
+    setMessage("");
     try {
-      await remove(id);
-      setCampaigns((prev) => prev.filter((c) => c._id !== id));
+      await campaignService.remove(id);
+      setCampaigns(campaigns.filter((campaign) => campaign._id !== id));
     } catch (err) {
-      setError("Couldn't delete that campaign.");
-    }
-  };
-
-  const handleSubmit = async (formData) => {
-    setSubmitting(true);
-    setError("");
-    try {
-      if (selected) {
-        const updated = await update(selected._id, formData);
-        setCampaigns((prev) =>
-          prev.map((c) => (c._id === updated._id ? updated : c)),
-        );
-      } else {
-        const created = await create(formData);
-        setCampaigns((prev) => [...prev, created]);
-      }
-      setMode("list");
-      setSelected(null);
-    } catch (err) {
-      setError("Couldn't save that campaign.");
+      setMessage(err.message);
     } finally {
-      setSubmitting(false);
+      setBusy(false);
     }
   };
 
-  if (loading) {
-    return <p>Loading campaigns...</p>;
-  }
-
-  if (mode === "create" || mode === "edit") {
-    return (
-      <div>
-        <h2>{mode === "edit" ? "Edit campaign" : "Create campaign"}</h2>
-        {error && <p>{error}</p>}
-        <CampaignForm
-          initialData={selected ? toFormValues(selected) : undefined}
-          onCancel={handleCancel}
-          onSubmit={handleSubmit}
-          submitting={submitting}
-        />
-      </div>
-    );
-  }
+  if (loading) return <p>Loading campaigns...</p>;
+  const filteredCampaigns = campaigns.filter((campaign) => status === "All" || campaign.status === status);
 
   return (
-    <div>
-      <h2>My campaigns</h2>
-      {error && <p>{error}</p>}
-      <button type="button" onClick={handleCreate}>
-        Create campaign
-      </button>
-      <ul>
-        {campaigns.map((c) => (
-          <li key={c._id}>
-            {c.title} - {c.status}
-            <button type="button" onClick={() => handleEdit(c)}>
-              Edit
-            </button>
-            <button type="button" onClick={() => handleDelete(c._id)}>
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <main>
+      <h1>My campaigns</h1>
+      <Link to="/organizer">Organizer dashboard</Link>
+      <p>{message}</p>
+      {organization ? <Link to="/organizer/campaigns/new">Create campaign</Link> : <Link to="/organizer/organization">Create your organization first</Link>}
+      {organization && organization.status !== "Approved" && <p>Your organization needs approval before you can submit campaigns.</p>}
+      <label>
+        Status
+        <select value={status} onChange={(evt) => setStatus(evt.target.value)}>
+          {["All", "Draft", "Pending", "Approved", "Rejected", "Removed", "Completed", "Cancelled"].map((status) => <option key={status} value={status}>{status}</option>)}
+        </select>
+      </label>
+      {filteredCampaigns.length === 0 && <p>No campaigns match this status.</p>}
+      {filteredCampaigns.map((campaign) => {
+        const started = new Date(campaign.startsAt) <= new Date();
+        const terminal = ["Cancelled", "Completed", "Removed"].includes(campaign.status);
+        const canSubmit = !started && ["Draft", "Rejected"].includes(campaign.status) && organization?.status === "Approved";
+        return (
+          <article key={campaign._id}>
+            <h2>{campaign.title}</h2>
+            <p>Status: {campaign.status}</p>
+            <p>{formatDateTime(campaign.startsAt)} to {formatDateTime(campaign.endsAt)} (Bahrain time)</p>
+            <p>{campaign.registeredCount} participants; {campaign.availablePlaces} places available</p>
+            {campaign.reviewReason && <p>Review feedback: {campaign.reviewReason}</p>}
+            {!started && !terminal && <Link to={`/organizer/campaigns/${campaign._id}/edit`}>Edit</Link>}
+            <Link to={`/organizer/campaigns/${campaign._id}/participants`}>Participants and certificates</Link>
+            {canSubmit && <button disabled={busy} onClick={() => handleSubmit(campaign._id)}>Submit for review</button>}
+            {!campaign.wasPublished && campaign.participants.length === 0 && <button disabled={busy} onClick={() => handleDelete(campaign._id)}>Delete</button>}
+            {campaign.wasPublished && !terminal && <button disabled={busy} onClick={() => handleCancel(campaign._id)}>Cancel campaign</button>}
+          </article>
+        );
+      })}
+    </main>
   );
-}
+};
+
+export default CampaignManager;
