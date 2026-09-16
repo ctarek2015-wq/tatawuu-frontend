@@ -21,7 +21,7 @@ const CampaignsPage = () => {
   const { t, tError } = useContext(LanguageContext);
   const [campaigns, setCampaigns] = useState([]);
   const [filters, setFilters] = useState(emptyFilters);
-  const [showFilters, setShowFilters] = useState(false);
+  const [showMoreFilters, setShowMoreFilters] = useState(false);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -72,6 +72,7 @@ const CampaignsPage = () => {
     filters.category ||
     filters.from ||
     filters.to;
+  const hasMoreFilters = filters.area || filters.from || filters.to;
 
   return (
     <>
@@ -90,155 +91,120 @@ const CampaignsPage = () => {
 
         {/* Filter bar */}
         <div className="filter-bar">
-          <div className="filter-bar-top">
+          <div className="filter-bar-inline">
             <label className="field field-search">
-              <span className="field-label">{t("Search")}</span>
+              <span className="field-label">
+                {t("Activity or Organization")}
+              </span>
               <input
                 name="search"
                 value={filters.search}
                 onChange={handleChange}
-                placeholder={t("Activity or organization")}
+                placeholder={t("e.g. Beach Cleanup or Red Crescent")}
               />
             </label>
 
-            <div className="filter-toggle-wrap">
-              <button
-                type="button"
-                className={`filter-toggle${showFilters ? " is-open" : ""}`}
-                aria-expanded={showFilters}
-                aria-controls="campaign-filters"
-                onClick={() => setShowFilters(!showFilters)}
+            <label className="field field-category">
+              <span className="field-label">{t("Category")}</span>
+              <select
+                name="category"
+                value={filters.category}
+                onChange={handleChange}
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  width="16"
-                  height="16"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                >
-                  <line x1="4" y1="6" x2="20" y2="6" />
-                  <circle
-                    cx="9"
-                    cy="6"
-                    r="2"
-                    fill="currentColor"
-                    stroke="none"
-                  />
-                  <line x1="4" y1="12" x2="20" y2="12" />
-                  <circle
-                    cx="15"
-                    cy="12"
-                    r="2"
-                    fill="currentColor"
-                    stroke="none"
-                  />
-                  <line x1="4" y1="18" x2="20" y2="18" />
-                  <circle
-                    cx="11"
-                    cy="18"
-                    r="2"
-                    fill="currentColor"
-                    stroke="none"
-                  />
-                </svg>
-                {t("Filters")}
-                {hasFilters && <span className="filter-toggle-dot" />}
-              </button>
+                <option value="">{t("Any category")}</option>
+                {categories.map((c) => (
+                  <option key={c} value={c}>
+                    {t(c)}
+                  </option>
+                ))}
+              </select>
+            </label>
 
-              {showFilters && (
-                <div id="campaign-filters" className="filter-panel">
-                  <label className="field">
-                    <span className="field-label">{t("Governorate")}</span>
-                    <select
-                      name="governorate"
-                      value={filters.governorate}
-                      onChange={handleChange}
-                    >
-                      <option value="">{t("All governorates")}</option>
-                      {governorates.map((g) => (
-                        <option key={g} value={g}>
-                          {t(g)}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
+            <label className="field field-governorate">
+              <span className="field-label">{t("Governorate")}</span>
+              <select
+                name="governorate"
+                value={filters.governorate}
+                onChange={handleChange}
+              >
+                <option value="">{t("Any governorate")}</option>
+                {governorates.map((g) => (
+                  <option key={g} value={g}>
+                    {t(g)}
+                  </option>
+                ))}
+              </select>
+            </label>
 
-                  <label className="field">
-                    <span className="field-label">{t("Area")}</span>
-                    <input
-                      name="area"
-                      value={filters.area}
-                      onChange={handleChange}
-                    />
-                  </label>
-
-                  <label className="field">
-                    <span className="field-label">{t("Category")}</span>
-                    <select
-                      name="category"
-                      value={filters.category}
-                      onChange={handleChange}
-                    >
-                      <option value="">{t("All categories")}</option>
-                      {categories.map((c) => (
-                        <option key={c} value={c}>
-                          {t(c)}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-
-                  <label className="field">
-                    <span className="field-label">{t("From date")}</span>
-                    <input
-                      type="date"
-                      dir="ltr"
-                      name="from"
-                      value={filters.from}
-                      onChange={handleChange}
-                    />
-                  </label>
-
-                  <label className="field">
-                    <span className="field-label">{t("To date")}</span>
-                    <input
-                      type="date"
-                      dir="ltr"
-                      name="to"
-                      value={filters.to}
-                      onChange={handleChange}
-                    />
-                  </label>
-
-                  <div className="filter-panel-actions">
-                    <button
-                      type="button"
-                      className="btn-link"
-                      onClick={() => {
-                        setFilters(emptyFilters);
-                        setPage(1);
-                      }}
-                    >
-                      {t("Clear filters")}
-                    </button>
-                    <button
-                      type="button"
-                      className="btn-soft btn-sm"
-                      onClick={() => setShowFilters(false)}
-                    >
-                      {t("Done")}
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {hasFilters && (
-              <span className="filter-chip">{t("Filters applied")}</span>
-            )}
+            <button
+              type="button"
+              className="btn-search"
+              onClick={() => setPage(1)}
+            >
+              {t("Search")}
+            </button>
           </div>
+
+          <button
+            type="button"
+            className="filter-more-toggle"
+            onClick={() => setShowMoreFilters(!showMoreFilters)}
+          >
+            {showMoreFilters ? t("Hide more filters") : t("More filters")}
+            {hasMoreFilters && !showMoreFilters ? " •" : ""}
+          </button>
+
+          {showMoreFilters && (
+            <div className="filter-panel-inline">
+              <label className="field">
+                <span className="field-label">{t("Area")}</span>
+                <input
+                  name="area"
+                  value={filters.area}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="field">
+                <span className="field-label">{t("From date")}</span>
+                <input
+                  type="date"
+                  dir="ltr"
+                  name="from"
+                  value={filters.from}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="field">
+                <span className="field-label">{t("To date")}</span>
+                <input
+                  type="date"
+                  dir="ltr"
+                  name="to"
+                  value={filters.to}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <div className="filter-panel-actions">
+                <button
+                  type="button"
+                  className="btn-link"
+                  onClick={() => {
+                    setFilters(emptyFilters);
+                    setPage(1);
+                  }}
+                >
+                  {t("Clear filters")}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {hasFilters && (
+            <span className="filter-chip">{t("Filters applied")}</span>
+          )}
         </div>
 
         {/* Results */}

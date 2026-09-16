@@ -3113,7 +3113,6 @@ html[dir="rtl"] .campaign-card-places {
 /* ==========================================================================
    CAMPAIGNS PAGE (standalone filter + grid page)
    ========================================================================== */
-
 .campaigns-page {
   min-height: 100vh;
   background: var(--warm-white);
@@ -3141,13 +3140,136 @@ html[dir="rtl"] .campaign-card-places {
 }
 
 .campaigns-page .filter-bar {
-  margin-bottom: 2.2rem;
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto 2.2rem;
 }
 
 .campaigns-page-results {
   max-width: 1080px;
   width: 100%;
   margin: 0 auto;
+}
+
+/* ---- New inline filter bar ---- */
+.filter-bar-inline {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-bar-inline .field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.filter-bar-inline .field-search {
+  flex: 1 1 260px;
+}
+
+.filter-bar-inline .field-category,
+.filter-bar-inline .field-governorate {
+  flex: 0 1 180px;
+}
+
+.filter-bar-inline .field-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--brown, #3d2b1f);
+}
+
+.filter-bar-inline input,
+.filter-bar-inline select {
+  height: 44px;
+  padding: 0 0.9rem;
+  border: 1px solid var(--beige-darker);
+  border-radius: 8px;
+  background: var(--warm-white);
+  font-size: 0.95rem;
+  width: 100%;
+  color: inherit;
+}
+
+.filter-bar-inline input::placeholder {
+  color: var(--beige-darker);
+}
+
+.filter-bar-inline .btn-search {
+  height: 44px;
+  padding: 0 1.6rem;
+  border-radius: 8px;
+  border: 1px solid #2b2116;
+  background: #6d0707;
+  color: #fff9f3;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 0 #2b2116;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.filter-bar-inline .btn-search:hover {
+  transform: translateY(-1px);
+}
+
+.filter-bar-inline .btn-search:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #2b2116;
+}
+
+/* More filters (area / dates) */
+.filter-more-toggle {
+  margin-top: 0.6rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--brown, #3d2b1f);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.filter-panel-inline {
+  position: static;
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.filter-panel-inline .field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 0 1 180px;
+}
+
+.filter-panel-inline input {
+  height: 44px;
+  padding: 0 0.9rem;
+  border: 1px solid var(--beige-darker);
+  border-radius: 8px;
+  background: var(--warm-white);
+  font-size: 0.95rem;
+}
+.filter-panel-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.filter-chip {
+  margin-top: 0.6rem;
+  display: inline-block;
+  font-size: 0.8rem;
+  color: var(--brown, #3d2b1f);
+  opacity: 0.7;
 }
 
 /* RTL alignment */
@@ -3171,5 +3293,14 @@ html[dir="rtl"] .campaigns-page-header .sec-desc {
   .campaigns-page-header {
     margin-bottom: 1.6rem;
     padding-bottom: 1.4rem;
+  }
+
+  .filter-bar-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-bar-inline .btn-search {
+    width: 100%;
   }
 }
