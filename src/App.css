@@ -998,3 +998,211 @@ button:focus-visible {
     grid-column: auto;
   }
 }
+/* ==========================================================================
+   ORGANIZATION LIST
+   ========================================================================== */
+
+.org-list-page {
+  min-height: 100vh;
+  background: var(--warm-white);
+  /* nav-height + extra breathing room fixes the content-hidden-under-navbar issue */
+  padding: calc(var(--nav-height) + 3rem) 2.5rem 5rem;
+}
+
+.org-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.org-card {
+  background: var(--beige);
+  border: 1px solid var(--beige-darker);
+  border-radius: 12px;
+  overflow: hidden;
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+.org-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(141, 0, 0, 0.12);
+}
+
+.org-card-img-wrap {
+  height: 150px;
+  width: 100%;
+  background: var(--beige-darker);
+}
+
+.org-card-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.org-card-img-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  background: var(--beige-dark);
+}
+
+.org-card-body {
+  padding: 1.1rem 1.2rem 1.3rem;
+}
+
+.org-card-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+  line-height: 1.35;
+}
+
+.org-card-title a {
+  color: var(--text-dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.org-card-title a:hover {
+  color: var(--burgundy);
+}
+
+.org-card-meta {
+  font-size: 0.82rem;
+  color: var(--text-mid);
+  font-weight: 300;
+}
+
+@media (max-width: 600px) {
+  .org-list-page {
+    padding: calc(var(--nav-height) + 2rem) 1.5rem 3.5rem;
+  }
+  .org-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ==========================================================================
+   AUTH FORMS (Sign in / Sign up)
+   ========================================================================== */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: var(--beige);
+  padding: calc(var(--nav-height) + 3rem) 1.5rem 4rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 14px;
+  padding: 2.4rem 2.2rem;
+  box-shadow: 0 14px 34px rgba(44, 24, 16, 0.08);
+}
+
+.auth-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: var(--text-dark);
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* reuse .field / .field-label from the filter bar, extend for stacked labels */
+.auth-form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.auth-form .field input,
+.auth-form .field select {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--text-dark);
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 6px;
+  padding: 0.7rem 0.85rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.auth-form .field input::placeholder {
+  color: var(--text-light);
+}
+
+.auth-form .field input:focus,
+.auth-form .field select:focus {
+  outline: none;
+  border-color: var(--burgundy);
+  box-shadow: 0 0 0 3px rgba(141, 0, 0, 0.09);
+}
+
+.auth-form-actions {
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 0.6rem;
+}
+
+.auth-form-actions .btn-primary-dark,
+.auth-form-actions .btn-soft {
+  flex: 1;
+  text-align: center;
+}
+
+.auth-form-actions .btn-primary-dark:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 1.6rem;
+  font-size: 0.88rem;
+  color: var(--text-mid);
+}
+
+.auth-switch a {
+  color: var(--burgundy);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.auth-switch a:hover {
+  border-bottom-color: var(--burgundy);
+}
+
+@media (max-width: 600px) {
+  .auth-page {
+    padding: calc(var(--nav-height) + 2rem) 1rem 3rem;
+  }
+  .auth-card {
+    padding: 1.8rem 1.4rem;
+  }
+  .auth-form-actions {
+    flex-direction: column;
+  }
+}
