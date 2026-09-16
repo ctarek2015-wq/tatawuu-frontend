@@ -1,6 +1,7 @@
-const formatDateTime = (value) => {
-  return new Date(value).toLocaleString("en-GB", {
+const formatDateTime = (value, language = "en") => {
+  return new Date(value).toLocaleString(language === "ar" ? "ar-BH" : "en-GB", {
     timeZone: "Asia/Bahrain",
+    calendar: "gregory",
     dateStyle: "medium",
     timeStyle: "short",
   });
