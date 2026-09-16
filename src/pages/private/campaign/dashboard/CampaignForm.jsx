@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { LanguageContext } from "../../../../contexts/LanguageContext.js";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
+import MapPicker from "../../../../components/MapPicker/MapPicker.jsx";
 import ImagePicker from "../../../../components/ImagePicker/ImagePicker.jsx";
 import { categories, governorates } from "../../../../utils/options.js";
 import { toDateInput, toUTC } from "../../../../utils/dates.js";
@@ -15,6 +17,8 @@ const emptyCampaign = {
   area: "",
   venue: "",
   address: "",
+  latitude: null,
+  longitude: null,
   startsAt: "",
   endsAt: "",
   capacity: "",
@@ -23,6 +27,7 @@ const emptyCampaign = {
 };
 
 const CampaignForm = () => {
+  const { t, tError } = useContext(LanguageContext);
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState(emptyCampaign);
@@ -53,6 +58,8 @@ const CampaignForm = () => {
             area: data.area,
             venue: data.venue,
             address: data.address,
+            latitude: data.latitude ?? null,
+            longitude: data.longitude ?? null,
             startsAt: toDateInput(data.startsAt),
             endsAt: toDateInput(data.endsAt),
             capacity: data.capacity,
@@ -115,71 +122,75 @@ const CampaignForm = () => {
     }
   };
 
-  if (loading) return <p>Loading campaign form...</p>;
+  if (loading) return <p>{t("Loading campaign form...")}</p>;
   if (!organization) {
-    return <main><p>{message || "Create an organization before adding a campaign."}</p><Link to="/organizer/organization">My organization</Link></main>;
+    return <main><p>{tError(message || "Create an organization before adding a campaign.")}</p><Link to="/organizer/organization">{t("My organization")}</Link></main>;
   }
-  if (id && !campaign) return <main><p>{message}</p><Link to="/organizer/campaigns">My campaigns</Link></main>;
+  if (id && !campaign) return <main><p>{tError(message)}</p><Link to="/organizer/campaigns">{t("My campaigns")}</Link></main>;
   if (campaign && (new Date(campaign.startsAt) <= new Date() || ["Cancelled", "Completed", "Removed"].includes(campaign.status))) {
-    return <main><p>This campaign can no longer be edited.</p><Link to="/organizer/campaigns">My campaigns</Link></main>;
+    return <main><p>{t("This campaign can no longer be edited.")}</p><Link to="/organizer/campaigns">{t("My campaigns")}</Link></main>;
   }
 
   return (
     <main>
-      <h1>{id ? "Edit campaign" : "New campaign"}</h1>
-      <p>Country: Bahrain</p>
-      <p>All dates and times are in Bahrain time.</p>
-      <p>{message}</p>
+      <h1>{t(id ? "Edit campaign" : "New campaign")}</h1>
+      <p>{t("Country: Bahrain")}</p>
+      <p>{t("All dates and times are in Bahrain time.")}</p>
+      <p>{tError(message)}</p>
       <form onSubmit={handleSubmit}>
         <label>
-          Title
-          <input required name="title" value={formData.title} onChange={handleChange} />
+          {t("Title")}
+          <input required dir="auto" name="title" value={formData.title} onChange={handleChange} />
         </label>
         <label>
-          Description
-          <textarea required name="description" value={formData.description} onChange={handleChange} />
+          {t("Description")}
+          <textarea required dir="auto" name="description" value={formData.description} onChange={handleChange} />
         </label>
         <label>
-          Category
+          {t("Category")}
           <select name="category" value={formData.category} onChange={handleChange}>
-            {categories.map((category) => <option key={category} value={category}>{category}</option>)}
+            {categories.map((category) => <option key={category} value={category}>{t(category)}</option>)}
           </select>
         </label>
         <label>
-          Governorate
+          {t("Governorate")}
           <select name="governorate" value={formData.governorate} onChange={handleChange}>
-            {governorates.map((governorate) => <option key={governorate} value={governorate}>{governorate}</option>)}
+            {governorates.map((governorate) => <option key={governorate} value={governorate}>{t(governorate)}</option>)}
           </select>
         </label>
         <label>
-          Area
-          <input required name="area" value={formData.area} onChange={handleChange} />
+          {t("Area")}
+          <input required dir="auto" name="area" value={formData.area} onChange={handleChange} />
         </label>
         <label>
-          Venue
-          <input required name="venue" value={formData.venue} onChange={handleChange} />
+          {t("Venue")}
+          <input required dir="auto" name="venue" value={formData.venue} onChange={handleChange} />
         </label>
         <label>
-          Address
-          <input required name="address" value={formData.address} onChange={handleChange} />
+          {t("Address")}
+          <input required dir="auto" name="address" value={formData.address} onChange={handleChange} />
         </label>
         <label>
-          Starts at (Bahrain time)
-          <input required type="datetime-local" name="startsAt" value={formData.startsAt} onChange={handleChange} />
+          {t("Starts at (Bahrain time)")}
+          <input required type="datetime-local" dir="ltr" name="startsAt" value={formData.startsAt} onChange={handleChange} />
         </label>
         <label>
-          Ends at (Bahrain time)
-          <input required type="datetime-local" name="endsAt" value={formData.endsAt} onChange={handleChange} />
+          {t("Ends at (Bahrain time)")}
+          <input required type="datetime-local" dir="ltr" name="endsAt" value={formData.endsAt} onChange={handleChange} />
         </label>
         <label>
-          Capacity
-          <input required min="1" step="1" type="number" name="capacity" value={formData.capacity} onChange={handleChange} />
+          {t("Capacity")}
+          <input required min="1" step="1" type="number" dir="ltr" name="capacity" value={formData.capacity} onChange={handleChange} />
         </label>
-        <ImagePicker label="Campaign cover" url={formData.coverImage} onFileChange={setFile} onRemove={handleRemoveImage} />
-        {!id && <p>Your campaign is saved as a draft. Submit it for review from My campaigns.</p>}
-        {campaign?.status === "Approved" && <p>Editing this campaign sends it for review again.</p>}
-        <button disabled={submitting} type="submit">{submitting ? "Saving..." : "Save campaign"}</button>
-        <Link to="/organizer/campaigns">Cancel</Link>
+        {Number.isFinite(organization.latitude) && Number.isFinite(organization.longitude) && <button type="button" onClick={() => setFormData({ ...formData, latitude: organization.latitude, longitude: organization.longitude })}>
+          {t("Use organization location")}
+        </button>}
+        <MapPicker latitude={formData.latitude} longitude={formData.longitude} onChange={({ latitude, longitude }) => setFormData({ ...formData, latitude, longitude })} />
+        <ImagePicker label={t("Campaign cover")} url={formData.coverImage} onFileChange={setFile} onRemove={handleRemoveImage} />
+        {!id && <p>{t("Your campaign is saved as a draft. Submit it for review from My campaigns.")}</p>}
+        {campaign?.status === "Approved" && <p>{t("Editing this campaign sends it for review again.")}</p>}
+        <button disabled={submitting} type="submit">{t(submitting ? "Saving..." : "Save campaign")}</button>
+        <Link to="/organizer/campaigns">{t("Cancel")}</Link>
       </form>
     </main>
   );

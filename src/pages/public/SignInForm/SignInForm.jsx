@@ -2,9 +2,11 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import * as authService from "../../../services/authService.js";
 import { UserContext } from "../../../contexts/UserContext.js";
+import { LanguageContext } from "../../../contexts/LanguageContext.js";
 
 const SignInForm = () => {
   const { setUser } = useContext(UserContext);
+  const { t, tError } = useContext(LanguageContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ username: "", password: "", role: "Volunteer" });
   const [error, setError] = useState("");
@@ -32,20 +34,20 @@ const SignInForm = () => {
   };
 
   return <main>
-    <h1>Sign in</h1>
-    {error && <p role="alert">{error}</p>}
+    <h1>{t("Sign in")}</h1>
+    {error && <p role="alert">{tError(error)}</p>}
     <form onSubmit={handleSubmit}>
-      <label>Username <input name="username" autoComplete="username" value={formData.username} onChange={handleChange} required /></label>
-      <label>Password <input type="password" name="password" autoComplete="current-password" value={formData.password} onChange={handleChange} required /></label>
-      <label>Role <select name="role" value={formData.role} onChange={handleChange} required>
-        <option>Admin</option>
-        <option>Organizer</option>
-        <option>Volunteer</option>
+      <label>{t("Username")} <input name="username" dir="auto" autoComplete="username" value={formData.username} onChange={handleChange} required /></label>
+      <label>{t("Password")} <input type="password" name="password" dir="ltr" autoComplete="current-password" value={formData.password} onChange={handleChange} required /></label>
+      <label>{t("Role")} <select name="role" value={formData.role} onChange={handleChange} required>
+        <option value="Admin">{t("Admin")}</option>
+        <option value="Organizer">{t("Organizer")}</option>
+        <option value="Volunteer">{t("Volunteer")}</option>
       </select></label>
-      <button disabled={saving}>{saving ? "Signing in..." : "Sign in"}</button>
-      <button type="button" onClick={() => navigate("/")}>Cancel</button>
+      <button disabled={saving}>{t(saving ? "Signing in..." : "Sign in")}</button>
+      <button type="button" onClick={() => navigate("/")}>{t("Cancel")}</button>
     </form>
-    <p><Link to="/sign-up">Create an account</Link></p>
+    <p><Link to="/sign-up">{t("Create an account")}</Link></p>
   </main>;
 };
 

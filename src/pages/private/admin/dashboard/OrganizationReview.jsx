@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import LocationMap from "../../../../components/LocationMap/LocationMap.jsx";
+import { LanguageContext } from "../../../../contexts/LanguageContext.js";
+import { useContext, useEffect, useState } from "react";
 import OrganizationContacts from "../../../../components/OrganizationContacts/OrganizationContacts.jsx";
 import * as organizationService from "../../../../services/organizationService.js";
 
 const OrganizationReviewItem = ({ organization, busy, onReview }) => {
+  const { t, tError } = useContext(LanguageContext);
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
 
@@ -17,27 +20,28 @@ const OrganizationReviewItem = ({ organization, busy, onReview }) => {
 
   return (
     <article>
-      <h3>{organization.name}</h3>
-      <p>Status: {organization.status}</p>
-      {organization.logo && <img src={organization.logo} alt={`${organization.name} logo`} width="160" />}
-      <p>{organization.description}</p>
-      <p>{organization.address}, {organization.area}, {organization.governorate}, Bahrain</p>
+      <h3><bdi>{organization.name}</bdi></h3>
+      <p>{t("Status")}: {t(organization.status)}</p>
+      {organization.logo && <img src={organization.logo} alt={t("{name} logo", { name: organization.name })} width="160" />}
+      <p dir="auto">{organization.description}</p>
+      <p>{organization.address}, {organization.area}, {t(organization.governorate)}, {t("Bahrain")}</p>
+      <LocationMap location={organization} />
       <OrganizationContacts organization={organization} />
-      {organization.reviewReason && <p>Previous feedback: {organization.reviewReason}</p>}
+      {organization.reviewReason && <p>{t("Previous feedback")}: <bdi>{organization.reviewReason}</bdi></p>}
       {["Pending", "Approved"].includes(organization.status) && (
         <>
           <label>
-            Review feedback
-            <textarea value={reason} onChange={(evt) => setReason(evt.target.value)} />
+          {t("Review feedback")}
+          <textarea value={reason} onChange={(evt) => setReason(evt.target.value)} />
           </label>
-          <p>{message}</p>
+          <p>{tError(message)}</p>
           {organization.status === "Pending" && (
             <>
-              <button disabled={busy} onClick={() => handleReview("Approved")}>Approve</button>
-              <button disabled={busy} onClick={() => handleReview("Rejected")}>Reject</button>
+              <button disabled={busy} onClick={() => handleReview("Approved")}>{t("Approve")}</button>
+              <button disabled={busy} onClick={() => handleReview("Rejected")}>{t("Reject")}</button>
             </>
           )}
-          {organization.status === "Approved" && <button disabled={busy} onClick={() => handleReview("Removed")}>Remove</button>}
+          {organization.status === "Approved" && <button disabled={busy} onClick={() => handleReview("Removed")}>{t("Remove")}</button>}
         </>
       )}
     </article>
@@ -45,6 +49,7 @@ const OrganizationReviewItem = ({ organization, busy, onReview }) => {
 };
 
 const OrganizationReview = () => {
+  const { t, tError } = useContext(LanguageContext);
   const [organizations, setOrganizations] = useState([]);
   const [status, setStatus] = useState("Pending");
   const [loading, setLoading] = useState(true);
@@ -82,15 +87,15 @@ const OrganizationReview = () => {
 
   return (
     <section>
-      <h2>Review organizations</h2>
+      <h2>{t("Review organizations")}</h2>
       <label>
-        Status
-        <select value={status} onChange={(evt) => setStatus(evt.target.value)}>
-          {["Pending", "Approved", "Rejected", "Removed", "All"].map((status) => <option key={status} value={status}>{status}</option>)}
+          {t("Status")}
+          <select value={status} onChange={(evt) => setStatus(evt.target.value)}>
+          {["Pending", "Approved", "Rejected", "Removed", "All"].map((status) => <option key={status} value={status}>{t(status)}</option>)}
         </select>
       </label>
-      <p>{message}</p>
-      {loading ? <p>Loading organizations...</p> : filteredOrganizations.length === 0 && <p>No organizations match this status.</p>}
+      <p>{tError(message)}</p>
+      {loading ? <p>{t("Loading organizations...")}</p> : filteredOrganizations.length === 0 && <p>{t("No organizations match this status.")}</p>}
       {filteredOrganizations.map((organization) => <OrganizationReviewItem key={organization._id} organization={organization} busy={busy} onReview={handleReview} />)}
     </section>
   );

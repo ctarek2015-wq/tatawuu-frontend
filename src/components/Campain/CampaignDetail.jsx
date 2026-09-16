@@ -1,13 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { UserContext } from "../../contexts/UserContext.js";
+import { LanguageContext } from "../../contexts/LanguageContext.js";
 import * as campaignService from "../../services/campaignService.js";
 import OrganizationContacts from "../OrganizationContacts/OrganizationContacts.jsx";
+import LocationMap from "../LocationMap/LocationMap.jsx";
 import { formatDateTime } from "../../utils/dates.js";
 
 const CampaignDetail = () => {
   const { id } = useParams();
   const { user } = useContext(UserContext);
+  const { language, t, tError } = useContext(LanguageContext);
   const [campaign, setCampaign] = useState(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -48,12 +51,12 @@ const CampaignDetail = () => {
       await navigator.clipboard.writeText(window.location.href);
       setMessage("Link copied.");
     } catch {
-      setMessage(`Copy this link: ${window.location.href}`);
+      setMessage("Copy this link");
     }
   };
 
-  if (loading) return <p>Loading activity...</p>;
-  if (!campaign) return <main><p role="alert">{error || "Activity unavailable."}</p><Link to="/">Explore activities</Link></main>;
+  if (loading) return <p>{t("Loading activity...")}</p>;
+  if (!campaign) return <main><p role="alert">{error ? tError(error) : t("Activity unavailable.")}</p><Link to="/">{t("Explore activities")}</Link></main>;
 
   const organization = campaign.organizationId;
   const participant = campaign.participants.find((person) =>
@@ -68,34 +71,35 @@ const CampaignDetail = () => {
       <h1>{campaign.title}</h1>
       {campaign.coverImage && <img src={campaign.coverImage} alt={campaign.title} width="320" />}
       <p>{campaign.description}</p>
-      <p>Category: {campaign.category}</p>
-      <p>{formatDateTime(campaign.startsAt)} — {formatDateTime(campaign.endsAt)} (Bahrain time)</p>
+      <p>{t("Category")}: {t(campaign.category)}</p>
+      <p>{formatDateTime(campaign.startsAt, language)} — {formatDateTime(campaign.endsAt, language)} ({t("Bahrain time")})</p>
       <p>{campaign.venue} — {campaign.address}</p>
-      <p>{campaign.area}, {campaign.governorate}, Bahrain</p>
-      <p>{campaign.availablePlaces} of {campaign.capacity} places available</p>
-      <p>Status: {campaign.status}</p>
-      {!approved && <p>This activity is currently unavailable for registration.</p>}
+      <p>{campaign.area}, {t(campaign.governorate)}, {t("Bahrain")}</p>
+      <LocationMap location={campaign} />
+      <p>{t("{available} of {capacity} places available", { available: campaign.availablePlaces, capacity: campaign.capacity })}</p>
+      <p>{t("Status")}: {t(campaign.status)}</p>
+      {!approved && <p>{t("This activity is currently unavailable for registration.")}</p>}
       {organization && <section>
         <h2><Link to={`/organizations/${organization._id}`}>{organization.name}</Link></h2>
         {organization.logo && <img src={organization.logo} alt={organization.name} width="100" />}
         <OrganizationContacts organization={organization} />
       </section>}
-      {error && <p role="alert">{error}</p>}
-      {message && <p>{message}</p>}
+      {error && <p role="alert">{tError(error)}</p>}
+      {message && <p>{t(message)}{message === "Copy this link" && <>: <bdi dir="ltr">{window.location.href}</bdi></>}</p>}
       {user?.role === "Volunteer" && <div>
         {joined ? <>
-          <p>Registered · Attendance: {participant.attendance}</p>
-          <button type="button" disabled={busy || started} onClick={() => handleAction(campaignService.leave)}>Cancel registration</button>
+          <p>{t("Registered")} · {t("Attendance")}: {t(participant.attendance)}</p>
+          <button type="button" disabled={busy || started} onClick={() => handleAction(campaignService.leave)}>{t("Cancel registration")}</button>
         </> : <button type="button" disabled={busy || !approved || started || campaign.availablePlaces === 0} onClick={() => handleAction(campaignService.join)}>
-          {!approved ? "Unavailable" : started ? "Registration closed" : campaign.availablePlaces === 0 ? "Full" : "Register for activity"}
+          {t(!approved ? "Unavailable" : started ? "Registration closed" : campaign.availablePlaces === 0 ? "Full" : "Register for activity")}
         </button>}
         <button type="button" disabled={busy || (!approved && !saved)} onClick={() => handleAction(saved ? campaignService.unfavorite : campaignService.favorite)}>
-          {saved ? "Remove from favorites" : "Save to favorites"}
+          {t(saved ? "Remove from favorites" : "Save to favorites")}
         </button>
       </div>}
-      {!user && <p><Link to="/sign-in">Sign in to join or save this activity</Link></p>}
-      <button type="button" onClick={handleShare}>Copy activity link</button>
-      <p><Link to="/">Back to activities</Link></p>
+      {!user && <p><Link to="/sign-in">{t("Sign in to join or save this activity")}</Link></p>}
+      <button type="button" onClick={handleShare}>{t("Copy activity link")}</button>
+      <p><Link to="/">{t("Back to activities")}</Link></p>
     </main>
   );
 };

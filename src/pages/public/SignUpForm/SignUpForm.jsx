@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { UserContext } from "../../../contexts/UserContext.js";
+import { LanguageContext } from "../../../contexts/LanguageContext.js";
 import * as authService from "../../../services/authService.js";
 
 const SignUpForm = () => {
   const { setUser } = useContext(UserContext);
+  const { t, tError } = useContext(LanguageContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ name: "", username: "", password: "", passwordConf: "", city: "", role: "Volunteer" });
   const [error, setError] = useState("");
@@ -34,21 +36,21 @@ const SignUpForm = () => {
   };
 
   return <main>
-    <h1>Create an account</h1>
-    {error && <p role="alert">{error}</p>}
+    <h1>{t("Create an account")}</h1>
+    {error && <p role="alert">{tError(error)}</p>}
     <form onSubmit={handleSubmit}>
-      <label>Name <input name="name" value={formData.name} onChange={handleChange} required /></label>
-      <label>Username <input name="username" autoComplete="username" value={formData.username} onChange={handleChange} required /></label>
-      <label>Password <input type="password" name="password" autoComplete="new-password" value={formData.password} onChange={handleChange} required /></label>
-      <label>Confirm password <input type="password" name="passwordConf" autoComplete="new-password" value={formData.passwordConf} onChange={handleChange} required /></label>
-      <label>City (optional) <input name="city" value={formData.city} onChange={handleChange} /></label>
-      <label>Account type <select name="role" value={formData.role} onChange={handleChange}>
-        <option>Volunteer</option><option>Organizer</option>
+      <label>{t("Name")} <input name="name" dir="auto" value={formData.name} onChange={handleChange} required /></label>
+      <label>{t("Username")} <input name="username" dir="auto" autoComplete="username" value={formData.username} onChange={handleChange} required /></label>
+      <label>{t("Password")} <input type="password" name="password" dir="ltr" autoComplete="new-password" value={formData.password} onChange={handleChange} required /></label>
+      <label>{t("Confirm password")} <input type="password" name="passwordConf" dir="ltr" autoComplete="new-password" value={formData.passwordConf} onChange={handleChange} required /></label>
+      <label>{t("City (optional)")} <input name="city" dir="auto" value={formData.city} onChange={handleChange} /></label>
+      <label>{t("Account type")} <select name="role" value={formData.role} onChange={handleChange}>
+        <option value="Volunteer">{t("Volunteer")}</option><option value="Organizer">{t("Organizer")}</option>
       </select></label>
-      <button disabled={saving}>{saving ? "Creating account..." : "Create account"}</button>
-      <button type="button" onClick={() => navigate("/")}>Cancel</button>
+      <button disabled={saving}>{t(saving ? "Creating account..." : "Create account")}</button>
+      <button type="button" onClick={() => navigate("/")}>{t("Cancel")}</button>
     </form>
-    <p><Link to="/sign-in">Already have an account? Sign in</Link></p>
+    <p><Link to="/sign-in">{t("Already have an account? Sign in")}</Link></p>
   </main>;
 };
 

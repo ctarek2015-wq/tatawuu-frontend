@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { LanguageContext } from "../../../../contexts/LanguageContext.js";
+import { useContext, useState } from "react";
+import MapPicker from "../../../../components/MapPicker/MapPicker.jsx";
 import ImagePicker from "../../../../components/ImagePicker/ImagePicker.jsx";
 import { governorates } from "../../../../utils/options.js";
 import * as uploadService from "../../../../services/uploadService.js";
 
 const OrganizationForm = ({ organization, onSubmit, onCancel }) => {
+  const { t, tError } = useContext(LanguageContext);
   const [formData, setFormData] = useState({
     name: organization?.name || "",
     description: organization?.description || "",
     governorate: organization?.governorate || governorates[0],
     area: organization?.area || "",
     address: organization?.address || "",
+    latitude: organization?.latitude ?? null,
+    longitude: organization?.longitude ?? null,
     contactEmail: organization?.contactEmail || "",
     contactPhone: organization?.contactPhone || "",
     whatsappNumber: organization?.whatsappNumber || "",
@@ -51,52 +56,53 @@ const OrganizationForm = ({ organization, onSubmit, onCancel }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <p>{message}</p>
+      <p>{tError(message)}</p>
       <label>
-        Organization name
-        <input required name="name" value={formData.name} onChange={handleChange} />
+          {t("Organization name")}
+          <input required dir="auto" name="name" value={formData.name} onChange={handleChange} />
       </label>
       <label>
-        Description
-        <textarea required name="description" value={formData.description} onChange={handleChange} />
+          {t("Description")}
+          <textarea required dir="auto" name="description" value={formData.description} onChange={handleChange} />
       </label>
-      <p>Country: Bahrain</p>
+      <p>{t("Country: Bahrain")}</p>
       <label>
-        Governorate
-        <select name="governorate" value={formData.governorate} onChange={handleChange}>
+          {t("Governorate")}
+          <select name="governorate" value={formData.governorate} onChange={handleChange}>
           {governorates.map((governorate) => (
-            <option key={governorate} value={governorate}>{governorate}</option>
+            <option key={governorate} value={governorate}>{t(governorate)}</option>
           ))}
         </select>
       </label>
       <label>
-        Area
-        <input required name="area" value={formData.area} onChange={handleChange} />
+          {t("Area")}
+          <input required dir="auto" name="area" value={formData.area} onChange={handleChange} />
       </label>
       <label>
-        Address
-        <input required name="address" value={formData.address} onChange={handleChange} />
+          {t("Address")}
+          <input required dir="auto" name="address" value={formData.address} onChange={handleChange} />
       </label>
       <label>
-        Public email
-        <input required type="email" name="contactEmail" value={formData.contactEmail} onChange={handleChange} />
+          {t("Public email")}
+          <input required type="email" dir="ltr" name="contactEmail" value={formData.contactEmail} onChange={handleChange} />
       </label>
       <label>
-        Public phone (optional)
-        <input type="tel" name="contactPhone" value={formData.contactPhone} onChange={handleChange} />
+          {t("Public phone (optional)")}
+          <input type="tel" dir="ltr" name="contactPhone" value={formData.contactPhone} onChange={handleChange} />
       </label>
       <label>
-        Public WhatsApp number (optional)
-        <input type="tel" name="whatsappNumber" value={formData.whatsappNumber} onChange={handleChange} />
+          {t("Public WhatsApp number (optional)")}
+          <input type="tel" dir="ltr" name="whatsappNumber" value={formData.whatsappNumber} onChange={handleChange} />
       </label>
       <label>
-        Website (optional)
-        <input type="url" name="website" value={formData.website} onChange={handleChange} />
+          {t("Website (optional)")}
+          <input type="url" dir="ltr" name="website" value={formData.website} onChange={handleChange} />
       </label>
-      <ImagePicker label="Organization logo" url={formData.logo} onFileChange={setFile} onRemove={handleRemoveImage} />
-      <p>Saving submits your organization for review.</p>
-      <button disabled={submitting} type="submit">{submitting ? "Saving..." : "Save and submit"}</button>
-      <button disabled={submitting} type="button" onClick={onCancel}>Cancel</button>
+      <MapPicker latitude={formData.latitude} longitude={formData.longitude} onChange={({ latitude, longitude }) => setFormData({ ...formData, latitude, longitude })} />
+      <ImagePicker label={t("Organization logo")} url={formData.logo} onFileChange={setFile} onRemove={handleRemoveImage} />
+      <p>{t("Saving submits your organization for review.")}</p>
+      <button disabled={submitting} type="submit">{t(submitting ? "Saving..." : "Save and submit")}</button>
+      <button disabled={submitting} type="button" onClick={onCancel}>{t("Cancel")}</button>
     </form>
   );
 };

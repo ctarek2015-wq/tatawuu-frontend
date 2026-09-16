@@ -1,0 +1,105 @@
+.certificate-preview {
+  position: relative;
+  box-sizing: border-box;
+  width: min(100%, 1120px);
+  aspect-ratio: 297 / 210;
+  margin: 24px auto;
+  padding: 32px 8%;
+  border: 3px solid #ce1126;
+  outline: 1px solid #ce1126;
+  outline-offset: -12px;
+  background: #fff;
+  color: #252525;
+  text-align: center;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.certificate-preview .certificate-emblem {
+  display: block;
+  width: 80px;
+  height: 96px;
+  object-fit: contain;
+  margin: 0 auto 18px;
+}
+
+.certificate-preview h2 {
+  margin: 0 0 22px;
+  color: #ce1126;
+  font-size: clamp(18px, 2.7vw, 31px);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.certificate-preview p {
+  margin: 8px 0;
+}
+
+.certificate-preview .certificate-label {
+  color: #555;
+  font-size: 16px;
+}
+
+.certificate-preview .certificate-recipient {
+  color: #ce1126;
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: bold;
+}
+
+.certificate-preview .certificate-activity {
+  font-size: clamp(18px, 2.4vw, 26px);
+  font-weight: bold;
+}
+
+.certificate-preview .certificate-organization {
+  font-size: 20px;
+}
+
+.certificate-preview .certificate-date {
+  margin-top: 24px;
+  font-size: 16px;
+}
+
+.certificate-preview .certificate-footer {
+  margin-top: 26px;
+  color: #ce1126;
+  font-size: 15px;
+}
+
+.certificate-preview .certificate-flag {
+  position: absolute;
+  top: 34px;
+  width: 85px;
+  height: 45px;
+  background: #ce1126;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 18% 90%, 0 80%, 18% 70%, 0 60%, 18% 50%, 0 40%, 18% 30%, 0 20%, 18% 10%);
+}
+
+.certificate-preview .certificate-flag-left {
+  left: 34px;
+}
+
+.certificate-preview .certificate-flag-right {
+  right: 34px;
+}
+
+@media (max-width: 600px) {
+  .certificate-preview {
+    padding: 28px 20px;
+  }
+
+  .certificate-preview .certificate-flag {
+    top: 26px;
+    width: 48px;
+    height: 26px;
+  }
+
+  .certificate-preview .certificate-flag-left {
+    left: 22px;
+  }
+
+  .certificate-preview .certificate-flag-right {
+    right: 22px;
+  }
+}

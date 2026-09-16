@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link, Navigate, Route, Routes } from "react-router";
 import { UserContext } from "./contexts/UserContext.js";
+import { LanguageContext } from "./contexts/LanguageContext.js";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import ExplorePage from "./components/ExplorePage/ExplorePage.jsx";
 import CampaignDetail from "./components/Campain/CampaignDetail.jsx";
@@ -22,12 +23,13 @@ import "./App.css";
 
 function App() {
   const { user, loading, accountError, retry } = useContext(UserContext);
-  if (loading) return <p>Loading account...</p>;
-  if (accountError) return <main><p role="alert">Could not load your account: {accountError}</p><button type="button" onClick={retry}>Retry</button></main>;
+  const { t, tError } = useContext(LanguageContext);
+  if (loading) return <><NavBar /><p>{t("Loading account...")}</p></>;
+  if (accountError) return <><NavBar /><main><p role="alert">{t("Could not load your account")}: {tError(accountError)}</p><button type="button" onClick={retry}>{t("Retry")}</button></main></>;
 
   const accountPage = (page, role) => {
     if (!user) return <Navigate to="/sign-in" replace />;
-    if (role && user.role !== role) return <p>This page is for {role.toLowerCase()} accounts.</p>;
+    if (role && user.role !== role) return <p>{t("This page is for {role} accounts.", { role: t(role) })}</p>;
     return page;
   };
 
@@ -56,7 +58,7 @@ function App() {
       <Route path="/my/favorites" element={accountPage(<Favorites />, "Volunteer")} />
       <Route path="/my/certificates" element={accountPage(<Certificates />, "Volunteer")} />
       <Route path="/admin" element={accountPage(<AdminDashboard />, "Admin")} />
-      <Route path="*" element={<main><h1>Page not found</h1><Link to="/">Explore activities</Link></main>} />
+      <Route path="*" element={<main><h1>{t("Page not found")}</h1><Link to="/">{t("Explore activities")}</Link></main>} />
     </Routes>
   </>;
 }
