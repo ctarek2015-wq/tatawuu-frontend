@@ -1,0 +1,7 @@
+.tatawwu-map {
+  height: 300px;
+  width: 100%;
+  max-width: 720px;
+  direction: ltr;
+  z-index: 0;
+}
