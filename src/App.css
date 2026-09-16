@@ -3899,3 +3899,106 @@ html[dir="rtl"] .manager-header {
     text-align: center;
   }
 }
+/* ==========================================================================
+   CAMPAIGN CARD — favorite icon
+   ========================================================================== */
+.campaign-card-image-wrap {
+  position: relative;
+}
+
+.campaign-card-favorite {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6d1a1a;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+
+.campaign-card-favorite:hover {
+  transform: scale(1.08);
+}
+
+.campaign-card-favorite:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.campaign-card-favorite.is-favorite {
+  color: #a12c2c;
+}
+
+/* If a card has no cover image, still anchor the button inside the wrap */
+.campaign-card-image-wrap:empty {
+  min-height: 44px;
+}
+
+/* RTL: keep heart on the visual top-right regardless of direction,
+   or flip to top-left — uncomment to mirror instead */
+/*
+html[dir="rtl"] .campaign-card-favorite {
+  right: auto;
+  left: 0.7rem;
+}
+*/
+
+/* ==========================================================================
+   FAVORITES PAGE
+   ========================================================================== */
+.favorites-page {
+  min-height: 100vh;
+  background: var(--warm-white);
+  padding: calc(var(--nav-height) + 2.5rem) 2.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6rem;
+}
+
+.favorites-unavailable-card {
+  border: 1px dashed var(--beige-darker);
+  border-radius: 12px;
+  padding: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+@media (max-width: 900px) {
+  .favorites-page {
+    padding: calc(var(--nav-height) + 2rem) 1.5rem 4rem;
+  }
+
+  .favorites-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .favorites-page {
+    padding: calc(var(--nav-height) + 1.5rem) 1rem 3.5rem;
+  }
+
+  .favorites-grid {
+    grid-template-columns: 1fr;
+  }
+}
