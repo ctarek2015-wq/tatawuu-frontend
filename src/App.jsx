@@ -1,125 +1,64 @@
-import { useContext, useEffect } from "react";
-import { UserContext, DataContext } from "./contexts/UserContext.jsx";
-import { Routes, Route } from "react-router";
-
-//services
-import * as campaignService from "./services/campaignService.js";
-import * as organizationService from "./services/organizationService.js";
-
-import AdminDashboard from "./pages/private/admin/dashboard/AdminDashboard.jsx";
-import OrganizerDashboard from "./pages/private/Organizer/dashboard/OrganizerDashboard.jsx";
-import VolunteerDashboard from "./pages/private/volunteer/dashboard/VolunteerDashboard.jsx";
-//components
-import Dashboard from "./components/Dashboard/Dashboard.jsx";
-import Landing from "./components/Landing/Landing.jsx";
-import ExplorePage from './components/ExplorePage/ExplorePage.jsx'
+import { useContext } from "react";
+import { Link, Navigate, Route, Routes } from "react-router";
+import { UserContext } from "./contexts/UserContext.js";
 import NavBar from "./components/NavBar/NavBar.jsx";
-import SignUpForm from "./pages/public/SignUpForm/SignUpForm.jsx";
-import SignInForm from "./pages/public/SignInForm/SignInForm.jsx";
-import OrganizationList from "./pages/public/Organization/OrganizationList.jsx";
-import CampaignList from "./pages/public/Campaign/CampaignList.jsx";
-
-// styles
-import "./App.css";
+import ExplorePage from "./components/ExplorePage/ExplorePage.jsx";
 import CampaignDetail from "./components/Campain/CampaignDetail.jsx";
+import OrganizationList from "./pages/public/Organization/OrganizationList.jsx";
+import OrganizationDetail from "./pages/public/Organization/OrganizationDetail.jsx";
+import SignInForm from "./pages/public/SignInForm/SignInForm.jsx";
+import SignUpForm from "./pages/public/SignUpForm/SignUpForm.jsx";
+import Profile from "./pages/private/Profile/Profile.jsx";
+import OrganizerDashboard from "./pages/private/Organizer/dashboard/OrganizerDashboard.jsx";
+import OrganizationProfile from "./pages/private/Organizer/dashboard/OrganizationProfile.jsx";
+import CampaignManager from "./pages/private/campaign/dashboard/CampaignManager.jsx";
+import CampaignForm from "./pages/private/campaign/dashboard/CampaignForm.jsx";
+import CampaignParticipants from "./pages/private/campaign/dashboard/CampaignParticipants.jsx";
+import AdminDashboard from "./pages/private/admin/dashboard/AdminDashboard.jsx";
+import VolunteerDashboard from "./pages/private/volunteer/dashboard/VolunteerDashboard.jsx";
+import Favorites from "./pages/private/volunteer/dashboard/Favorites.jsx";
+import Certificates from "./pages/private/volunteer/dashboard/Certificates.jsx";
+import "./App.css";
 
 function App() {
-  const { user, loading, setLoading } = useContext(UserContext);
-  const { campaigns, setCampaigns, organizations, setOrganizations } =
-    useContext(DataContext);
+  const { user, loading, accountError, retry } = useContext(UserContext);
+  if (loading) return <p>Loading account...</p>;
+  if (accountError) return <main><p role="alert">Could not load your account: {accountError}</p><button type="button" onClick={retry}>Retry</button></main>;
 
-  useEffect(() => {
-    const fetchCampaigns = async () => {
-      setLoading(true);
-      try {
-        const data = await campaignService.index();
-        setCampaigns(data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCampaigns();
-  }, []);
-
-  useEffect(() => {
-    const fetchOrganization = async () => {
-      setLoading(true);
-      try {
-        const data = await organizationService.index();
-        setOrganizations(data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOrganization();
-  }, []);
-
-  // handlers for campaigns
-
-  const handleAddCampaign = async (formData) => {
-    const newCampaign = await campaignService.create(formData);
-    setCampaigns([newCampaign, ...campaigns]);
+  const accountPage = (page, role) => {
+    if (!user) return <Navigate to="/sign-in" replace />;
+    if (role && user.role !== role) return <p>This page is for {role.toLowerCase()} accounts.</p>;
+    return page;
   };
 
-  const handleUpdateCampaign = async (id, formData) => {
-    const updatedCampaign = await campaignService.update(id, formData);
-    setCampaigns(campaigns.map((c) => (c.id === id ? updatedCampaign : c)));
-  };
+  const signInPage = user?.role === "Organizer" ? "/organizer/campaigns" : user?.role === "Admin" ? "/admin" : "/";
+  const signUpPage = user?.role === "Organizer" ? "/organizer/organization" : "/";
 
-  const handleRemoveCampaign = async (id) => {
-    await campaignService.remove(id);
-    setCampaigns(campaigns.filter((c) => c.id !== id));
-  };
-  //handlers for organization
-  const handleAddOrganization = async (formData) => {
-    const newOrganization = await organizationService.create(formData);
-    setOrganizations([newOrganization, ...organizations]);
-  };
-  const handleUpdateOrganization = async (id, formData) => {
-    const updatedOrganization = await organizationService.update(id, formData);
-    setOrganizations(
-      organizations.map((o) => (o.id === id ? updatedOrganization : o)),
-    );
-  };
-  const handleRemoveOrganization = async (id) => {
-    await organizationService.remove(id);
-    setOrganizations(organizations.filter((o) => o.id !== id));
-  };
-
-  return (
-    <>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<ExplorePage campaigns={campaigns} />} />
-        <Route path="/sign-up" element={<SignUpForm />} />
-        <Route path="/sign-in" element={<SignInForm />} />
-        <Route
-          path="/organizations"
-          element={<OrganizationList organizations={organizations} />}
-        />
-        <Route
-          path={"/campaigns" || "/organizations/:orgId/campaigns"}
-          element={<CampaignList />}
-        />
-        <Route path="/campaigns/:id" element={<CampaignDetail />} />
-        {user && user.role === "Admin" && (
-          <Route path="/admin" element={<AdminDashboard />} />
-        )}
-        {user && user.role === "Organizer" && (
-          <Route path="/organizer" element={<OrganizerDashboard />} />
-        )}
-        {user && user.role === "Volunteer" && (
-          <Route path={`/${user.username}`} element={<VolunteerDashboard />} />
-        )}
-      </Routes>
-      {loading && <p>Loading ...</p>}
-    </>
-  );
+  return <>
+    <NavBar />
+    <Routes>
+      <Route path="/" element={<ExplorePage />} />
+      <Route path="/campaigns" element={<ExplorePage />} />
+      <Route path="/campaigns/:id" element={<CampaignDetail />} />
+      <Route path="/organizations" element={<OrganizationList />} />
+      <Route path="/organizations/:id" element={<OrganizationDetail />} />
+      <Route path="/organizations/:orgId/campaigns" element={<ExplorePage />} />
+      <Route path="/sign-in" element={user ? <Navigate to={signInPage} replace /> : <SignInForm />} />
+      <Route path="/sign-up" element={user ? <Navigate to={signUpPage} replace /> : <SignUpForm />} />
+      <Route path="/profile" element={accountPage(<Profile />)} />
+      <Route path="/organizer" element={accountPage(<OrganizerDashboard />, "Organizer")} />
+      <Route path="/organizer/organization" element={accountPage(<OrganizationProfile />, "Organizer")} />
+      <Route path="/organizer/campaigns" element={accountPage(<CampaignManager />, "Organizer")} />
+      <Route path="/organizer/campaigns/new" element={accountPage(<CampaignForm key="new" />, "Organizer")} />
+      <Route path="/organizer/campaigns/:id/edit" element={accountPage(<CampaignForm key="edit" />, "Organizer")} />
+      <Route path="/organizer/campaigns/:id/participants" element={accountPage(<CampaignParticipants />, "Organizer")} />
+      <Route path="/my/registrations" element={accountPage(<VolunteerDashboard />, "Volunteer")} />
+      <Route path="/my/favorites" element={accountPage(<Favorites />, "Volunteer")} />
+      <Route path="/my/certificates" element={accountPage(<Certificates />, "Volunteer")} />
+      <Route path="/admin" element={accountPage(<AdminDashboard />, "Admin")} />
+      <Route path="*" element={<main><h1>Page not found</h1><Link to="/">Explore activities</Link></main>} />
+    </Routes>
+  </>;
 }
 
 export default App;
