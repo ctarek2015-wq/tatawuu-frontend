@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { LanguageContext } from "../../../../contexts/LanguageContext.js";
+import { useContext, useEffect, useState } from "react";
 import * as campaignService from "../../../../services/campaignService.js";
 import CampaignCard from "../../../../components/CampaignCard/CampaignCard.jsx";
 
 const Favorites = () => {
+  const { t, tError } = useContext(LanguageContext);
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -35,13 +37,13 @@ const Favorites = () => {
   };
 
   return <main>
-    <h1>My favorites</h1>
-    {loading && <p>Loading favorites...</p>}
-    {error && <p role="alert">{error}</p>}
-    {!loading && !error && campaigns.length === 0 && <p>Explore activities to save your first favorite.</p>}
+    <h1>{t("My favorites")}</h1>
+    {loading && <p>{t("Loading favorites...")}</p>}
+    {error && <p role="alert">{tError(error)}</p>}
+    {!loading && !error && campaigns.length === 0 && <p>{t("Explore activities to save your first favorite.")}</p>}
     {campaigns.map((campaign) => <section key={campaign._id}>
-      {campaign.unavailable ? <p>Activity no longer available.</p> : <CampaignCard campaign={campaign} />}
-      <button type="button" disabled={busy} onClick={() => handleRemove(campaign._id)}>Remove from favorites</button>
+      {campaign.unavailable ? <p>{t("Activity no longer available.")}</p> : <CampaignCard campaign={campaign} />}
+      <button type="button" disabled={busy} onClick={() => handleRemove(campaign._id)}>{t("Remove from favorites")}</button>
     </section>)}
   </main>;
 };
