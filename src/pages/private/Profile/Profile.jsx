@@ -6,7 +6,10 @@ import * as authService from "../../../services/authService.js";
 const Profile = () => {
   const { t, tError } = useContext(LanguageContext);
   const { user, setUser } = useContext(UserContext);
-  const [formData, setFormData] = useState({ name: user.name, city: user.city || "" });
+  const [formData, setFormData] = useState({
+    name: user.name,
+    city: user.city || "",
+  });
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -30,22 +33,71 @@ const Profile = () => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  return <main>
-    <h1>{t("My profile")}</h1>
-    <p>{t("Username")}: <bdi>{user.username}</bdi></p>
-    <p>{t("Account type")}: {t(user.role)}</p>
-    {error && <p role="alert">{tError(error)}</p>}
-    {message && <p>{t(message)}</p>}
-    <form onSubmit={handleSubmit}>
-      <label>
-          {t("Name")}
-          <input dir="auto" name="name" value={formData.name} onChange={handleChange} required /></label>
-      <label>
-          {t("City (optional)")}
-          <input dir="auto" name="city" value={formData.city} onChange={handleChange} /></label>
-      <button disabled={saving}>{t(saving ? "Saving..." : "Save changes")}</button>
-    </form>
-  </main>;
+  return (
+    <main className="profile-page">
+      <div className="profile-card">
+        {/* Avatar initials */}
+        <div className="profile-avatar">
+          {user.name?.[0]?.toUpperCase() || user.username?.[0]?.toUpperCase()}
+        </div>
+
+        {/* Page title */}
+        <h1 className="profile-title">{t("My profile")}</h1>
+
+        {/* Read-only info */}
+        <div className="profile-meta">
+          <div className="profile-meta-row">
+            <span className="profile-meta-label">{t("Username")}</span>
+            <bdi className="profile-meta-value">{user.username}</bdi>
+          </div>
+          <div className="profile-meta-row">
+            <span className="profile-meta-label">{t("Account type")}</span>
+            <span className="profile-meta-value">{t(user.role)}</span>
+          </div>
+        </div>
+
+        {/* Feedback messages */}
+        {error && (
+          <p role="alert" className="profile-alert">
+            {tError(error)}
+          </p>
+        )}
+        {message && <p className="profile-success">{t(message)}</p>}
+
+        {/* Edit form */}
+        <form className="profile-form" onSubmit={handleSubmit}>
+          <div className="field">
+            <label className="field-label">{t("Name")}</label>
+            <input
+              dir="auto"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="field">
+            <label className="field-label">{t("City (optional)")}</label>
+            <input
+              dir="auto"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="btn-primary-dark profile-submit-btn"
+            disabled={saving}
+          >
+            {t(saving ? "Saving..." : "Save changes")}
+          </button>
+        </form>
+      </div>
+    </main>
+  );
 };
 
 export default Profile;

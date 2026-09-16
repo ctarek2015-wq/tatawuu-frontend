@@ -7,7 +7,6 @@ const Favorites = () => {
   const { t, tError } = useContext(LanguageContext);
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -23,29 +22,55 @@ const Favorites = () => {
     loadFavorites();
   }, []);
 
-  const handleRemove = async (id) => {
-    setBusy(true);
-    setError("");
-    try {
-      await campaignService.unfavorite(id);
-      setCampaigns(campaigns.filter((campaign) => campaign._id !== id));
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setBusy(false);
+  const handleFavoriteChange = (id, isFavorite) => {
+    if (!isFavorite) {
+      setCampaigns((prev) => prev.filter((campaign) => campaign._id !== id));
     }
   };
 
-  return <main>
-    <h1>{t("My favorites")}</h1>
-    {loading && <p>{t("Loading favorites...")}</p>}
-    {error && <p role="alert">{tError(error)}</p>}
-    {!loading && !error && campaigns.length === 0 && <p>{t("Explore activities to save your first favorite.")}</p>}
-    {campaigns.map((campaign) => <section key={campaign._id}>
-      {campaign.unavailable ? <p>{t("Activity no longer available.")}</p> : <CampaignCard campaign={campaign} />}
-      <button type="button" disabled={busy} onClick={() => handleRemove(campaign._id)}>{t("Remove from favorites")}</button>
-    </section>)}
-  </main>;
+  return (
+    <main className="favorites-page">
+      <div className="sec-heading" style={{ margin: 0, textAlign: "left" }}>
+        <h1 className="sec-title">
+          {t("My")} <em>{t("favorites")}</em>
+        </h1>
+        <p className="sec-desc">{t("Activities you've saved for later.")}</p>
+      </div>
+
+      {loading && <p className="state-msg">{t("Loading favorites...")}</p>}
+      {error && (
+        <p className="state-msg state-error" role="alert">
+          {tError(error)}
+        </p>
+      )}
+
+      {!loading && !error && campaigns.length === 0 && (
+        <p className="state-msg">
+          {t("Explore activities to save your first favorite.")}
+        </p>
+      )}
+
+      {!loading && !error && campaigns.length > 0 && (
+        <div className="favorites-grid">
+          {campaigns.map((campaign) =>
+            campaign.unavailable ? (
+              <div key={campaign._id} className="favorites-unavailable-card">
+                <p className="state-msg">
+                  {t("Activity no longer available.")}
+                </p>
+              </div>
+            ) : (
+              <CampaignCard
+                key={campaign._id}
+                campaign={{ ...campaign, isFavorited: true }}
+                onFavoriteChange={handleFavoriteChange}
+              />
+            ),
+          )}
+        </div>
+      )}
+    </main>
+  );
 };
 
 export default Favorites;

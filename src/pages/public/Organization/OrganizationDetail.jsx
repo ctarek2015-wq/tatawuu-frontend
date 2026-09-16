@@ -23,7 +23,13 @@ const OrganizationDetail = () => {
         const org = await organizationService.show(id);
         const allCampaigns = await campaignService.index();
         setOrganization(org);
-        setCampaigns(allCampaigns.filter((campaign) => campaign.organizationId?._id === id && new Date(campaign.startsAt) > new Date()));
+        setCampaigns(
+          allCampaigns.filter(
+            (campaign) =>
+              campaign.organizationId?._id === id &&
+              new Date(campaign.startsAt) > new Date(),
+          ),
+        );
       } catch (err) {
         setError(err.message);
       } finally {
@@ -33,20 +39,75 @@ const OrganizationDetail = () => {
     loadOrganization();
   }, [id]);
 
-  if (loading) return <p>{t("Loading organization...")}</p>;
-  if (error) return <p role="alert">{tError(error)}</p>;
-  if (!organization) return <p>{t("Organization unavailable.")}</p>;
+  if (loading) {
+    return (
+      <main className="org-detail-page">
+        <p className="state-msg">{t("Loading organization...")}</p>
+      </main>
+    );
+  }
 
-  return <main>
-    <h1>{organization.name}</h1>
-    {organization.logo && <img src={organization.logo} alt={organization.name} width="200" />}
-    <p>{organization.description}</p>
-    <p>{organization.address} — {organization.area}, {t(organization.governorate)}, {t("Bahrain")}</p>
-    <LocationMap location={organization} />
-    <OrganizationContacts organization={organization} />
-    <h2>{t("Upcoming activities")}</h2>
-    <CampaignGrid campaigns={campaigns} />
-  </main>;
+  if (error) {
+    return (
+      <main className="org-detail-page">
+        <p className="state-msg state-error" role="alert">
+          {tError(error)}
+        </p>
+      </main>
+    );
+  }
+
+  if (!organization) {
+    return (
+      <main className="org-detail-page">
+        <p className="state-msg">{t("Organization unavailable.")}</p>
+      </main>
+    );
+  }
+
+  return (
+    <main className="org-detail-page">
+      <section className="org-detail-card">
+        <div className="org-detail-header">
+          {organization.logo ? (
+            <img
+              className="org-detail-logo"
+              src={organization.logo}
+              alt={organization.name}
+            />
+          ) : (
+            <div className="org-detail-logo org-detail-logo-placeholder">
+              {organization.name.charAt(0)}
+            </div>
+          )}
+          <div className="org-detail-heading">
+            <h1 className="org-detail-name">{organization.name}</h1>
+            <p className="org-detail-address">
+              {organization.address} — {organization.area},{" "}
+              {t(organization.governorate)}, {t("Bahrain")}
+            </p>
+          </div>
+        </div>
+
+        <p className="org-detail-description">{organization.description}</p>
+
+        <div className="org-detail-map">
+          <LocationMap location={organization} />
+        </div>
+
+        <div className="org-detail-contacts">
+          <OrganizationContacts organization={organization} />
+        </div>
+      </section>
+
+      <section className="org-detail-campaigns">
+        <h2 className="sec-title org-detail-campaigns-title">
+          {t("Upcoming activities")}
+        </h2>
+        <CampaignGrid campaigns={campaigns} />
+      </section>
+    </main>
+  );
 };
 
 export default OrganizationDetail;

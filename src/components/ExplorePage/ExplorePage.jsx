@@ -1,91 +1,161 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link } from "react-router";
 import { LanguageContext } from "../../contexts/LanguageContext.js";
 import * as campaignService from "../../services/campaignService.js";
-import CampaignGrid from "../CampaignGrid/CampaignGrid.jsx";
-import { categories, governorates } from "../../utils/options.js";
-import { dateOnly } from "../../utils/dates.js";
-
-const emptyFilters = { search: "", governorate: "", area: "", category: "", from: "", to: "" };
+import heroVideo from "../../assets/main.mp4";
+import Footer from "../Footer/Footer.jsx";
 
 const ExplorePage = () => {
-  const { orgId } = useParams();
-  const { t, tError } = useContext(LanguageContext);
-  const [campaigns, setCampaigns] = useState([]);
-  const [filters, setFilters] = useState(emptyFilters);
-  const [showFilters, setShowFilters] = useState(false);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const { t } = useContext(LanguageContext);
+  const [upcoming, setUpcoming] = useState([]);
 
   useEffect(() => {
-    const loadCampaigns = async () => {
-      try {
-        setCampaigns(await campaignService.index());
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadCampaigns();
+    campaignService
+      .index()
+      .then((data) => {
+        setUpcoming(
+          data.filter((c) => new Date(c.startsAt) > new Date()).slice(0, 10),
+        );
+      })
+      .catch(() => {});
   }, []);
 
-  const handleChange = (event) => {
-    setFilters({ ...filters, [event.target.name]: event.target.value });
-    setPage(1);
-  };
-
-  const filteredCampaigns = campaigns.filter((campaign) => {
-    const text = `${campaign.title} ${campaign.organizationId?.name || ""}`.toLowerCase();
-    const date = dateOnly(campaign.startsAt);
-    return new Date(campaign.startsAt) > new Date()
-      && (!orgId || campaign.organizationId?._id === orgId)
-      && text.includes(filters.search.toLowerCase())
-      && (!filters.governorate || campaign.governorate === filters.governorate)
-      && campaign.area.toLowerCase().includes(filters.area.toLowerCase())
-      && (!filters.category || campaign.category === filters.category)
-      && (!filters.from || date >= filters.from)
-      && (!filters.to || date <= filters.to);
-  });
-  const pages = Math.max(1, Math.ceil(filteredCampaigns.length / 6));
-  const shownPage = Math.min(page, pages);
-  const visibleCampaigns = filteredCampaigns.slice((shownPage - 1) * 6, shownPage * 6);
-  const hasFilters = filters.governorate || filters.area || filters.category || filters.from || filters.to;
+  const marqueeCampaigns = [...upcoming, ...upcoming];
 
   return (
-    <main>
-      <h1>{t("Volunteer in Bahrain")}</h1>
-      <p>{t("Find a local activity and make time for your community.")}</p>
-      <label>{t("Search")} <input name="search" value={filters.search} onChange={handleChange} placeholder={t("Activity or organization")} /></label>
-      <button type="button" aria-expanded={showFilters} aria-controls="campaign-filters" onClick={() => setShowFilters(!showFilters)}>
-        {t(showFilters ? "Hide filters" : "Show filters")}
-      </button>
-      {!showFilters && hasFilters && <span>{t("Filters applied")}</span>}
-      <div id="campaign-filters" hidden={!showFilters}>
-        <label>{t("Governorate")} <select name="governorate" value={filters.governorate} onChange={handleChange}>
-          <option value="">{t("All governorates")}</option>
-          {governorates.map((governorate) => <option key={governorate} value={governorate}>{t(governorate)}</option>)}
-        </select></label>
-        <label>{t("Area")} <input name="area" value={filters.area} onChange={handleChange} /></label>
-        <label>{t("Category")} <select name="category" value={filters.category} onChange={handleChange}>
-          <option value="">{t("All categories")}</option>
-          {categories.map((category) => <option key={category} value={category}>{t(category)}</option>)}
-        </select></label>
-        <label>{t("From date")} <input type="date" dir="ltr" name="from" value={filters.from} onChange={handleChange} /></label>
-        <label>{t("To date")} <input type="date" dir="ltr" name="to" value={filters.to} onChange={handleChange} /></label>
-      </div>
-      <button type="button" onClick={() => { setFilters(emptyFilters); setPage(1); }}>{t("Clear filters")}</button>
-      <h2>{t("Upcoming activities")}</h2>
-      {loading && <p>{t("Loading activities...")}</p>}
-      {error && <p role="alert">{tError(error)}</p>}
-      {!loading && !error && <>
-        <CampaignGrid campaigns={visibleCampaigns} />
-        <button type="button" disabled={shownPage === 1} onClick={() => setPage(shownPage - 1)}>{t("Previous")}</button>
-        <span> {t("Page {page} of {pages}", { page: shownPage, pages })} </span>
-        <button type="button" disabled={shownPage === pages} onClick={() => setPage(shownPage + 1)}>{t("Next")}</button>
-      </>}
-    </main>
+    <>
+      <main>
+        {/* ================= HERO ================= */}
+        <section className="hero">
+          <video
+            className="hero-video"
+            src={heroVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+          <div className="hero-scrim" />
+          <div className="hero-content">
+            <h1>
+              {t("Small acts, done together,")}
+              <span className="line-two">{t("move a whole community.")}</span>
+            </h1>
+            <div className="hero-btns">
+              <a href="#about" className="btn-outline-light">
+                {t("About us")}
+              </a>
+              <Link to="/activities" className="btn-primary-light">
+                {t("Explore activities")}
+              </Link>
+            </div>
+          </div>
+          <div className="hero-scroll-cue">↓</div>
+        </section>
+
+        {/* ================= ABOUT ================= */}
+        <section className="about-section" id="about">
+          <div className="sec-heading">
+            <h2 className="sec-title">
+              {t("About")} <em>Tatawwu&rsquo;</em>
+            </h2>
+            <p className="sec-desc">
+              {t(
+                "The national platform connecting Bahrain's volunteers with the organizations that need them.",
+              )}
+            </p>
+          </div>
+          <div className="about-grid">
+            <div className="about-box">
+              <h3>{t("Our mission")}</h3>
+              <p>
+                {t(
+                  "Tatawwu' brings verified charities, clubs, and civic groups onto one calendar, so anyone in Bahrain can find a cause worth an afternoon — or a career.",
+                )}
+              </p>
+              <p>
+                {t(
+                  "Every campaign listed here is reviewed by our team before it goes live, and every certificate a volunteer earns is recorded against a real, completed activity.",
+                )}
+              </p>
+            </div>
+            <div className="about-stats">
+              <div className="about-stat">
+                <div className="about-stat-num">120+</div>
+                <div className="about-stat-label">
+                  {t("Active organizations")}
+                </div>
+              </div>
+              <div className="about-stat">
+                <div className="about-stat-num">4,600</div>
+                <div className="about-stat-label">
+                  {t("Volunteers registered")}
+                </div>
+              </div>
+              <div className="about-stat">
+                <div className="about-stat-num">38</div>
+                <div className="about-stat-label">
+                  {t("Governorates & areas covered")}
+                </div>
+              </div>
+              <div className="about-stat">
+                <div className="about-stat-num">9,000+</div>
+                <div className="about-stat-label">
+                  {t("Hours logged this year")}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= MARQUEE STRIP ================= */}
+        {marqueeCampaigns.length > 0 && (
+          <section className="explore-section" id="campaigns">
+            <div className="sec-heading">
+              <h2 className="sec-title">
+                {t("Volunteer in")} <em>{t("Bahrain")}</em>
+              </h2>
+              <p className="sec-desc">
+                {t("Find a local activity and make time for your community.")}
+              </p>
+            </div>
+
+            <div className="marquee">
+              <div className="marquee-track">
+                {marqueeCampaigns.map((campaign, i) => (
+                  <article
+                    className="campaign-card"
+                    key={`${campaign._id}-${i}`}
+                  >
+                    <img
+                      className="campaign-card-img"
+                      src={campaign.coverImage || "/placeholder-campaign.jpg"}
+                      alt={campaign.title}
+                    />
+                    <div className="campaign-card-body">
+                      <span className="campaign-card-tag">
+                        {campaign.category}
+                      </span>
+                      <h3 className="campaign-card-title">{campaign.title}</h3>
+                      <p className="campaign-card-meta">
+                        {campaign.organizationId?.name} &middot; {campaign.area}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className="explore-cta">
+              <Link to="/activities" className="btn-primary-dark">
+                {t("Browse all activities")}
+              </Link>
+            </div>
+          </section>
+        )}
+      </main>
+      <Footer />
+    </>
   );
 };
 

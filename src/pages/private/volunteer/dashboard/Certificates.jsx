@@ -1,93 +1,86 @@
-import { useContext, useEffect, useState } from "react";
-import { LanguageContext } from "../../../../contexts/LanguageContext.js";
-import { UserContext } from "../../../../contexts/UserContext.js";
-import * as campaignService from "../../../../services/campaignService.js";
-import { formatDateTime } from "../../../../utils/dates.js";
-import "./Certificates.css";
+import { useContext } from "react";
+import { LanguageContext } from "../../contexts/LanguageContext.js";
+import { formatDateTime } from "../../utils/dates.js";
 
-const Certificates = () => {
-  const { user } = useContext(UserContext);
-  const { language, t, tError } = useContext(LanguageContext);
-  const [campaigns, setCampaigns] = useState([]);
-  const [preview, setPreview] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
+/**
+ * Props:
+ * - volunteerName: string (e.g. volunteer.name || volunteer.username)
+ * - campaignTitle: string (e.g. campaign.title)
+ * - organizationName: string (e.g. campaign.organizationId?.name)
+ * - issuedAt: date-ish value used for the "Date" field (e.g. campaign.endsAt, or a certificate issuedAt if you store one)
+ */
+const Certificate = ({
+  volunteerName,
+  campaignTitle,
+  organizationName,
+  issuedAt,
+}) => {
+  const { t, language } = useContext(LanguageContext);
+  const dateLabel = issuedAt ? formatDateTime(issuedAt, language) : "";
 
-  useEffect(() => {
-    const loadCertificates = async () => {
-      try {
-        setCampaigns(await campaignService.certificates());
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadCertificates();
-  }, []);
+  return (
+    <div className="certificate-wrap">
+      <div className="certificate-card">
+        <div className="cert-corner cert-corner-tl">
+          <span className="cert-tri cert-tri-pink" />
+          <span className="cert-tri cert-tri-maroon" />
+          <span className="cert-tri-gold-line" />
+        </div>
+        <div className="cert-corner cert-corner-br">
+          <span className="cert-tri cert-tri-pink" />
+          <span className="cert-tri cert-tri-maroon" />
+          <span className="cert-tri-gold-line" />
+        </div>
 
-  useEffect(() => {
-    if (!preview) return;
-    return () => URL.revokeObjectURL(preview.url);
-  }, [preview]);
+        <div className="cert-medal">
+          <span className="cert-medal-star">★</span>
+          <span className="cert-ribbon cert-ribbon-left" />
+          <span className="cert-ribbon cert-ribbon-right" />
+        </div>
 
-  const handleCertificate = async (campaign, download) => {
-    setBusy(true);
-    setError("");
-    try {
-      const blob = await campaignService.certificate(campaign._id);
-      const url = URL.createObjectURL(blob);
-      setPreview({ url, campaign });
-      if (download) {
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `tatawwu-certificate-${campaign._id}.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-      }
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setBusy(false);
-    }
-  };
+        <div className="cert-content">
+          <h1 className="cert-title">{t("CERTIFICATE")}</h1>
+          <p className="cert-subtitle">{t("OF ACHIEVEMENT")}</p>
 
-  return <main>
-    <h1>{t("My certificates")}</h1>
-    {loading && <p>{t("Loading certificates...")}</p>}
-    {error && <p role="alert">{tError(error)}</p>}
-    {!loading && !error && campaigns.length === 0 && <p>{t("No certificates granted yet.")}</p>}
-    {campaigns.map((campaign) => <article key={campaign._id}>
-      <h2><bdi>{campaign.title}</bdi></h2>
-      <p>{campaign.organizationId?.name} — {formatDateTime(campaign.startsAt, language)} ({t("Bahrain time")})</p>
-      <button type="button" disabled={busy} onClick={() => handleCertificate(campaign, false)}>{t("Preview PDF")}</button>
-      <button type="button" disabled={busy} onClick={() => handleCertificate(campaign, true)}>{t("Download PDF")}</button>
-    </article>)}
-    {busy && <p>{t("Loading PDF...")}</p>}
-    {preview && <section>
-      <article className="certificate-preview" lang="en" dir="ltr">
-        <div className="certificate-flag certificate-flag-left" aria-hidden="true" />
-        <div className="certificate-flag certificate-flag-right" aria-hidden="true" />
-        <img className="certificate-emblem" src="/bahrain-coat-of-arms.png" alt="Coat of arms of Bahrain" />
-        <h2>CERTIFICATE OF PARTICIPATION</h2>
-        <p className="certificate-label">Presented to</p>
-        <p className="certificate-recipient"><bdi>{user.name || user.username}</bdi></p>
-        <p className="certificate-label">For participating in</p>
-        <p className="certificate-activity"><bdi>{preview.campaign.title}</bdi></p>
-        {preview.campaign.organizationId && <>
-          <p className="certificate-label">Organized by</p>
-          <p className="certificate-organization"><bdi>{preview.campaign.organizationId.name}</bdi></p>
-        </>}
-        <p className="certificate-date">Completed on {new Date(preview.campaign.endsAt).toLocaleDateString("en-GB", { timeZone: "Asia/Bahrain", day: "numeric", month: "long", year: "numeric" })} (Bahrain time)</p>
-        <p className="certificate-footer">Tatawwu' - Volunteering in Bahrain</p>
-      </article>
-      <iframe title={t("Certificate preview")} src={preview.url} width="600" height="500" />
-      <p><a href={preview.url} target="_blank" rel="noreferrer">{t("Open PDF")}</a></p>
-      <button type="button" onClick={() => setPreview(null)}>{t("Close preview")}</button>
-    </section>}
-  </main>;
+          <p className="cert-presented">
+            {t("This certificate is presented to")}
+          </p>
+          <h2 className="cert-name">
+            <bdi>{volunteerName}</bdi>
+          </h2>
+          <hr className="cert-name-line" />
+
+          <p className="cert-desc">
+            {t(
+              'For dedicating time and effort to "{campaignTitle}", organized by {organizationName}, and completing it with distinction.',
+              { campaignTitle, organizationName },
+            )}
+          </p>
+
+          <div className="cert-footer">
+            <div className="cert-sig">
+              <p className="cert-sig-value">
+                <bdi>{organizationName}</bdi>
+              </p>
+              <p className="cert-sig-label">{t("Signature")}</p>
+            </div>
+            <div className="cert-sig cert-sig-date">
+              <p className="cert-sig-value">{dateLabel}</p>
+              <p className="cert-sig-label">{t("Date")}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        className="btn-primary certificate-print-btn"
+        onClick={() => window.print()}
+      >
+        {t("Download / Print certificate")}
+      </button>
+    </div>
+  );
 };
 
-export default Certificates;
+export default Certificate;
