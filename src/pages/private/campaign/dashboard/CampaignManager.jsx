@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { LanguageContext } from "../../../../contexts/LanguageContext.js";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router";
 import { formatDateTime } from "../../../../utils/dates.js";
 import * as campaignService from "../../../../services/campaignService.js";
 import * as organizationService from "../../../../services/organizationService.js";
 
 const CampaignManager = () => {
+  const { t, tError, language } = useContext(LanguageContext);
   const [campaigns, setCampaigns] = useState([]);
   const [organization, setOrganization] = useState(null);
   const [status, setStatus] = useState("All");
@@ -69,39 +71,39 @@ const CampaignManager = () => {
     }
   };
 
-  if (loading) return <p>Loading campaigns...</p>;
+  if (loading) return <p>{t("Loading campaigns...")}</p>;
   const filteredCampaigns = campaigns.filter((campaign) => status === "All" || campaign.status === status);
 
   return (
     <main>
-      <h1>My campaigns</h1>
-      <Link to="/organizer">Organizer dashboard</Link>
-      <p>{message}</p>
-      {organization ? <Link to="/organizer/campaigns/new">Create campaign</Link> : <Link to="/organizer/organization">Create your organization first</Link>}
-      {organization && organization.status !== "Approved" && <p>Your organization needs approval before you can submit campaigns.</p>}
+      <h1>{t("My campaigns")}</h1>
+      <Link to="/organizer">{t("Organizer dashboard")}</Link>
+      <p>{tError(message)}</p>
+      {organization ? <Link to="/organizer/campaigns/new">{t("Create campaign")}</Link> : <Link to="/organizer/organization">{t("Create your organization first")}</Link>}
+      {organization && organization.status !== "Approved" && <p>{t("Your organization needs approval before you can submit campaigns.")}</p>}
       <label>
-        Status
-        <select value={status} onChange={(evt) => setStatus(evt.target.value)}>
-          {["All", "Draft", "Pending", "Approved", "Rejected", "Removed", "Completed", "Cancelled"].map((status) => <option key={status} value={status}>{status}</option>)}
+          {t("Status")}
+          <select value={status} onChange={(evt) => setStatus(evt.target.value)}>
+          {["All", "Draft", "Pending", "Approved", "Rejected", "Removed", "Completed", "Cancelled"].map((status) => <option key={status} value={status}>{t(status)}</option>)}
         </select>
       </label>
-      {filteredCampaigns.length === 0 && <p>No campaigns match this status.</p>}
+      {filteredCampaigns.length === 0 && <p>{t("No campaigns match this status.")}</p>}
       {filteredCampaigns.map((campaign) => {
         const started = new Date(campaign.startsAt) <= new Date();
         const terminal = ["Cancelled", "Completed", "Removed"].includes(campaign.status);
         const canSubmit = !started && ["Draft", "Rejected"].includes(campaign.status) && organization?.status === "Approved";
         return (
           <article key={campaign._id}>
-            <h2>{campaign.title}</h2>
-            <p>Status: {campaign.status}</p>
-            <p>{formatDateTime(campaign.startsAt)} to {formatDateTime(campaign.endsAt)} (Bahrain time)</p>
-            <p>{campaign.registeredCount} participants; {campaign.availablePlaces} places available</p>
-            {campaign.reviewReason && <p>Review feedback: {campaign.reviewReason}</p>}
-            {!started && !terminal && <Link to={`/organizer/campaigns/${campaign._id}/edit`}>Edit</Link>}
-            <Link to={`/organizer/campaigns/${campaign._id}/participants`}>Participants and certificates</Link>
-            {canSubmit && <button disabled={busy} onClick={() => handleSubmit(campaign._id)}>Submit for review</button>}
-            {!campaign.wasPublished && campaign.participants.length === 0 && <button disabled={busy} onClick={() => handleDelete(campaign._id)}>Delete</button>}
-            {campaign.wasPublished && !terminal && <button disabled={busy} onClick={() => handleCancel(campaign._id)}>Cancel campaign</button>}
+            <h2><bdi>{campaign.title}</bdi></h2>
+            <p>{t("Status")}: {t(campaign.status)}</p>
+            <p>{formatDateTime(campaign.startsAt, language)} — {formatDateTime(campaign.endsAt, language)} ({t("Bahrain time")})</p>
+            <p>{t("{count} participants; {places} places available", { count: campaign.registeredCount, places: campaign.availablePlaces })}</p>
+            {campaign.reviewReason && <p>{t("Review feedback")}: <bdi>{campaign.reviewReason}</bdi></p>}
+            {!started && !terminal && <Link to={`/organizer/campaigns/${campaign._id}/edit`}>{t("Edit")}</Link>}
+            <Link to={`/organizer/campaigns/${campaign._id}/participants`}>{t("Participants and certificates")}</Link>
+            {canSubmit && <button disabled={busy} onClick={() => handleSubmit(campaign._id)}>{t("Submit for review")}</button>}
+            {!campaign.wasPublished && campaign.participants.length === 0 && <button disabled={busy} onClick={() => handleDelete(campaign._id)}>{t("Delete")}</button>}
+            {campaign.wasPublished && !terminal && <button disabled={busy} onClick={() => handleCancel(campaign._id)}>{t("Cancel campaign")}</button>}
           </article>
         );
       })}
