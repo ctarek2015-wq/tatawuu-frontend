@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { LanguageContext } from "../../contexts/LanguageContext.js";
 
 const ImagePicker = ({ label, url, onFileChange, onRemove }) => {
+  const { t } = useContext(LanguageContext);
   const [preview, setPreview] = useState("");
   const input = useRef(null);
 
@@ -26,7 +28,7 @@ const ImagePicker = ({ label, url, onFileChange, onRemove }) => {
     <div>
       <label>{label} <input ref={input} type="file" accept="image/jpeg,image/png,image/webp" onChange={handleChange} /></label>
       {(preview || url) && <p><img src={preview || url} alt={label} width="200" /></p>}
-      {(preview || url) && <button type="button" onClick={handleRemove}>Remove image</button>}
+      {(preview || url) && <button type="button" onClick={handleRemove}>{t("Remove image")}</button>}
     </div>
   );
 };
