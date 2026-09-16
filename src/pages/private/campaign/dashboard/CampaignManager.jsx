@@ -6,6 +6,7 @@ import {
   update,
   remove,
 } from "../../../../services/campaignService";
+import { byCampaign } from "../../../../services/registerationService";
 
 const toDateInput = (iso) => (iso ? iso.slice(0, 10) : "");
 const toDateTimeInput = (iso) => (iso ? iso.slice(0, 16) : "");
@@ -25,6 +26,11 @@ export default function CampaignManager() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  const [expandedId, setExpandedId] = useState(null);
+  const [roster, setRoster] = useState([]);
+  const [rosterLoading, setRosterLoading] = useState(false);
+  const [rosterError, setRosterError] = useState("");
 
   const loadCampaigns = async () => {
     setLoading(true);
@@ -88,6 +94,24 @@ export default function CampaignManager() {
     }
   };
 
+  const handleToggleRoster = async (campaignId) => {
+    if (expandedId === campaignId) {
+      setExpandedId(null);
+      return;
+    }
+    setExpandedId(campaignId);
+    setRosterLoading(true);
+    setRosterError("");
+    try {
+      const data = await byCampaign(campaignId);
+      setRoster(data || []);
+    } catch (err) {
+      setRosterError("Couldn't load volunteers for this campaign.");
+    } finally {
+      setRosterLoading(false);
+    }
+  };
+
   if (loading) {
     return <p>Loading campaigns...</p>;
   }
@@ -117,13 +141,40 @@ export default function CampaignManager() {
       <ul>
         {campaigns.map((c) => (
           <li key={c._id}>
-            {c.title} - {c.status}
+            {c.title} - {c.status} ({c.registeredCount}/{c.capacity})
             <button type="button" onClick={() => handleEdit(c)}>
               Edit
             </button>
             <button type="button" onClick={() => handleDelete(c._id)}>
               Delete
             </button>
+            <button type="button" onClick={() => handleToggleRoster(c._id)}>
+              {expandedId === c._id ? "Hide volunteers" : "View volunteers"}
+            </button>
+
+            {expandedId === c._id && (
+              <div>
+                {rosterLoading && <p>Loading volunteers...</p>}
+                {rosterError && <p>{rosterError}</p>}
+                {!rosterLoading && !rosterError && roster.length === 0 && (
+                  <p>No one has registered yet.</p>
+                )}
+                {!rosterLoading && roster.length > 0 && (
+                  <ul>
+                    {roster.map((r) => (
+                      <li key={r._id}>
+                        {r.volunteerId?.name || "Unknown volunteer"}
+                        {r.volunteerId?.email ? ` (${r.volunteerId.email})` : ""}
+                        {" - "}
+                        {r.status}
+                        {" - "}
+                        {r.attendance}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
           </li>
         ))}
       </ul>
