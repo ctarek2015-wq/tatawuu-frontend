@@ -33,7 +33,9 @@ const VolunteerDashboard = () => {
     setError("");
     try {
       const updated = await campaignService.leave(id);
-      setCampaigns(campaigns.map((campaign) => campaign._id === id ? updated : campaign));
+      setCampaigns(
+        campaigns.map((campaign) => (campaign._id === id ? updated : campaign)),
+      );
     } catch (err) {
       setError(err.message);
     } finally {
@@ -46,33 +48,154 @@ const VolunteerDashboard = () => {
     return tab === "past" ? past : !past;
   });
 
-  return <main>
-    <h1>{t("My activities")}</h1>
-    <button type="button" disabled={tab === "upcoming"} onClick={() => setTab("upcoming")}>{t("Upcoming / in progress")}</button>
-    <button type="button" disabled={tab === "past"} onClick={() => setTab("past")}>{t("Past")}</button>
-    {loading && <p>{t("Loading activities...")}</p>}
-    {error && <p role="alert">{tError(error)}</p>}
-    {!loading && !error && visibleCampaigns.length === 0 && <p>{t(tab === "past" ? "No past activities." : "No upcoming activities.")}</p>}
-    {visibleCampaigns.map((campaign) => {
-      const participant = campaign.participants.find((person) => person.volunteerId === user._id || person.volunteerId?._id === user._id);
-      const isPublic = campaign.status === "Approved" && campaign.organizationId?.status === "Approved";
-      return <article key={campaign._id}>
-        <h2><bdi>{campaign.title}</bdi></h2>
-        <p>{campaign.organizationId?.name}</p>
-        <p>{formatDateTime(campaign.startsAt, language)} — {formatDateTime(campaign.endsAt, language)} ({t("Bahrain time")})</p>
-        <p>{campaign.venue}, {campaign.address}, {campaign.area}, {t(campaign.governorate)}</p>
-        <LocationMap location={campaign} />
-        <p>{t("Campaign")}: {t(campaign.status)}</p>
-        <p>{t("Registration")}: {t(participant?.status)} · {t("Attendance")}: {t(participant?.attendance)}</p>
-        {isPublic && <p><Link to={`/campaigns/${campaign._id}`}>{t("View activity")}</Link></p>}
-        {campaign.status === "Cancelled" && <p>{t("This activity will not take place.")}</p>}
-        {participant?.status === "Registered" && new Date(campaign.startsAt) > new Date() && <button type="button" disabled={busy !== ""} onClick={() => handleCancel(campaign._id)}>
-          {t(busy === campaign._id ? "Cancelling..." : "Cancel registration")}
-        </button>}
-        {campaign.certificates.includes(user._id) && <p><Link to="/my/certificates">{t("View my certificate")}</Link></p>}
-      </article>;
-    })}
-  </main>;
+  return (
+    <main className="volunteer-dashboard-page">
+      <div className="sec-heading" style={{ margin: 0, textAlign: "left" }}>
+        <h1 className="sec-title">
+          {t("My")} <em>{t("activities")}</em>
+        </h1>
+        <p className="sec-desc">
+          {t("Track your registrations and upcoming volunteer activities.")}
+        </p>
+      </div>
+
+      <div className="dashboard-tabs">
+        <button
+          type="button"
+          className={`dashboard-tab${tab === "upcoming" ? " is-active" : ""}`}
+          disabled={tab === "upcoming"}
+          onClick={() => setTab("upcoming")}
+        >
+          {t("Upcoming / in progress")}
+        </button>
+        <button
+          type="button"
+          className={`dashboard-tab${tab === "past" ? " is-active" : ""}`}
+          disabled={tab === "past"}
+          onClick={() => setTab("past")}
+        >
+          {t("Past")}
+        </button>
+      </div>
+
+      {loading && <p className="state-msg">{t("Loading activities...")}</p>}
+      {error && (
+        <p className="state-msg state-error" role="alert">
+          {tError(error)}
+        </p>
+      )}
+
+      {!loading && !error && visibleCampaigns.length === 0 && (
+        <p className="state-msg">
+          {t(
+            tab === "past" ? "No past activities." : "No upcoming activities.",
+          )}
+        </p>
+      )}
+
+      <div className="dashboard-activity-list">
+        {visibleCampaigns.map((campaign) => {
+          const participant = campaign.participants.find(
+            (person) =>
+              person.volunteerId === user._id ||
+              person.volunteerId?._id === user._id,
+          );
+          const isPublic =
+            campaign.status === "Approved" &&
+            campaign.organizationId?.status === "Approved";
+          const canCancel =
+            participant?.status === "Registered" &&
+            new Date(campaign.startsAt) > new Date();
+
+          return (
+            <article key={campaign._id} className="dashboard-activity-card">
+              <div className="dashboard-activity-top">
+                <div>
+                  <h2 className="dashboard-activity-title">
+                    <bdi>{campaign.title}</bdi>
+                  </h2>
+                  <p className="dashboard-activity-org">
+                    {campaign.organizationId?.name}
+                  </p>
+                </div>
+                <span
+                  className={`status-badge status-${campaign.status.toLowerCase()}`}
+                >
+                  {t(campaign.status)}
+                </span>
+              </div>
+
+              <p className="dashboard-activity-dates">
+                {formatDateTime(campaign.startsAt, language)} —{" "}
+                {formatDateTime(campaign.endsAt, language)}{" "}
+                <span className="manager-tz">({t("Bahrain time")})</span>
+              </p>
+
+              <p className="dashboard-activity-location">
+                {campaign.venue}, {campaign.address}, {campaign.area},{" "}
+                {t(campaign.governorate)}
+              </p>
+
+              <div className="dashboard-activity-map">
+                <LocationMap location={campaign} />
+              </div>
+
+              <div className="dashboard-activity-badges">
+                <span
+                  className={`status-badge status-${(participant?.status || "unmarked").toLowerCase()}`}
+                >
+                  {t("Registration")}: {t(participant?.status)}
+                </span>
+                <span
+                  className={`attendance-badge attendance-${(participant?.attendance || "unmarked").toLowerCase()}`}
+                >
+                  {t("Attendance")}: {t(participant?.attendance)}
+                </span>
+              </div>
+
+              {campaign.status === "Cancelled" && (
+                <p className="manager-notice">
+                  {t("This activity will not take place.")}
+                </p>
+              )}
+
+              <div className="dashboard-activity-actions">
+                {isPublic && (
+                  <Link
+                    to={`/campaigns/${campaign._id}`}
+                    className="btn-soft btn-sm"
+                  >
+                    {t("View activity")}
+                  </Link>
+                )}
+
+                {canCancel && (
+                  <button
+                    type="button"
+                    disabled={busy !== ""}
+                    onClick={() => handleCancel(campaign._id)}
+                    className="btn-danger-outline btn-sm"
+                  >
+                    {t(
+                      busy === campaign._id
+                        ? "Cancelling..."
+                        : "Cancel registration",
+                    )}
+                  </button>
+                )}
+
+                {campaign.certificates.includes(user._id) && (
+                  <Link to="/my/certificates" className="btn-primary btn-sm">
+                    {t("View my certificate")}
+                  </Link>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </main>
+  );
 };
 
 export default VolunteerDashboard;

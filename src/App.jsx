@@ -20,6 +20,7 @@ import VolunteerDashboard from "./pages/private/volunteer/dashboard/VolunteerDas
 import Favorites from "./pages/private/volunteer/dashboard/Favorites.jsx";
 import Certificates from "./pages/private/volunteer/dashboard/Certificates.jsx";
 import CampaignsPage from "./components/CampaignsPage/CampaignsPage.jsx";
+
 import "./App.css";
 
 function App() {
