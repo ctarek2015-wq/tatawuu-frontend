@@ -1794,3 +1794,1382 @@ html[dir="rtl"] .org-detail-campaigns-title {
     height: 80px;
   }
 }
+/* ==========================================================================
+   CAMPAIGN CARD
+   ========================================================================== */
+
+.campaign-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.campaign-card-image {
+  height: 150px;
+  width: 100%;
+  object-fit: cover;
+  background: var(--beige-darker);
+  flex-shrink: 0;
+}
+
+.campaign-card-content {
+  padding: 1.1rem 1.2rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.campaign-card-category {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--burgundy);
+  background: rgba(141, 0, 0, 0.08);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  margin-bottom: 0.55rem;
+}
+
+.campaign-card-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--text-dark);
+  line-height: 1.35;
+  margin-bottom: 0.4rem;
+}
+
+.campaign-card-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.campaign-card-title a:hover {
+  color: var(--burgundy);
+}
+
+.campaign-card-organization {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.campaign-card-location {
+  font-size: 0.78rem;
+  color: var(--text-mid);
+  font-weight: 300;
+  margin-bottom: 0.55rem;
+}
+
+.campaign-card-date {
+  font-size: 0.78rem;
+  color: var(--text-mid);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.campaign-card-time {
+  font-size: 0.7rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 0.6rem;
+}
+
+.campaign-card-places {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  background: var(--beige-dark);
+  border: 1px solid var(--beige-darker);
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  margin-top: auto;
+  margin-bottom: 0.85rem;
+}
+
+.campaign-card-button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: var(--burgundy);
+  color: var(--beige);
+  padding: 0.65rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+  margin-top: auto;
+}
+
+.campaign-card-button:hover {
+  background: var(--burgundy-light);
+  transform: translateY(-1px);
+}
+
+/* RTL adjustments */
+html[dir="rtl"] .campaign-card-category,
+html[dir="rtl"] .campaign-card-places {
+  align-self: flex-start;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .campaign-card-image {
+    height: 130px;
+  }
+
+  .campaign-card-content {
+    padding: 0.9rem 1rem 1rem;
+  }
+}
+/* ==========================================================================
+   CAMPAIGN DETAIL
+   ========================================================================== */
+
+/* Page wrapper */
+.campaign-detail-page {
+  min-height: 100vh;
+  background: var(--beige);
+  padding: calc(var(--nav-height) + 2rem) 1.5rem 5rem;
+}
+
+/* Empty / loading state */
+.campaign-detail-state {
+  min-height: 100vh;
+  background: var(--beige);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+  padding: calc(var(--nav-height) + 2rem) 1.5rem 5rem;
+  text-align: center;
+}
+
+/* Main card */
+.campaign-detail-card {
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px rgba(44, 24, 16, 0.08);
+}
+
+/* Cover image */
+.campaign-detail-cover {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+  background: var(--beige-darker);
+}
+
+/* Padded content body */
+.campaign-detail-body {
+  padding: 2.2rem 2.4rem 2.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+/* --- Header: category + title --- */
+.campaign-detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.campaign-detail-category {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--burgundy);
+  background: rgba(141, 0, 0, 0.08);
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+}
+
+.campaign-detail-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--text-dark);
+  line-height: 1.22;
+}
+
+/* --- Description --- */
+.campaign-detail-description {
+  font-size: 0.95rem;
+  color: var(--text-mid);
+  line-height: 1.85;
+  font-weight: 300;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--beige-dark);
+}
+
+/* --- Meta table --- */
+.campaign-detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--beige-darker);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.campaign-detail-meta-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.75rem 1.1rem;
+  border-bottom: 1px solid var(--beige-dark);
+}
+
+.campaign-detail-meta-row:last-child {
+  border-bottom: none;
+}
+
+.campaign-detail-meta-row:nth-child(even) {
+  background: var(--beige);
+}
+
+.campaign-detail-meta-label {
+  flex: 0 0 90px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.campaign-detail-meta-value {
+  font-size: 0.88rem;
+  color: var(--text-dark);
+  font-weight: 400;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.campaign-detail-timezone {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+/* --- Status badge (inside meta table) --- */
+.campaign-detail-status-badge {
+  display: inline-flex;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(141, 0, 0, 0.08);
+  color: var(--burgundy);
+}
+
+.campaign-detail-status-approved {
+  background: rgba(45, 122, 62, 0.1);
+  color: #2d7a3e;
+}
+
+.campaign-detail-status-pending {
+  background: rgba(184, 150, 12, 0.12);
+  color: var(--gold);
+}
+
+.campaign-detail-status-rejected {
+  background: rgba(141, 0, 0, 0.1);
+  color: var(--burgundy);
+}
+
+/* --- Unavailable notice --- */
+.campaign-detail-notice {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  background: rgba(141, 0, 0, 0.06);
+  border: 1px solid rgba(141, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  line-height: 1.55;
+}
+
+/* --- Map wrapper --- */
+.campaign-detail-map {
+  border: 1px solid var(--beige-darker);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* --- Organization section --- */
+.campaign-detail-org {
+  background: var(--beige);
+  border: 1px solid var(--beige-darker);
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.campaign-detail-org-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.campaign-detail-org-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: var(--beige-darker);
+  flex-shrink: 0;
+}
+
+.campaign-detail-org-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  background: var(--beige-dark);
+}
+
+.campaign-detail-org-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-dark);
+}
+
+.campaign-detail-org-name a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.campaign-detail-org-name a:hover {
+  color: var(--burgundy);
+}
+
+/* --- Inline alert / feedback messages --- */
+.campaign-detail-alert {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  background: rgba(141, 0, 0, 0.06);
+  border: 1px solid rgba(141, 0, 0, 0.18);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.campaign-detail-message {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  background: var(--beige);
+  border: 1px solid var(--beige-darker);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  line-height: 1.6;
+}
+
+.campaign-detail-copied-url {
+  font-size: 0.8rem;
+  color: var(--text-dark);
+  word-break: break-all;
+}
+
+/* --- Volunteer action buttons --- */
+.campaign-detail-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--beige-dark);
+}
+
+.campaign-detail-join-btn {
+  width: 100%;
+  text-align: center;
+  padding: 0.85rem 1.2rem;
+  font-size: 0.92rem;
+}
+
+.campaign-detail-join-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Registered status row */
+.campaign-detail-registered {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: rgba(45, 122, 62, 0.07);
+  border: 1px solid rgba(45, 122, 62, 0.2);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+}
+
+.campaign-detail-registered-status {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #2d7a3e;
+}
+
+.campaign-detail-registered-status span {
+  font-weight: 400;
+  color: var(--text-mid);
+}
+
+/* Save / favorite button */
+.campaign-detail-save-btn {
+  width: 100%;
+  background: var(--beige-dark);
+  color: var(--text-dark);
+  border: 1px solid var(--beige-darker);
+  border-radius: 6px;
+  padding: 0.75rem 1.2rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-align: center;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.campaign-detail-save-btn:hover:not(:disabled) {
+  background: var(--beige-darker);
+  border-color: var(--burgundy);
+  color: var(--burgundy);
+}
+
+.campaign-detail-save-btn.is-saved {
+  background: rgba(141, 0, 0, 0.07);
+  border-color: rgba(141, 0, 0, 0.25);
+  color: var(--burgundy);
+}
+
+.campaign-detail-save-btn.is-saved:hover:not(:disabled) {
+  background: rgba(141, 0, 0, 0.13);
+}
+
+.campaign-detail-save-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* --- Guest sign-in prompt --- */
+.campaign-detail-signin {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  text-align: center;
+  padding: 1rem;
+  background: var(--beige);
+  border: 1px solid var(--beige-darker);
+  border-radius: 8px;
+}
+
+.campaign-detail-signin a {
+  color: var(--burgundy);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.campaign-detail-signin a:hover {
+  border-bottom-color: var(--burgundy);
+}
+
+/* --- Footer: share + back --- */
+.campaign-detail-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--beige-dark);
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   CAMPAIGN DETAIL — RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 700px) {
+  .campaign-detail-page {
+    padding: calc(var(--nav-height) + 1rem) 1rem 3.5rem;
+  }
+
+  .campaign-detail-cover {
+    height: 220px;
+  }
+
+  .campaign-detail-body {
+    padding: 1.6rem 1.2rem 2rem;
+    gap: 1.3rem;
+  }
+
+  .campaign-detail-meta-label {
+    flex: 0 0 72px;
+  }
+
+  .campaign-detail-registered {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .campaign-detail-footer {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+}
+/* ==========================================================================
+   ORGANIZATION CONTACTS — icon-only buttons
+   ========================================================================== */
+
+.org-contacts {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.org-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--beige-dark);
+  border: 1px solid var(--beige-darker);
+  color: var(--burgundy);
+  text-decoration: none;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s,
+    transform 0.2s;
+  flex-shrink: 0;
+}
+
+.org-contact-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.org-contact-btn:hover {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
+  color: var(--beige);
+  transform: translateY(-1px);
+}
+
+/* WhatsApp — green accent on hover */
+.org-contact-btn--whatsapp:hover {
+  background: #25d366;
+  border-color: #25d366;
+  color: #fff;
+}
+/* ==========================================================================
+   ADMIN DASHBOARD
+   ========================================================================== */
+
+.admin-dashboard-page {
+  min-height: 100vh;
+  background: var(--beige);
+  padding: calc(var(--nav-height) + 2rem) 1.5rem 5rem;
+}
+
+/* --- Header --- */
+.admin-dashboard-header {
+  max-width: 1080px;
+  margin: 0 auto 2rem;
+}
+
+.admin-dashboard-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  color: var(--text-dark);
+}
+
+/* --- Tab bar --- */
+.admin-tab-bar {
+  max-width: 1080px;
+  margin: 0 auto 2rem;
+  display: flex;
+  gap: 0;
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 10px;
+  padding: 4px;
+  width: fit-content;
+}
+
+.admin-tab-btn {
+  padding: 0.6rem 1.6rem;
+  border-radius: 7px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-mid);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  letter-spacing: 0.01em;
+  font-family: inherit;
+}
+
+.admin-tab-btn:hover {
+  color: var(--burgundy);
+}
+
+.admin-tab-btn.is-active {
+  background: var(--burgundy);
+  color: var(--beige);
+}
+
+/* --- Tab content area --- */
+.admin-tab-content {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+  .admin-dashboard-page {
+    padding: calc(var(--nav-height) + 1rem) 1rem 3.5rem;
+  }
+
+  .admin-tab-bar {
+    width: 100%;
+  }
+
+  .admin-tab-btn {
+    flex: 1;
+    text-align: center;
+    padding: 0.6rem 1rem;
+  }
+}
+/* ==========================================================================
+   ADMIN REVIEW — shared between CampaignReview & OrganizationReview
+   ========================================================================== */
+
+/* Section wrapper */
+.review-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.review-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--beige-darker);
+}
+
+.review-section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  color: var(--text-dark);
+}
+
+.review-status-select {
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: var(--text-dark);
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 6px;
+  padding: 0.55rem 0.8rem;
+  min-width: 160px;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.review-status-select:focus {
+  outline: none;
+  border-color: var(--burgundy);
+  box-shadow: 0 0 0 3px rgba(141, 0, 0, 0.09);
+}
+
+/* List of review cards */
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* --- Individual review card --- */
+.review-item {
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(44, 24, 16, 0.06);
+}
+
+.review-item-cover {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  background: var(--beige-darker);
+}
+
+.review-item-body {
+  padding: 1.8rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+/* Header row: title + status badge */
+.review-item-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.review-item-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: var(--text-dark);
+  flex: 1;
+}
+
+/* --- Status badges --- */
+.review-status-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.review-status-pending {
+  background: rgba(184, 150, 12, 0.12);
+  color: var(--gold);
+}
+
+.review-status-approved {
+  background: rgba(45, 122, 62, 0.1);
+  color: #2d7a3e;
+}
+
+.review-status-rejected,
+.review-status-removed {
+  background: rgba(141, 0, 0, 0.08);
+  color: var(--burgundy);
+}
+
+.review-status-completed {
+  background: rgba(44, 24, 16, 0.07);
+  color: var(--text-mid);
+}
+
+.review-status-cancelled,
+.review-status-draft {
+  background: rgba(44, 24, 16, 0.05);
+  color: var(--text-light);
+}
+
+/* Description */
+.review-item-description {
+  font-size: 0.92rem;
+  color: var(--text-mid);
+  line-height: 1.8;
+  font-weight: 300;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--beige-dark);
+}
+
+/* --- Meta dl table --- */
+.review-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--beige-darker);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.review-meta-row {
+  display: flex;
+  gap: 1rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--beige-dark);
+  font-size: 0.85rem;
+}
+
+.review-meta-row:last-child {
+  border-bottom: none;
+}
+
+.review-meta-row:nth-child(even) {
+  background: var(--beige);
+}
+
+.review-meta-row dt {
+  flex: 0 0 130px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--text-light);
+  padding-top: 0.05rem;
+}
+
+.review-meta-row dd {
+  flex: 1;
+  color: var(--text-dark);
+  line-height: 1.5;
+}
+
+.review-meta-tz {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+/* Map wrapper */
+.review-item-map {
+  border: 1px solid var(--beige-darker);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* --- Nested org block inside campaign review --- */
+.review-org-block {
+  background: var(--beige);
+  border: 1px solid var(--beige-darker);
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.review-org-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.review-org-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: var(--beige-darker);
+  flex-shrink: 0;
+}
+
+.review-org-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  background: var(--beige-dark);
+}
+
+.review-org-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-dark);
+  margin-bottom: 0.3rem;
+}
+
+.review-org-description {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+.review-org-address {
+  font-size: 0.82rem;
+  color: var(--text-mid);
+}
+
+/* --- Previous feedback box --- */
+.review-prev-feedback {
+  background: rgba(184, 150, 12, 0.07);
+  border: 1px solid rgba(184, 150, 12, 0.22);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  font-size: 0.88rem;
+  color: var(--text-dark);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.review-prev-feedback-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* --- Review action area --- */
+.review-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--beige-dark);
+}
+
+.review-textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 6px;
+  padding: 0.7rem 0.85rem;
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.6;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.review-textarea:focus {
+  outline: none;
+  border-color: var(--burgundy);
+  box-shadow: 0 0 0 3px rgba(141, 0, 0, 0.09);
+}
+
+.review-action-error {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--burgundy);
+}
+
+.review-action-btns {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Approve button — green */
+.btn-review-approve {
+  flex: 1;
+  min-width: 110px;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  background: #2d7a3e;
+  color: #fff;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.btn-review-approve:hover:not(:disabled) {
+  background: #236130;
+  transform: translateY(-1px);
+}
+
+.btn-review-approve:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Reject button — outlined burgundy */
+.btn-review-reject {
+  flex: 1;
+  min-width: 110px;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--warm-white);
+  color: var(--burgundy);
+  border: 1.5px solid var(--burgundy);
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+
+.btn-review-reject:hover:not(:disabled) {
+  background: var(--burgundy);
+  color: var(--beige);
+  transform: translateY(-1px);
+}
+
+.btn-review-reject:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Remove button — solid burgundy */
+.btn-review-remove {
+  flex: 1;
+  min-width: 110px;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  background: var(--burgundy);
+  color: var(--beige);
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.btn-review-remove:hover:not(:disabled) {
+  background: var(--burgundy-light);
+  transform: translateY(-1px);
+}
+
+.btn-review-remove:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==========================================================================
+   ADMIN REVIEW — RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 700px) {
+  .review-item-body {
+    padding: 1.3rem 1.1rem 1.5rem;
+    gap: 1rem;
+  }
+
+  .review-item-cover {
+    height: 160px;
+  }
+
+  .review-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .review-status-select {
+    width: 100%;
+  }
+
+  .review-meta-row dt {
+    flex: 0 0 100px;
+  }
+
+  .review-action-btns {
+    flex-direction: column;
+  }
+
+  .btn-review-approve,
+  .btn-review-reject,
+  .btn-review-remove {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* ==========================================================================
+   PROFILE PAGE
+   ========================================================================== */
+
+.profile-page {
+  min-height: 100vh;
+  background: var(--beige);
+  padding: calc(var(--nav-height) + 2.5rem) 1.5rem 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Card */
+.profile-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 14px;
+  padding: 2.4rem 2.2rem 2.6rem;
+  box-shadow: 0 14px 34px rgba(44, 24, 16, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+/* Avatar circle */
+.profile-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--burgundy);
+  color: var(--beige);
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
+}
+
+/* Title */
+.profile-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+  color: var(--text-dark);
+  text-align: center;
+  margin-top: -0.4rem;
+}
+
+/* Read-only meta rows */
+.profile-meta {
+  background: var(--beige);
+  border: 1px solid var(--beige-darker);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.profile-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--beige-dark);
+  font-size: 0.88rem;
+}
+
+.profile-meta-row:last-child {
+  border-bottom: none;
+}
+
+.profile-meta-row:nth-child(even) {
+  background: var(--warm-white);
+}
+
+.profile-meta-label {
+  flex: 0 0 110px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.profile-meta-value {
+  color: var(--text-dark);
+  font-weight: 400;
+}
+
+/* Feedback messages */
+.profile-alert {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  background: rgba(141, 0, 0, 0.06);
+  border: 1px solid rgba(141, 0, 0, 0.18);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.profile-success {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #2d7a3e;
+  background: rgba(45, 122, 62, 0.07);
+  border: 1px solid rgba(45, 122, 62, 0.2);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+/* Form */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.profile-form .field input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--text-dark);
+  background: var(--warm-white);
+  border: 1px solid var(--beige-darker);
+  border-radius: 6px;
+  padding: 0.7rem 0.85rem;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.profile-form .field input:focus {
+  outline: none;
+  border-color: var(--burgundy);
+  box-shadow: 0 0 0 3px rgba(141, 0, 0, 0.09);
+}
+
+/* Submit button */
+.profile-submit-btn {
+  width: 100%;
+  text-align: center;
+  padding: 0.85rem;
+  font-size: 0.92rem;
+  margin-top: 0.4rem;
+}
+
+.profile-submit-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .profile-page {
+    padding: calc(var(--nav-height) + 1.5rem) 1rem 3.5rem;
+  }
+
+  .profile-card {
+    padding: 1.8rem 1.4rem 2rem;
+    gap: 1.3rem;
+  }
+
+  .profile-meta-label {
+    flex: 0 0 90px;
+  }
+}
+/* ==========================================================================
+   CAMPAIGNS PAGE (standalone filter + grid page)
+   ========================================================================== */
+
+.campaigns-page {
+  min-height: 100vh;
+  background: var(--warm-white);
+  padding: calc(var(--nav-height) + 2.5rem) 2.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.campaigns-page-header {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto 2.2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--beige-darker);
+}
+
+.campaigns-page-header .sec-title {
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+
+.campaigns-page-header .sec-desc {
+  text-align: left;
+}
+
+.campaigns-page .filter-bar {
+  margin-bottom: 2.2rem;
+}
+
+.campaigns-page-results {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* RTL alignment */
+html[dir="rtl"] .campaigns-page-header .sec-title,
+html[dir="rtl"] .campaigns-page-header .sec-desc {
+  text-align: right;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .campaigns-page {
+    padding: calc(var(--nav-height) + 2rem) 1.5rem 4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .campaigns-page {
+    padding: calc(var(--nav-height) + 1.5rem) 1rem 3.5rem;
+  }
+
+  .campaigns-page-header {
+    margin-bottom: 1.6rem;
+    padding-bottom: 1.4rem;
+  }
+}

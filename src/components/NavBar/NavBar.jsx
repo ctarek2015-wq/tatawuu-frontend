@@ -24,7 +24,9 @@ const NavBar = () => {
     <nav className="navbar">
       {/* --- logo, top-left --- */}
       <Link to="/" className="nav-logo" onClick={close}>
-        <img src={logo} alt="Tatawwu'" />
+        <h2 className="sec-title">
+          <em>Tatawwu&rsquo;</em>
+        </h2>
       </Link>
 
       {/* --- primary links, middle --- */}
@@ -34,6 +36,15 @@ const NavBar = () => {
             {t("Explore")}
           </NavLink>
         </li>
+        <li>
+          <Link
+            to="/activities"
+            className={location.pathname === "/activities" ? "active" : ""}
+          >
+            {t("Campaigns")}
+          </Link>
+        </li>
+
         <li>
           <NavLink to="/organizations" className={linkClass} onClick={close}>
             {t("Organizations")}

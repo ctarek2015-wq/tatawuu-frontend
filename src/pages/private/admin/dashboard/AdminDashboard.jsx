@@ -7,23 +7,36 @@ const AdminDashboard = () => {
   const { t } = useContext(LanguageContext);
   const [activeTab, setActiveTab] = useState("organizations");
 
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-  };
-
   return (
-    <main>
-      <h1>{t("Moderation")}</h1>
-      <div>
-        <button type="button" onClick={() => handleTabChange("organizations")}>{t("Organizations")}</button>
-        <button type="button" onClick={() => handleTabChange("campaigns")}>{t("Campaigns")}</button>
+    <main className="admin-dashboard-page">
+      <div className="admin-dashboard-header">
+        <h1 className="admin-dashboard-title">{t("Moderation")}</h1>
       </div>
 
-      {activeTab === "organizations" ? (
-        <OrganizationReview />
-      ) : (
-        <CampaignReview />
-      )}
+      <div className="admin-tab-bar">
+        <button
+          type="button"
+          className={`admin-tab-btn${activeTab === "organizations" ? " is-active" : ""}`}
+          onClick={() => setActiveTab("organizations")}
+        >
+          {t("Organizations")}
+        </button>
+        <button
+          type="button"
+          className={`admin-tab-btn${activeTab === "campaigns" ? " is-active" : ""}`}
+          onClick={() => setActiveTab("campaigns")}
+        >
+          {t("Campaigns")}
+        </button>
+      </div>
+
+      <div className="admin-tab-content">
+        {activeTab === "organizations" ? (
+          <OrganizationReview />
+        ) : (
+          <CampaignReview />
+        )}
+      </div>
     </main>
   );
 };
