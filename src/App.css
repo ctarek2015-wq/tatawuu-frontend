@@ -3304,3 +3304,598 @@ html[dir="rtl"] .campaigns-page-header .sec-desc {
     width: 100%;
   }
 }
+/* ==========================================================================
+   CAMPAIGN MANAGER PAGE
+   ========================================================================== */
+.campaign-manager-page {
+  min-height: 100vh;
+  background: var(--warm-white);
+  padding: calc(var(--nav-height) + 2.5rem) 2.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.manager-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--beige-darker);
+  flex-wrap: wrap;
+}
+
+.manager-back-link {
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.manager-actions-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.manager-actions-row .field-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 180px;
+}
+
+.manager-actions-row .field-status select {
+  height: 44px;
+  padding: 0 0.9rem;
+  border: 1px solid var(--beige-darker);
+  border-radius: 8px;
+  background: var(--warm-white);
+  font-size: 0.95rem;
+}
+
+.manager-notice {
+  background: #fbf0e0;
+  border: 1px solid #e8d4a8;
+  color: #6b4a1a;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+/* ---- Campaign cards ---- */
+.manager-campaign-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.manager-campaign-card {
+  background: #fff;
+  border: 1px solid var(--beige-darker);
+  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.manager-campaign-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.manager-campaign-title {
+  font-family: var(--font-serif, serif);
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.manager-campaign-dates {
+  font-size: 0.9rem;
+  color: #5c4a3a;
+  margin: 0;
+}
+
+.manager-tz {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.manager-campaign-meta {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #4a3c30;
+}
+
+.manager-review-reason {
+  font-size: 0.88rem;
+  background: #fdecec;
+  border: 1px solid #f3c6c6;
+  color: #8a2c2c;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  margin: 0.2rem 0 0;
+}
+
+.manager-campaign-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+/* ---- Status badges ---- */
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.status-draft {
+  background: #eee;
+  color: #555;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #8a6d1a;
+}
+
+.status-approved {
+  background: #dcf5e3;
+  color: #1e7a3f;
+}
+
+.status-rejected {
+  background: #fde2e2;
+  color: #a12c2c;
+}
+
+.status-removed {
+  background: #eee;
+  color: #888;
+}
+
+.status-completed {
+  background: #e0e9f7;
+  color: #2c4d8a;
+}
+
+.status-cancelled {
+  background: #f1e0e0;
+  color: #8a2c2c;
+}
+
+/* ---- Buttons ---- */
+.btn-primary,
+.btn-soft,
+.btn-danger,
+.btn-danger-outline,
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition:
+    transform 0.1s ease,
+    opacity 0.15s ease;
+}
+
+.btn-primary {
+  background: #7a1a1a;
+  color: #fff;
+  border-color: #5c1212;
+  padding: 0.7rem 1.4rem;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+}
+
+.btn-soft {
+  background: var(--warm-white);
+  color: #3d2b1f;
+  border-color: var(--beige-darker);
+  padding: 0.7rem 1.2rem;
+}
+
+.btn-soft:hover {
+  background: #f3ece0;
+}
+
+.btn-danger {
+  background: #a12c2c;
+  color: #fff;
+  border-color: #7a1a1a;
+  padding: 0.7rem 1.2rem;
+}
+
+.btn-danger:hover {
+  transform: translateY(-1px);
+}
+
+.btn-danger-outline {
+  background: transparent;
+  color: #a12c2c;
+  border-color: #a12c2c;
+  padding: 0.7rem 1.2rem;
+}
+
+.btn-danger-outline:hover {
+  background: #fdecec;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: #3d2b1f;
+  text-decoration: underline;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+.btn-sm {
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+}
+
+button:disabled,
+a.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* RTL */
+html[dir="rtl"] .manager-header,
+html[dir="rtl"] .manager-actions-row,
+html[dir="rtl"] .manager-campaign-top {
+  direction: rtl;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .campaign-manager-page {
+    padding: calc(var(--nav-height) + 2rem) 1.5rem 4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .campaign-manager-page {
+    padding: calc(var(--nav-height) + 1.5rem) 1rem 3.5rem;
+    gap: 1.2rem;
+  }
+
+  .manager-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .manager-actions-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .manager-actions-row .field-status {
+    width: 100%;
+  }
+
+  .manager-campaign-actions {
+    flex-direction: column;
+  }
+
+  .manager-campaign-actions .btn-primary,
+  .manager-campaign-actions .btn-soft,
+  .manager-campaign-actions .btn-danger,
+  .manager-campaign-actions .btn-danger-outline {
+    width: 100%;
+    text-align: center;
+  }
+
+  .manager-campaign-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* ==========================================================================
+   CAMPAIGN FORM PAGE
+   ========================================================================== */
+.campaign-form-page {
+  min-height: 100vh;
+  background: var(--warm-white);
+  padding: calc(var(--nav-height) + 2.5rem) 2.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.campaign-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.form-section {
+  background: #fff;
+  border: 1px solid var(--beige-darker);
+  border-radius: 12px;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-section-title {
+  font-family: var(--font-serif, serif);
+  font-size: 1.05rem;
+  margin: 0 0 0.2rem;
+  color: #3d2b1f;
+  border-bottom: 1px solid var(--beige-darker);
+  padding-bottom: 0.6rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.form-grid .field-full {
+  grid-column: 1 / -1;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #3d2b1f;
+}
+
+.field input,
+.field select,
+.field textarea {
+  height: 44px;
+  padding: 0 0.9rem;
+  border: 1px solid var(--beige-darker);
+  border-radius: 8px;
+  background: var(--warm-white);
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: inherit;
+  width: 100%;
+}
+
+.field textarea {
+  height: auto;
+  padding: 0.7rem 0.9rem;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: #7a1a1a;
+  box-shadow: 0 0 0 3px rgba(122, 26, 26, 0.12);
+}
+
+.form-map-wrap {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--beige-darker);
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+
+/* RTL */
+html[dir="rtl"] .form-actions,
+html[dir="rtl"] .manager-header {
+  direction: rtl;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .campaign-form-page {
+    padding: calc(var(--nav-height) + 2rem) 1.5rem 4rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.8rem;
+  }
+
+  .form-actions .btn-primary {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ==========================================================================
+   PARTICIPANTS PAGE
+   ========================================================================== */
+.participants-page {
+  min-height: 100vh;
+  background: var(--warm-white);
+  padding: calc(var(--nav-height) + 2.5rem) 2.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.participants-status-row {
+  display: flex;
+}
+
+.participants-map-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--beige-darker);
+}
+
+.participants-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.participant-row {
+  background: #fff;
+  border: 1px solid var(--beige-darker);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.participant-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 200px;
+}
+
+.participant-name {
+  font-family: var(--font-serif, serif);
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.participant-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.participant-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.attendance-picker {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+}
+
+.field-attendance {
+  min-width: 160px;
+}
+
+.field-attendance select {
+  height: 40px;
+}
+
+.manager-notice-sm {
+  font-size: 0.82rem;
+  padding: 0.5rem 0.8rem;
+  margin: 0;
+}
+
+/* Attendance badges (reuse status-badge base, new palette) */
+.attendance-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.attendance-unmarked {
+  background: #eee;
+  color: #777;
+}
+
+.attendance-attended {
+  background: #dcf5e3;
+  color: #1e7a3f;
+}
+
+.attendance-absent {
+  background: #fde2e2;
+  color: #a12c2c;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .participants-page {
+    padding: calc(var(--nav-height) + 2rem) 1.5rem 4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .participants-page {
+    padding: calc(var(--nav-height) + 1.5rem) 1rem 3.5rem;
+  }
+
+  .participant-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .attendance-picker {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .attendance-picker .btn-primary {
+    width: 100%;
+    text-align: center;
+  }
+
+  .participant-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .participant-actions > button,
+  .participant-actions > a {
+    width: 100%;
+    text-align: center;
+  }
+}

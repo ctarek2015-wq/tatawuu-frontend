@@ -5,6 +5,17 @@ import { formatDateTime } from "../../../../utils/dates.js";
 import * as campaignService from "../../../../services/campaignService.js";
 import * as organizationService from "../../../../services/organizationService.js";
 
+const statusOptions = [
+  "All",
+  "Draft",
+  "Pending",
+  "Approved",
+  "Rejected",
+  "Removed",
+  "Completed",
+  "Cancelled",
+];
+
 const CampaignManager = () => {
   const { t, tError, language } = useContext(LanguageContext);
   const [campaigns, setCampaigns] = useState([]);
@@ -37,7 +48,9 @@ const CampaignManager = () => {
     setMessage("");
     try {
       const updated = await campaignService.submit(id);
-      setCampaigns(campaigns.map((campaign) => campaign._id === id ? updated : campaign));
+      setCampaigns(
+        campaigns.map((campaign) => (campaign._id === id ? updated : campaign)),
+      );
     } catch (err) {
       setMessage(err.message);
     } finally {
@@ -50,7 +63,9 @@ const CampaignManager = () => {
     setMessage("");
     try {
       const updated = await campaignService.cancel(id);
-      setCampaigns(campaigns.map((campaign) => campaign._id === id ? updated : campaign));
+      setCampaigns(
+        campaigns.map((campaign) => (campaign._id === id ? updated : campaign)),
+      );
     } catch (err) {
       setMessage(err.message);
     } finally {
@@ -71,42 +86,167 @@ const CampaignManager = () => {
     }
   };
 
-  if (loading) return <p>{t("Loading campaigns...")}</p>;
-  const filteredCampaigns = campaigns.filter((campaign) => status === "All" || campaign.status === status);
+  if (loading) return <p className="state-msg">{t("Loading campaigns...")}</p>;
+  const filteredCampaigns = campaigns.filter(
+    (campaign) => status === "All" || campaign.status === status,
+  );
 
   return (
-    <main>
-      <h1>{t("My campaigns")}</h1>
-      <Link to="/organizer">{t("Organizer dashboard")}</Link>
-      <p>{tError(message)}</p>
-      {organization ? <Link to="/organizer/campaigns/new">{t("Create campaign")}</Link> : <Link to="/organizer/organization">{t("Create your organization first")}</Link>}
-      {organization && organization.status !== "Approved" && <p>{t("Your organization needs approval before you can submit campaigns.")}</p>}
-      <label>
-          {t("Status")}
-          <select value={status} onChange={(evt) => setStatus(evt.target.value)}>
-          {["All", "Draft", "Pending", "Approved", "Rejected", "Removed", "Completed", "Cancelled"].map((status) => <option key={status} value={status}>{t(status)}</option>)}
-        </select>
-      </label>
-      {filteredCampaigns.length === 0 && <p>{t("No campaigns match this status.")}</p>}
-      {filteredCampaigns.map((campaign) => {
-        const started = new Date(campaign.startsAt) <= new Date();
-        const terminal = ["Cancelled", "Completed", "Removed"].includes(campaign.status);
-        const canSubmit = !started && ["Draft", "Rejected"].includes(campaign.status) && organization?.status === "Approved";
-        return (
-          <article key={campaign._id}>
-            <h2><bdi>{campaign.title}</bdi></h2>
-            <p>{t("Status")}: {t(campaign.status)}</p>
-            <p>{formatDateTime(campaign.startsAt, language)} — {formatDateTime(campaign.endsAt, language)} ({t("Bahrain time")})</p>
-            <p>{t("{count} participants; {places} places available", { count: campaign.registeredCount, places: campaign.availablePlaces })}</p>
-            {campaign.reviewReason && <p>{t("Review feedback")}: <bdi>{campaign.reviewReason}</bdi></p>}
-            {!started && !terminal && <Link to={`/organizer/campaigns/${campaign._id}/edit`}>{t("Edit")}</Link>}
-            <Link to={`/organizer/campaigns/${campaign._id}/participants`}>{t("Participants and certificates")}</Link>
-            {canSubmit && <button disabled={busy} onClick={() => handleSubmit(campaign._id)}>{t("Submit for review")}</button>}
-            {!campaign.wasPublished && campaign.participants.length === 0 && <button disabled={busy} onClick={() => handleDelete(campaign._id)}>{t("Delete")}</button>}
-            {campaign.wasPublished && !terminal && <button disabled={busy} onClick={() => handleCancel(campaign._id)}>{t("Cancel campaign")}</button>}
-          </article>
-        );
-      })}
+    <main className="campaign-manager-page">
+      <div className="manager-header">
+        <div className="sec-heading" style={{ margin: 0, textAlign: "left" }}>
+          <h1 className="sec-title">
+            {t("My")} <em>{t("campaigns")}</em>
+          </h1>
+          <p className="sec-desc">
+            {organization
+              ? t("Manage, submit, and track your organization's activities.")
+              : t("Set up your organization to start creating activities.")}
+          </p>
+        </div>
+        <Link to="/organizer" className="btn-link manager-back-link">
+          {t("Organizer dashboard")}
+        </Link>
+      </div>
+
+      {message && (
+        <p className="state-msg state-error" role="alert">
+          {tError(message)}
+        </p>
+      )}
+
+      <div className="manager-actions-row">
+        {organization ? (
+          <Link to="/organizer/campaigns/new" className="btn-primary">
+            {t("Create campaign")}
+          </Link>
+        ) : (
+          <Link to="/organizer/organization" className="btn-primary">
+            {t("Create your organization first")}
+          </Link>
+        )}
+
+        <label className="field field-status">
+          <span className="field-label">{t("Status")}</span>
+          <select
+            value={status}
+            onChange={(evt) => setStatus(evt.target.value)}
+          >
+            {statusOptions.map((s) => (
+              <option key={s} value={s}>
+                {t(s)}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      {organization && organization.status !== "Approved" && (
+        <p className="manager-notice">
+          {t(
+            "Your organization needs approval before you can submit campaigns.",
+          )}
+        </p>
+      )}
+
+      <div className="manager-campaign-list">
+        {filteredCampaigns.length === 0 && (
+          <p className="state-msg">{t("No campaigns match this status.")}</p>
+        )}
+
+        {filteredCampaigns.map((campaign) => {
+          const started = new Date(campaign.startsAt) <= new Date();
+          const terminal = ["Cancelled", "Completed", "Removed"].includes(
+            campaign.status,
+          );
+          const canSubmit =
+            !started &&
+            ["Draft", "Rejected"].includes(campaign.status) &&
+            organization?.status === "Approved";
+          const statusClass = `status-badge status-${campaign.status.toLowerCase()}`;
+
+          return (
+            <article key={campaign._id} className="manager-campaign-card">
+              <div className="manager-campaign-top">
+                <h2 className="manager-campaign-title">
+                  <bdi>{campaign.title}</bdi>
+                </h2>
+                <span className={statusClass}>{t(campaign.status)}</span>
+              </div>
+
+              <p className="manager-campaign-dates">
+                {formatDateTime(campaign.startsAt, language)} —{" "}
+                {formatDateTime(campaign.endsAt, language)}{" "}
+                <span className="manager-tz">({t("Bahrain time")})</span>
+              </p>
+
+              <p className="manager-campaign-meta">
+                {t("{count} participants; {places} places available", {
+                  count: campaign.registeredCount,
+                  places: campaign.availablePlaces,
+                })}
+              </p>
+
+              {campaign.reviewReason && (
+                <p className="manager-review-reason">
+                  <strong>{t("Review feedback")}:</strong>{" "}
+                  <bdi>{campaign.reviewReason}</bdi>
+                </p>
+              )}
+
+              <div className="manager-campaign-actions">
+                {!started && !terminal && (
+                  <Link
+                    to={`/organizer/campaigns/${campaign._id}/edit`}
+                    className="btn-soft btn-sm"
+                  >
+                    {t("Edit")}
+                  </Link>
+                )}
+
+                <Link
+                  to={`/organizer/campaigns/${campaign._id}/participants`}
+                  className="btn-soft btn-sm"
+                >
+                  {t("Participants and certificates")}
+                </Link>
+
+                {canSubmit && (
+                  <button
+                    disabled={busy}
+                    onClick={() => handleSubmit(campaign._id)}
+                    className="btn-primary btn-sm"
+                  >
+                    {t("Submit for review")}
+                  </button>
+                )}
+
+                {!campaign.wasPublished &&
+                  campaign.participants.length === 0 && (
+                    <button
+                      disabled={busy}
+                      onClick={() => handleDelete(campaign._id)}
+                      className="btn-danger btn-sm"
+                    >
+                      {t("Delete")}
+                    </button>
+                  )}
+
+                {campaign.wasPublished && !terminal && (
+                  <button
+                    disabled={busy}
+                    onClick={() => handleCancel(campaign._id)}
+                    className="btn-danger-outline btn-sm"
+                  >
+                    {t("Cancel campaign")}
+                  </button>
+                )}
+              </div>
+            </article>
+          );
+          a;
+        })}
+      </div>
     </main>
   );
 };

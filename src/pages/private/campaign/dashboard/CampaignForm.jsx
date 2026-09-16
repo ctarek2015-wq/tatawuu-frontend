@@ -103,7 +103,12 @@ const CampaignForm = () => {
     }
     setSubmitting(true);
     try {
-      const data = { ...formData, startsAt, endsAt, capacity: Number(formData.capacity) };
+      const data = {
+        ...formData,
+        startsAt,
+        endsAt,
+        capacity: Number(formData.capacity),
+      };
       if (file) {
         const image = await uploadService.upload(file);
         data.coverImage = image.url;
@@ -122,75 +127,270 @@ const CampaignForm = () => {
     }
   };
 
-  if (loading) return <p>{t("Loading campaign form...")}</p>;
+  if (loading)
+    return <p className="state-msg">{t("Loading campaign form...")}</p>;
+
   if (!organization) {
-    return <main><p>{tError(message || "Create an organization before adding a campaign.")}</p><Link to="/organizer/organization">{t("My organization")}</Link></main>;
+    return (
+      <main className="campaign-form-page">
+        <p className="state-msg state-error">
+          {tError(
+            message || "Create an organization before adding a campaign.",
+          )}
+        </p>
+        <Link to="/organizer/organization" className="btn-primary">
+          {t("My organization")}
+        </Link>
+      </main>
+    );
   }
-  if (id && !campaign) return <main><p>{tError(message)}</p><Link to="/organizer/campaigns">{t("My campaigns")}</Link></main>;
-  if (campaign && (new Date(campaign.startsAt) <= new Date() || ["Cancelled", "Completed", "Removed"].includes(campaign.status))) {
-    return <main><p>{t("This campaign can no longer be edited.")}</p><Link to="/organizer/campaigns">{t("My campaigns")}</Link></main>;
+
+  if (id && !campaign) {
+    return (
+      <main className="campaign-form-page">
+        <p className="state-msg state-error">{tError(message)}</p>
+        <Link to="/organizer/campaigns" className="btn-primary">
+          {t("My campaigns")}
+        </Link>
+      </main>
+    );
+  }
+
+  if (
+    campaign &&
+    (new Date(campaign.startsAt) <= new Date() ||
+      ["Cancelled", "Completed", "Removed"].includes(campaign.status))
+  ) {
+    return (
+      <main className="campaign-form-page">
+        <p className="state-msg">
+          {t("This campaign can no longer be edited.")}
+        </p>
+        <Link to="/organizer/campaigns" className="btn-primary">
+          {t("My campaigns")}
+        </Link>
+      </main>
+    );
   }
 
   return (
-    <main>
-      <h1>{t(id ? "Edit campaign" : "New campaign")}</h1>
-      <p>{t("Country: Bahrain")}</p>
-      <p>{t("All dates and times are in Bahrain time.")}</p>
-      <p>{tError(message)}</p>
-      <form onSubmit={handleSubmit}>
-        <label>
-          {t("Title")}
-          <input required dir="auto" name="title" value={formData.title} onChange={handleChange} />
-        </label>
-        <label>
-          {t("Description")}
-          <textarea required dir="auto" name="description" value={formData.description} onChange={handleChange} />
-        </label>
-        <label>
-          {t("Category")}
-          <select name="category" value={formData.category} onChange={handleChange}>
-            {categories.map((category) => <option key={category} value={category}>{t(category)}</option>)}
-          </select>
-        </label>
-        <label>
-          {t("Governorate")}
-          <select name="governorate" value={formData.governorate} onChange={handleChange}>
-            {governorates.map((governorate) => <option key={governorate} value={governorate}>{t(governorate)}</option>)}
-          </select>
-        </label>
-        <label>
-          {t("Area")}
-          <input required dir="auto" name="area" value={formData.area} onChange={handleChange} />
-        </label>
-        <label>
-          {t("Venue")}
-          <input required dir="auto" name="venue" value={formData.venue} onChange={handleChange} />
-        </label>
-        <label>
-          {t("Address")}
-          <input required dir="auto" name="address" value={formData.address} onChange={handleChange} />
-        </label>
-        <label>
-          {t("Starts at (Bahrain time)")}
-          <input required type="datetime-local" dir="ltr" name="startsAt" value={formData.startsAt} onChange={handleChange} />
-        </label>
-        <label>
-          {t("Ends at (Bahrain time)")}
-          <input required type="datetime-local" dir="ltr" name="endsAt" value={formData.endsAt} onChange={handleChange} />
-        </label>
-        <label>
-          {t("Capacity")}
-          <input required min="1" step="1" type="number" dir="ltr" name="capacity" value={formData.capacity} onChange={handleChange} />
-        </label>
-        {Number.isFinite(organization.latitude) && Number.isFinite(organization.longitude) && <button type="button" onClick={() => setFormData({ ...formData, latitude: organization.latitude, longitude: organization.longitude })}>
-          {t("Use organization location")}
-        </button>}
-        <MapPicker latitude={formData.latitude} longitude={formData.longitude} onChange={({ latitude, longitude }) => setFormData({ ...formData, latitude, longitude })} />
-        <ImagePicker label={t("Campaign cover")} url={formData.coverImage} onFileChange={setFile} onRemove={handleRemoveImage} />
-        {!id && <p>{t("Your campaign is saved as a draft. Submit it for review from My campaigns.")}</p>}
-        {campaign?.status === "Approved" && <p>{t("Editing this campaign sends it for review again.")}</p>}
-        <button disabled={submitting} type="submit">{t(submitting ? "Saving..." : "Save campaign")}</button>
-        <Link to="/organizer/campaigns">{t("Cancel")}</Link>
+    <main className="campaign-form-page">
+      <div className="sec-heading" style={{ margin: 0, textAlign: "left" }}>
+        <h1 className="sec-title">
+          {t(id ? "Edit" : "New")} <em>{t("campaign")}</em>
+        </h1>
+        <p className="sec-desc">
+          {t("Country: Bahrain")} —{" "}
+          {t("All dates and times are in Bahrain time.")}
+        </p>
+      </div>
+
+      {message && (
+        <p className="state-msg state-error" role="alert">
+          {tError(message)}
+        </p>
+      )}
+
+      <form onSubmit={handleSubmit} className="campaign-form">
+        <div className="form-section">
+          <h2 className="form-section-title">{t("Basics")}</h2>
+          <div className="form-grid">
+            <label className="field field-full">
+              <span className="field-label">{t("Title")}</span>
+              <input
+                required
+                dir="auto"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+              />
+            </label>
+
+            <label className="field field-full">
+              <span className="field-label">{t("Description")}</span>
+              <textarea
+                required
+                dir="auto"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows={4}
+              />
+            </label>
+
+            <label className="field">
+              <span className="field-label">{t("Category")}</span>
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {t(category)}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="field">
+              <span className="field-label">{t("Governorate")}</span>
+              <select
+                name="governorate"
+                value={formData.governorate}
+                onChange={handleChange}
+              >
+                {governorates.map((governorate) => (
+                  <option key={governorate} value={governorate}>
+                    {t(governorate)}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div className="form-section">
+          <h2 className="form-section-title">{t("Location")}</h2>
+          <div className="form-grid">
+            <label className="field">
+              <span className="field-label">{t("Area")}</span>
+              <input
+                required
+                dir="auto"
+                name="area"
+                value={formData.area}
+                onChange={handleChange}
+              />
+            </label>
+
+            <label className="field">
+              <span className="field-label">{t("Venue")}</span>
+              <input
+                required
+                dir="auto"
+                name="venue"
+                value={formData.venue}
+                onChange={handleChange}
+              />
+            </label>
+
+            <label className="field field-full">
+              <span className="field-label">{t("Address")}</span>
+              <input
+                required
+                dir="auto"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+
+          {Number.isFinite(organization.latitude) &&
+            Number.isFinite(organization.longitude) && (
+              <button
+                type="button"
+                className="btn-soft btn-sm"
+                onClick={() =>
+                  setFormData({
+                    ...formData,
+                    latitude: organization.latitude,
+                    longitude: organization.longitude,
+                  })
+                }
+              >
+                {t("Use organization location")}
+              </button>
+            )}
+
+          <div className="form-map-wrap">
+            <MapPicker
+              latitude={formData.latitude}
+              longitude={formData.longitude}
+              onChange={({ latitude, longitude }) =>
+                setFormData({ ...formData, latitude, longitude })
+              }
+            />
+          </div>
+        </div>
+
+        <div className="form-section">
+          <h2 className="form-section-title">{t("Schedule and capacity")}</h2>
+          <div className="form-grid">
+            <label className="field">
+              <span className="field-label">
+                {t("Starts at (Bahrain time)")}
+              </span>
+              <input
+                required
+                type="datetime-local"
+                dir="ltr"
+                name="startsAt"
+                value={formData.startsAt}
+                onChange={handleChange}
+              />
+            </label>
+
+            <label className="field">
+              <span className="field-label">{t("Ends at (Bahrain time)")}</span>
+              <input
+                required
+                type="datetime-local"
+                dir="ltr"
+                name="endsAt"
+                value={formData.endsAt}
+                onChange={handleChange}
+              />
+            </label>
+
+            <label className="field">
+              <span className="field-label">{t("Capacity")}</span>
+              <input
+                required
+                min="1"
+                step="1"
+                type="number"
+                dir="ltr"
+                name="capacity"
+                value={formData.capacity}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+        </div>
+
+        <div className="form-section">
+          <h2 className="form-section-title">{t("Cover image")}</h2>
+          <ImagePicker
+            label={t("Campaign cover")}
+            url={formData.coverImage}
+            onFileChange={setFile}
+            onRemove={handleRemoveImage}
+          />
+        </div>
+
+        {!id && (
+          <p className="manager-notice">
+            {t(
+              "Your campaign is saved as a draft. Submit it for review from My campaigns.",
+            )}
+          </p>
+        )}
+        {campaign?.status === "Approved" && (
+          <p className="manager-notice">
+            {t("Editing this campaign sends it for review again.")}
+          </p>
+        )}
+
+        <div className="form-actions">
+          <button disabled={submitting} type="submit" className="btn-primary">
+            {t(submitting ? "Saving..." : "Save campaign")}
+          </button>
+          <Link to="/organizer/campaigns" className="btn-link">
+            {t("Cancel")}
+          </Link>
+        </div>
       </form>
     </main>
   );

@@ -24,8 +24,15 @@ const OrganizationList = () => {
 
   return (
     <main className="org-list-page">
-      <div className="sec-heading">
-        <h1 className="sec-title">{t("Organizations")}</h1>
+      <div className="sec-heading" style={{ margin: 0, textAlign: "left" }}>
+        <h1 className="sec-title">
+          {t("Discover")} <em>{t("Organizations")}</em>
+        </h1>
+        <p className="sec-desc">
+          {t(
+            "Browse verified organizations making a difference in your community.",
+          )}
+        </p>
       </div>
 
       {loading && <p className="state-msg">{t("Loading organizations...")}</p>}
