@@ -1,137 +1,104 @@
 import { useState } from "react";
+import ImagePicker from "../../../../components/ImagePicker/ImagePicker.jsx";
+import { governorates } from "../../../../utils/options.js";
+import * as uploadService from "../../../../services/uploadService.js";
 
-const governorates = ["Capital", "Northern", "Southern", "Muharraq", "Riffa"];
-
-export default function OrganizationForm({
-  initialData,
-  onCancel,
-  onSubmit,
-  submitting,
-}) {
-  const [formData, setFormData] = useState(initialData);
-  const [errors, setErrors] = useState({});
+const OrganizationForm = ({ organization, onSubmit, onCancel }) => {
+  const [formData, setFormData] = useState({
+    name: organization?.name || "",
+    description: organization?.description || "",
+    governorate: organization?.governorate || governorates[0],
+    area: organization?.area || "",
+    address: organization?.address || "",
+    contactEmail: organization?.contactEmail || "",
+    contactPhone: organization?.contactPhone || "",
+    whatsappNumber: organization?.whatsappNumber || "",
+    website: organization?.website || "",
+    logo: organization?.logo || "",
+    logoPublicId: organization?.logoPublicId || "",
+  });
+  const [file, setFile] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleChange = (evt) => {
-    const { name, value } = evt.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [evt.target.name]: evt.target.value });
   };
 
-  const validate = () => {
-    const next = {};
-    if (!formData.name.trim()) next.name = "Organization name is required.";
-    if (!formData.description.trim())
-      next.description = "Description is required.";
-    if (!formData.area.trim()) next.area = "Area is required.";
-    if (!formData.address.trim()) next.address = "Address is required.";
-    if (!formData.contactEmail.trim())
-      next.contactEmail = "Contact email is required.";
-    setErrors(next);
-    return Object.keys(next).length === 0;
+  const handleRemoveImage = () => {
+    setFile(null);
+    setFormData({ ...formData, logo: "", logoPublicId: "" });
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
-    if (!validate()) return;
-    onSubmit(formData);
+    setSubmitting(true);
+    setMessage("");
+    try {
+      const data = { ...formData };
+      if (file) {
+        const image = await uploadService.upload(file);
+        data.logo = image.url;
+        data.logoPublicId = image.publicId;
+      }
+      await onSubmit(data);
+    } catch (err) {
+      setMessage(err.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <p>{message}</p>
       <label>
         Organization name
-        <input name="name" value={formData.name} onChange={handleChange} />
-        {errors.name && <span>{errors.name}</span>}
+        <input required name="name" value={formData.name} onChange={handleChange} />
       </label>
-
       <label>
         Description
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-        {errors.description && <span>{errors.description}</span>}
+        <textarea required name="description" value={formData.description} onChange={handleChange} />
       </label>
-
       <p>Country: Bahrain</p>
-
       <label>
         Governorate
-        <select
-          name="governorate"
-          value={formData.governorate}
-          onChange={handleChange}
-        >
-          {governorates.map((g) => (
-            <option key={g} value={g}>
-              {g}
-            </option>
+        <select name="governorate" value={formData.governorate} onChange={handleChange}>
+          {governorates.map((governorate) => (
+            <option key={governorate} value={governorate}>{governorate}</option>
           ))}
         </select>
       </label>
-
       <label>
         Area
-        <input name="area" value={formData.area} onChange={handleChange} />
-        {errors.area && <span>{errors.area}</span>}
+        <input required name="area" value={formData.area} onChange={handleChange} />
       </label>
-
       <label>
-        Organization address
-        <input
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-        />
-        {errors.address && <span>{errors.address}</span>}
+        Address
+        <input required name="address" value={formData.address} onChange={handleChange} />
       </label>
-
       <label>
-        Contact email (required, public)
-        <input
-          type="email"
-          name="contactEmail"
-          value={formData.contactEmail}
-          onChange={handleChange}
-        />
-        {errors.contactEmail && <span>{errors.contactEmail}</span>}
+        Public email
+        <input required type="email" name="contactEmail" value={formData.contactEmail} onChange={handleChange} />
       </label>
-
+      <label>
+        Public phone (optional)
+        <input type="tel" name="contactPhone" value={formData.contactPhone} onChange={handleChange} />
+      </label>
+      <label>
+        Public WhatsApp number (optional)
+        <input type="tel" name="whatsappNumber" value={formData.whatsappNumber} onChange={handleChange} />
+      </label>
       <label>
         Website (optional)
-        <input
-          name="website"
-          value={formData.website}
-          onChange={handleChange}
-        />
+        <input type="url" name="website" value={formData.website} onChange={handleChange} />
       </label>
-
-      <label>
-        Phone (optional, public)
-        <input
-          name="contactPhone"
-          value={formData.contactPhone}
-          onChange={handleChange}
-        />
-      </label>
-
-      <label>
-        WhatsApp number (optional, public)
-        <input
-          name="whatsappNumber"
-          value={formData.whatsappNumber}
-          onChange={handleChange}
-        />
-      </label>
-
-      <div>
-        <button type="submit" disabled={submitting}>
-          {submitting ? "Submitting..." : "Save and submit for approval"}
-        </button>
-        <button type="button" onClick={onCancel} disabled={submitting}>
-          Cancel
-        </button>
-      </div>
+      <ImagePicker label="Organization logo" url={formData.logo} onFileChange={setFile} onRemove={handleRemoveImage} />
+      <p>Saving submits your organization for review.</p>
+      <button disabled={submitting} type="submit">{submitting ? "Saving..." : "Save and submit"}</button>
+      <button disabled={submitting} type="button" onClick={onCancel}>Cancel</button>
     </form>
   );
-}
+};
+
+export default OrganizationForm;
