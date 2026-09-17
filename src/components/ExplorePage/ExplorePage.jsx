@@ -106,17 +106,6 @@ const ExplorePage = () => {
               <Link to="/activities" className="btn-primary-light">
                 {t("Explore activities")}
               </Link>
-              <button
-                type="button"
-                className="btn-outline-light hero-motion-toggle"
-                onClick={() => setVideoPaused(!videoPaused)}
-              >
-                {t(
-                  videoPaused
-                    ? "Play background video"
-                    : "Pause background video",
-                )}
-              </button>
             </div>
           </div>
           <div className="hero-scroll-cue" aria-hidden="true">
@@ -187,17 +176,6 @@ const ExplorePage = () => {
           )}
           {featured.length > 0 && (
             <>
-              <button
-                type="button"
-                className="btn-soft marquee-motion-toggle"
-                onClick={() => setMarqueePaused(!marqueePaused)}
-              >
-                {t(
-                  marqueePaused
-                    ? "Resume activity animation"
-                    : "Pause activity animation",
-                )}
-              </button>
               <div className="marquee">
                 <div
                   className={`marquee-track${marqueePaused ? " is-paused" : ""}`}
