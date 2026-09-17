@@ -43,7 +43,7 @@ const OrganizationView = ({ organization, onEdit }) => {
       </p>
 
       <p className="org-view-address">
-        {organization.address}, {organization.area},{" "}
+        <bdi>{organization.address}</bdi>, <bdi>{organization.area}</bdi>,{" "}
         {t(organization.governorate)}, {t("Bahrain")}
       </p>
 

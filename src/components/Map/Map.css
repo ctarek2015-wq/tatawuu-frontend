@@ -4,4 +4,6 @@
   max-width: 720px;
   direction: ltr;
   z-index: 0;
+  border-radius: 6px;
+  margin-block: 0.6rem;
 }

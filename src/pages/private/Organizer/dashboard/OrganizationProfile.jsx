@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import OrganizationForm from "./OrganizationForm.jsx";
 import OrganizationView from "./OrganizationView.jsx";
 import * as organizationService from "../../../../services/organizationService.js";
+import * as campaignService from "../../../../services/campaignService.js";
 
 const OrganizationProfile = () => {
   const { t, tError } = useContext(LanguageContext);
@@ -11,12 +12,19 @@ const OrganizationProfile = () => {
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const [hasCampaigns, setHasCampaigns] = useState(true);
+  const [deleting, setDeleting] = useState(false);
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     const fetchOrganization = async () => {
       try {
-        const data = await organizationService.showMine();
+        const [data, campaigns] = await Promise.all([
+          organizationService.showMine(),
+          campaignService.showMine(),
+        ]);
         setOrganization(data);
+        setHasCampaigns(campaigns.length > 0);
         setEditing(!data);
       } catch (err) {
         setMessage(err.message);
@@ -33,6 +41,22 @@ const OrganizationProfile = () => {
       : await organizationService.create(formData);
     setOrganization(savedOrganization);
     setEditing(false);
+    setSuccess("");
+  };
+
+  const handleDelete = async () => {
+    if (!window.confirm(t("Delete this organization?"))) return;
+    setDeleting(true);
+    setMessage("");
+    try {
+      await organizationService.remove(organization._id);
+      setOrganization(null);
+      setSuccess("Organization deleted.");
+    } catch (err) {
+      setMessage(err.message);
+    } finally {
+      setDeleting(false);
+    }
   };
 
   if (loading) {
@@ -61,6 +85,7 @@ const OrganizationProfile = () => {
           {tError(message)}
         </p>
       )}
+      {success && <p role="status">{t(success)}</p>}
 
       {editing ? (
         <OrganizationForm
@@ -82,6 +107,16 @@ const OrganizationProfile = () => {
             {t("Create organization")}
           </button>
         </div>
+      )}
+      {organization && !editing && !hasCampaigns && (
+        <button
+          type="button"
+          className="btn-danger-outline"
+          disabled={deleting}
+          onClick={handleDelete}
+        >
+          {t("Delete organization")}
+        </button>
       )}
     </main>
   );

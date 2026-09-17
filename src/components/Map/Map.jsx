@@ -133,7 +133,11 @@ const Map = ({ latitude, longitude, onChange, editable = false }) => {
         </p>
       )}
       {editable && (
-        <button type="button" onClick={selectCenter}>
+        <button
+          type="button"
+          className="btn-soft btn-sm"
+          onClick={selectCenter}
+        >
           {t("Use map center")}
         </button>
       )}

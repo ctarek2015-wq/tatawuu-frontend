@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import { useContext } from "react";
 import { LanguageContext } from "../../contexts/LanguageContext.js";
 
@@ -8,7 +7,7 @@ const Footer = () => {
   return (
     <footer>
       <span className="footer-copy">
-        &copy; {new Date().getFullYear()} Tatawwu&rsquo;.{" "}
+        &copy; {new Date().getFullYear()} <bdi>{t("Tatawwu")}</bdi>.{" "}
         {t("All rights reserved.")}
       </span>
     </footer>

@@ -24,13 +24,11 @@ const OrganizationList = () => {
 
   return (
     <main className="org-list-page">
-      <div className="sec-heading" style={{ margin: 0, textAlign: "left" }}>
-        <h1 className="sec-title">
-          {t("Discover")} <em>{t("Organizations")}</em>
-        </h1>
+      <div className="sec-heading" style={{ margin: 0, textAlign: "start" }}>
+        <h1 className="sec-title">{t("Organizations")}</h1>
         <p className="sec-desc">
           {t(
-            "Browse verified organizations making a difference in your community.",
+            "Browse approved organizations and their volunteering activities.",
           )}
         </p>
       </div>
@@ -67,11 +65,11 @@ const OrganizationList = () => {
               <div className="org-card-body">
                 <h2 className="org-card-title">
                   <Link to={`/organizations/${organization._id}`}>
-                    {organization.name}
+                    <bdi>{organization.name}</bdi>
                   </Link>
                 </h2>
                 <p className="org-card-meta">
-                  {organization.area}, {t(organization.governorate)}
+                  <bdi>{organization.area}</bdi>, {t(organization.governorate)}
                 </p>
               </div>
             </article>

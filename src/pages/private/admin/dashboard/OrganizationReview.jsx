@@ -58,7 +58,7 @@ const OrganizationReviewItem = ({ organization, busy, onReview }) => {
           <div className="review-meta-row">
             <dt>{t("Address")}</dt>
             <dd>
-              {organization.address}, {organization.area},{" "}
+              <bdi>{organization.address}</bdi>, <bdi>{organization.area}</bdi>,{" "}
               {t(organization.governorate)}, {t("Bahrain")}
             </dd>
           </div>
@@ -86,8 +86,15 @@ const OrganizationReviewItem = ({ organization, busy, onReview }) => {
         {["Pending", "Approved"].includes(organization.status) && (
           <div className="review-actions">
             <div className="field">
-              <label className="field-label">{t("Review feedback")}</label>
+              <label
+                htmlFor={`organization-feedback-${organization._id}`}
+                className="field-label"
+              >
+                {t("Review feedback")}
+              </label>
               <textarea
+                id={`organization-feedback-${organization._id}`}
+                dir="auto"
                 className="review-textarea"
                 value={reason}
                 onChange={(evt) => setReason(evt.target.value)}
@@ -95,7 +102,9 @@ const OrganizationReviewItem = ({ organization, busy, onReview }) => {
               />
             </div>
             {message && (
-              <p className="review-action-error">{tError(message)}</p>
+              <p className="review-action-error" role="alert">
+                {tError(message)}
+              </p>
             )}
             <div className="review-action-btns">
               {organization.status === "Pending" && (
@@ -183,8 +192,11 @@ const OrganizationReview = () => {
       <div className="review-section-header">
         <h2 className="review-section-title">{t("Review organizations")}</h2>
         <div className="field">
-          <label className="field-label">{t("Status")}</label>
+          <label htmlFor="organization-review-status" className="field-label">
+            {t("Status")}
+          </label>
           <select
+            id="organization-review-status"
             className="review-status-select"
             value={status}
             onChange={(evt) => setStatus(evt.target.value)}
@@ -198,7 +210,11 @@ const OrganizationReview = () => {
         </div>
       </div>
 
-      {message && <p className="state-msg state-error">{tError(message)}</p>}
+      {message && (
+        <p className="state-msg state-error" role="alert">
+          {tError(message)}
+        </p>
+      )}
       {loading && <p className="state-msg">{t("Loading organizations...")}</p>}
       {!loading && filteredOrganizations.length === 0 && (
         <p className="state-msg">{t("No organizations match this status.")}</p>

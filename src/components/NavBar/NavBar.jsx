@@ -1,5 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { UserContext } from "../../contexts/UserContext.js";
 import { LanguageContext } from "../../contexts/LanguageContext.js";
 import logo from "../../assets/logo.png";
@@ -9,6 +9,7 @@ const NavBar = () => {
   const { language, setLanguage, t } = useContext(LanguageContext);
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButton = useRef(null);
 
   const handleSignOut = () => {
     localStorage.removeItem("token");
@@ -21,7 +22,16 @@ const NavBar = () => {
   const linkClass = ({ isActive }) => (isActive ? "active" : "");
 
   return (
-    <nav className="navbar">
+    <nav
+      className="navbar"
+      aria-label={t("Main navigation")}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && menuOpen) {
+          setMenuOpen(false);
+          menuButton.current.focus();
+        }
+      }}
+    >
       {/* --- logo, top-left --- */}
       <Link to="/" className="nav-logo" onClick={close}>
         <h2 className="sec-title">
@@ -30,19 +40,19 @@ const NavBar = () => {
       </Link>
 
       {/* --- primary links, middle --- */}
-      <ul className={`nav-links ${menuOpen ? "is-open" : ""}`}>
+      <ul
+        id="main-navigation"
+        className={`nav-links ${menuOpen ? "is-open" : ""}`}
+      >
         <li>
           <NavLink to="/" end className={linkClass} onClick={close}>
             {t("Explore")}
           </NavLink>
         </li>
         <li>
-          <Link
-            to="/activities"
-            className={location.pathname === "/activities" ? "active" : ""}
-          >
+          <NavLink to="/activities" className={linkClass} onClick={close}>
             {t("Campaigns")}
-          </Link>
+          </NavLink>
         </li>
 
         <li>
@@ -117,11 +127,30 @@ const NavBar = () => {
             </NavLink>
           </li>
         )}
+        {!user && (
+          <>
+            <li className="nav-mobile-auth">
+              <Link to="/sign-in" onClick={close}>
+                {t("Sign in")}
+              </Link>
+            </li>
+            <li className="nav-mobile-auth">
+              <Link to="/sign-up" onClick={close}>
+                {t("Sign up")}
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
 
       {/* --- language switch + auth, top-right --- */}
       <div className="nav-right">
-        <div className="lang-switch" role="group" aria-label={t("Language")}>
+        <div
+          className="lang-switch"
+          dir="ltr"
+          role="group"
+          aria-label={t("Language")}
+        >
           <span
             className={`lang-switch-thumb ${language === "ar" ? "pos-ar" : "pos-en"}`}
           />
@@ -132,7 +161,7 @@ const NavBar = () => {
             aria-pressed={language === "en"}
             onClick={() => setLanguage("en")}
           >
-            EN
+            English
           </button>
           <button
             type="button"
@@ -141,7 +170,7 @@ const NavBar = () => {
             aria-pressed={language === "ar"}
             onClick={() => setLanguage("ar")}
           >
-            AR
+            العربية
           </button>
         </div>
 
@@ -169,8 +198,10 @@ const NavBar = () => {
         <button
           type="button"
           className="nav-burger"
+          ref={menuButton}
           aria-label={t("Menu")}
           aria-expanded={menuOpen}
+          aria-controls="main-navigation"
           onClick={() => setMenuOpen((open) => !open)}
         >
           <span />

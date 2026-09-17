@@ -50,10 +50,8 @@ const VolunteerDashboard = () => {
 
   return (
     <main className="volunteer-dashboard-page">
-      <div className="sec-heading" style={{ margin: 0, textAlign: "left" }}>
-        <h1 className="sec-title">
-          {t("My")} <em>{t("activities")}</em>
-        </h1>
+      <div className="sec-heading" style={{ margin: 0, textAlign: "start" }}>
+        <h1 className="sec-title">{t("My activities")}</h1>
         <p className="sec-desc">
           {t("Track your registrations and upcoming volunteer activities.")}
         </p>
@@ -63,7 +61,7 @@ const VolunteerDashboard = () => {
         <button
           type="button"
           className={`dashboard-tab${tab === "upcoming" ? " is-active" : ""}`}
-          disabled={tab === "upcoming"}
+          aria-pressed={tab === "upcoming"}
           onClick={() => setTab("upcoming")}
         >
           {t("Upcoming / in progress")}
@@ -71,7 +69,7 @@ const VolunteerDashboard = () => {
         <button
           type="button"
           className={`dashboard-tab${tab === "past" ? " is-active" : ""}`}
-          disabled={tab === "past"}
+          aria-pressed={tab === "past"}
           onClick={() => setTab("past")}
         >
           {t("Past")}
@@ -115,7 +113,7 @@ const VolunteerDashboard = () => {
                     <bdi>{campaign.title}</bdi>
                   </h2>
                   <p className="dashboard-activity-org">
-                    {campaign.organizationId?.name}
+                    <bdi>{campaign.organizationId?.name}</bdi>
                   </p>
                 </div>
                 <span
@@ -132,8 +130,8 @@ const VolunteerDashboard = () => {
               </p>
 
               <p className="dashboard-activity-location">
-                {campaign.venue}, {campaign.address}, {campaign.area},{" "}
-                {t(campaign.governorate)}
+                <bdi>{campaign.venue}</bdi>, <bdi>{campaign.address}</bdi>,{" "}
+                <bdi>{campaign.area}</bdi>, {t(campaign.governorate)}
               </p>
 
               <div className="dashboard-activity-map">

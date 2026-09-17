@@ -86,7 +86,12 @@ const CampaignManager = () => {
     }
   };
 
-  if (loading) return <p className="state-msg">{t("Loading campaigns...")}</p>;
+  if (loading)
+    return (
+      <p className="state-msg page-state" role="status">
+        {t("Loading campaigns...")}
+      </p>
+    );
   const filteredCampaigns = campaigns.filter(
     (campaign) => status === "All" || campaign.status === status,
   );
@@ -94,10 +99,8 @@ const CampaignManager = () => {
   return (
     <main className="campaign-manager-page">
       <div className="manager-header">
-        <div className="sec-heading" style={{ margin: 0, textAlign: "left" }}>
-          <h1 className="sec-title">
-            {t("My")} <em>{t("campaigns")}</em>
-          </h1>
+        <div className="sec-heading" style={{ margin: 0, textAlign: "start" }}>
+          <h1 className="sec-title">{t("My campaigns")}</h1>
           <p className="sec-desc">
             {organization
               ? t("Manage, submit, and track your organization's activities.")
@@ -211,6 +214,13 @@ const CampaignManager = () => {
                   {t("Participants and certificates")}
                 </Link>
 
+                <Link
+                  to={`/organizer/campaigns/${campaign._id}/updates`}
+                  className="btn-soft btn-sm"
+                >
+                  {t("Manage updates")}
+                </Link>
+
                 {canSubmit && (
                   <button
                     disabled={busy}
@@ -244,7 +254,6 @@ const CampaignManager = () => {
               </div>
             </article>
           );
-          a;
         })}
       </div>
     </main>

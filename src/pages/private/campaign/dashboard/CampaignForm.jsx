@@ -128,12 +128,16 @@ const CampaignForm = () => {
   };
 
   if (loading)
-    return <p className="state-msg">{t("Loading campaign form...")}</p>;
+    return (
+      <p className="state-msg page-state" role="status">
+        {t("Loading campaign form...")}
+      </p>
+    );
 
   if (!organization) {
     return (
       <main className="campaign-form-page">
-        <p className="state-msg state-error">
+        <p className="state-msg state-error" role="alert">
           {tError(
             message || "Create an organization before adding a campaign.",
           )}
@@ -148,7 +152,9 @@ const CampaignForm = () => {
   if (id && !campaign) {
     return (
       <main className="campaign-form-page">
-        <p className="state-msg state-error">{tError(message)}</p>
+        <p className="state-msg state-error" role="alert">
+          {tError(message)}
+        </p>
         <Link to="/organizer/campaigns" className="btn-primary">
           {t("My campaigns")}
         </Link>
@@ -175,9 +181,9 @@ const CampaignForm = () => {
 
   return (
     <main className="campaign-form-page">
-      <div className="sec-heading" style={{ margin: 0, textAlign: "left" }}>
+      <div className="sec-heading" style={{ margin: 0, textAlign: "start" }}>
         <h1 className="sec-title">
-          {t(id ? "Edit" : "New")} <em>{t("campaign")}</em>
+          {t(id ? "Edit campaign" : "New campaign")}
         </h1>
         <p className="sec-desc">
           {t("Country: Bahrain")} —{" "}

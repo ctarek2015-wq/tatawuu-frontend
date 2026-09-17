@@ -180,12 +180,18 @@ const CampaignParticipants = () => {
   };
 
   if (loading)
-    return <p className="state-msg">{t("Loading participants...")}</p>;
+    return (
+      <p className="state-msg page-state" role="status">
+        {t("Loading participants...")}
+      </p>
+    );
 
   if (!campaign) {
     return (
       <main className="participants-page">
-        <p className="state-msg state-error">{tError(message)}</p>
+        <p className="state-msg state-error" role="alert">
+          {tError(message)}
+        </p>
         <Link to="/organizer/campaigns" className="btn-primary">
           {t("My campaigns")}
         </Link>
@@ -207,11 +213,11 @@ const CampaignParticipants = () => {
   return (
     <main className="participants-page">
       <div className="manager-header">
-        <div className="sec-heading" style={{ margin: 0, textAlign: "left" }}>
-          <h1 className="sec-title">
-            <bdi>{campaign.title}</bdi>: <em>{t("participants")}</em>
-          </h1>
+        <div className="sec-heading" style={{ margin: 0, textAlign: "start" }}>
+          <h1 className="sec-title">{t("Participants and certificates")}</h1>
           <p className="sec-desc">
+            <bdi>{campaign.title}</bdi>
+            <br />
             {t("Ends")}: {formatDateTime(campaign.endsAt, language)} (
             {t("Bahrain time")})
           </p>

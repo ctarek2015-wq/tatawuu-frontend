@@ -15,6 +15,7 @@ import OrganizationProfile from "./pages/private/Organizer/dashboard/Organizatio
 import CampaignManager from "./pages/private/campaign/dashboard/CampaignManager.jsx";
 import CampaignForm from "./pages/private/campaign/dashboard/CampaignForm.jsx";
 import CampaignParticipants from "./pages/private/campaign/dashboard/CampaignParticipants.jsx";
+import CampaignUpdates from "./pages/private/campaign/dashboard/CampaignUpdates.jsx";
 import AdminDashboard from "./pages/private/admin/dashboard/AdminDashboard.jsx";
 import VolunteerDashboard from "./pages/private/volunteer/dashboard/VolunteerDashboard.jsx";
 import Favorites from "./pages/private/volunteer/dashboard/Favorites.jsx";
@@ -30,18 +31,20 @@ function App() {
     return (
       <>
         <NavBar />
-        <p>{t("Loading account...")}</p>
+        <main className="page-state">
+          <p className="state-msg">{t("Loading account...")}</p>
+        </main>
       </>
     );
   if (accountError)
     return (
       <>
         <NavBar />
-        <main>
+        <main className="page-state">
           <p role="alert">
             {t("Could not load your account")}: {tError(accountError)}
           </p>
-          <button type="button" onClick={retry}>
+          <button type="button" className="btn-soft" onClick={retry}>
             {t("Retry")}
           </button>
         </main>
@@ -51,7 +54,11 @@ function App() {
   const accountPage = (page, role) => {
     if (!user) return <Navigate to="/sign-in" replace />;
     if (role && user.role !== role)
-      return <p>{t("This page is for {role} accounts.", { role: t(role) })}</p>;
+      return (
+        <main className="page-state">
+          <p>{t("This page is for {role} accounts.", { role: t(role) })}</p>
+        </main>
+      );
     return page;
   };
 
@@ -69,14 +76,14 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<ExplorePage />} />
-        <Route path="/campaigns" element={<ExplorePage />} />
+        <Route path="/campaigns" element={<CampaignsPage />} />
         <Route path="/campaigns/:id" element={<CampaignDetail />} />
         <Route path="/organizations" element={<OrganizationList />} />
         <Route path="/organizations/:id" element={<OrganizationDetail />} />
         <Route path="/activities" element={<CampaignsPage />} />
         <Route
           path="/organizations/:orgId/campaigns"
-          element={<ExplorePage />}
+          element={<CampaignsPage />}
         />
         <Route
           path="/sign-in"
@@ -112,6 +119,10 @@ function App() {
           element={accountPage(<CampaignParticipants />, "Organizer")}
         />
         <Route
+          path="/organizer/campaigns/:id/updates"
+          element={accountPage(<CampaignUpdates />, "Organizer")}
+        />
+        <Route
           path="/my/registrations"
           element={accountPage(<VolunteerDashboard />, "Volunteer")}
         />
@@ -130,9 +141,9 @@ function App() {
         <Route
           path="*"
           element={
-            <main>
+            <main className="page-state">
               <h1>{t("Page not found")}</h1>
-              <Link to="/">{t("Explore activities")}</Link>
+              <Link to="/activities">{t("Explore activities")}</Link>
             </main>
           }
         />

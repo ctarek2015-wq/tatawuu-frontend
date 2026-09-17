@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import { UserContext } from "../../contexts/UserContext.js";
 import { LanguageContext } from "../../contexts/LanguageContext.js";
 import * as campaignService from "../../services/campaignService.js";
+import * as campaignUpdateService from "../../services/campaignUpdateService.js";
 import OrganizationContacts from "../OrganizationContacts/OrganizationContacts.jsx";
 import LocationMap from "../LocationMap/LocationMap.jsx";
 import { formatDateTime } from "../../utils/dates.js";
@@ -16,6 +17,9 @@ const CampaignDetail = () => {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [updates, setUpdates] = useState([]);
+  const [updatesLoading, setUpdatesLoading] = useState(true);
+  const [updatesError, setUpdatesError] = useState("");
 
   useEffect(() => {
     const loadCampaign = async () => {
@@ -31,6 +35,27 @@ const CampaignDetail = () => {
       }
     };
     loadCampaign();
+  }, [id]);
+
+  useEffect(() => {
+    let active = true;
+    const loadUpdates = async () => {
+      setUpdatesLoading(true);
+      setUpdates([]);
+      setUpdatesError("");
+      try {
+        const data = await campaignUpdateService.index(id);
+        if (active) setUpdates(data);
+      } catch (err) {
+        if (active) setUpdatesError(err.message);
+      } finally {
+        if (active) setUpdatesLoading(false);
+      }
+    };
+    loadUpdates();
+    return () => {
+      active = false;
+    };
   }, [id]);
 
   const handleAction = async (action) => {
@@ -68,7 +93,7 @@ const CampaignDetail = () => {
         <p role="alert" className="state-msg state-error">
           {error ? tError(error) : t("Activity unavailable.")}
         </p>
-        <Link to="/" className="btn-primary-dark">
+        <Link to="/activities" className="btn-primary-dark">
           {t("Explore activities")}
         </Link>
       </main>
@@ -102,11 +127,15 @@ const CampaignDetail = () => {
             <span className="campaign-detail-category">
               {t(campaign.category)}
             </span>
-            <h1 className="campaign-detail-title">{campaign.title}</h1>
+            <h1 className="campaign-detail-title">
+              <bdi>{campaign.title}</bdi>
+            </h1>
           </div>
 
           {/* Description */}
-          <p className="campaign-detail-description">{campaign.description}</p>
+          <p className="campaign-detail-description" dir="auto">
+            {campaign.description}
+          </p>
 
           {/* Structured meta rows */}
           <dl className="campaign-detail-meta">
@@ -126,14 +155,15 @@ const CampaignDetail = () => {
             <div className="campaign-detail-meta-row">
               <dt className="campaign-detail-meta-label">{t("Venue")}</dt>
               <dd className="campaign-detail-meta-value">
-                {campaign.venue} — {campaign.address}
+                <bdi>{campaign.venue}</bdi> — <bdi>{campaign.address}</bdi>
               </dd>
             </div>
 
             <div className="campaign-detail-meta-row">
               <dt className="campaign-detail-meta-label">{t("Location")}</dt>
               <dd className="campaign-detail-meta-value">
-                {campaign.area}, {t(campaign.governorate)}, {t("Bahrain")}
+                <bdi>{campaign.area}</bdi>, {t(campaign.governorate)},{" "}
+                {t("Bahrain")}
               </dd>
             </div>
 
@@ -194,13 +224,44 @@ const CampaignDetail = () => {
                 )}
                 <h2 className="campaign-detail-org-name">
                   <Link to={`/organizations/${organization._id}`}>
-                    {organization.name}
+                    <bdi>{organization.name}</bdi>
                   </Link>
                 </h2>
               </div>
               <OrganizationContacts organization={organization} />
             </section>
           )}
+
+          <section
+            className="campaign-updates-section"
+            aria-labelledby="campaign-updates-title"
+          >
+            <h2 id="campaign-updates-title">{t("Campaign updates")}</h2>
+            {updatesLoading && (
+              <p className="state-msg">{t("Loading updates...")}</p>
+            )}
+            {updatesError && (
+              <p className="state-msg state-error" role="alert">
+                {tError(updatesError)}
+              </p>
+            )}
+            {!updatesLoading && !updatesError && updates.length === 0 && (
+              <p>{t("No updates yet.")}</p>
+            )}
+            {updates.map((update) => (
+              <article key={update._id} className="campaign-update-card">
+                <p>
+                  <time dateTime={update.createdAt}>
+                    {formatDateTime(update.createdAt, language)}
+                  </time>{" "}
+                  ({t("Bahrain time")})
+                </p>
+                <p dir="auto" style={{ whiteSpace: "pre-wrap" }}>
+                  {update.text}
+                </p>
+              </article>
+            ))}
+          </section>
 
           {/* Inline error / message feedback */}
           {error && (
@@ -301,7 +362,7 @@ const CampaignDetail = () => {
             >
               {t("Copy activity link")}
             </button>
-            <Link to="/" className="btn-link">
+            <Link to="/activities" className="btn-link">
               {t("Back to activities")}
             </Link>
           </div>

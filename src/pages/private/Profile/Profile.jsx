@@ -62,14 +62,21 @@ const Profile = () => {
             {tError(error)}
           </p>
         )}
-        {message && <p className="profile-success">{t(message)}</p>}
+        {message && (
+          <p className="profile-success" role="status">
+            {t(message)}
+          </p>
+        )}
 
         {/* Edit form */}
         <form className="profile-form" onSubmit={handleSubmit}>
           <div className="field">
-            <label className="field-label">{t("Name")}</label>
+            <label htmlFor="profile-name" className="field-label">
+              {t("Name")}
+            </label>
             <input
               dir="auto"
+              id="profile-name"
               name="name"
               value={formData.name}
               onChange={handleChange}
@@ -78,9 +85,12 @@ const Profile = () => {
           </div>
 
           <div className="field">
-            <label className="field-label">{t("City (optional)")}</label>
+            <label htmlFor="profile-city" className="field-label">
+              {t("City (optional)")}
+            </label>
             <input
               dir="auto"
+              id="profile-city"
               name="city"
               value={formData.city}
               onChange={handleChange}

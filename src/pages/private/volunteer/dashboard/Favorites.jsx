@@ -28,12 +28,23 @@ const Favorites = () => {
     }
   };
 
+  const handleRemove = async (id) => {
+    setBusy(true);
+    setError("");
+    try {
+      await campaignService.unfavorite(id);
+      handleFavoriteChange(id, false);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <main className="favorites-page">
-      <div className="sec-heading" style={{ margin: 0, textAlign: "left" }}>
-        <h1 className="sec-title">
-          {t("My")} <em>{t("favorites")}</em>
-        </h1>
+      <div className="sec-heading" style={{ margin: 0, textAlign: "start" }}>
+        <h1 className="sec-title">{t("My favorites")}</h1>
         <p className="sec-desc">{t("Activities you've saved for later.")}</p>
       </div>
 
@@ -50,7 +61,7 @@ const Favorites = () => {
         </p>
       )}
 
-      {!loading && !error && campaigns.length > 0 && (
+      {!loading && campaigns.length > 0 && (
         <div className="favorites-grid">
           {campaigns.map((campaign) =>
             campaign.unavailable ? (
@@ -58,11 +69,18 @@ const Favorites = () => {
                 <p className="state-msg">
                   {t("Activity no longer available.")}
                 </p>
+                <button
+                  className="btn-soft"
+                  disabled={busy}
+                  onClick={() => handleRemove(campaign._id)}
+                >
+                  {t("Remove favorite")}
+                </button>
               </div>
             ) : (
               <CampaignCard
                 key={campaign._id}
-                campaign={{ ...campaign, isFavorited: true }}
+                campaign={campaign}
                 onFavoriteChange={handleFavoriteChange}
               />
             ),

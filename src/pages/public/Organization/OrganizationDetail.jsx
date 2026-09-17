@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { LanguageContext } from "../../../contexts/LanguageContext.js";
 import * as organizationService from "../../../services/organizationService.js";
 import * as campaignService from "../../../services/campaignService.js";
@@ -38,6 +38,14 @@ const OrganizationDetail = () => {
     };
     loadOrganization();
   }, [id]);
+
+  const handleFavoriteChange = (campaignId, _isFavorite, updated) => {
+    setCampaigns((current) =>
+      current.map((campaign) =>
+        campaign._id === campaignId ? updated : campaign,
+      ),
+    );
+  };
 
   if (loading) {
     return (
@@ -81,15 +89,19 @@ const OrganizationDetail = () => {
             </div>
           )}
           <div className="org-detail-heading">
-            <h1 className="org-detail-name">{organization.name}</h1>
+            <h1 className="org-detail-name">
+              <bdi>{organization.name}</bdi>
+            </h1>
             <p className="org-detail-address">
-              {organization.address} — {organization.area},{" "}
-              {t(organization.governorate)}, {t("Bahrain")}
+              <bdi>{organization.address}</bdi> — <bdi>{organization.area}</bdi>
+              , {t(organization.governorate)}, {t("Bahrain")}
             </p>
           </div>
         </div>
 
-        <p className="org-detail-description">{organization.description}</p>
+        <p className="org-detail-description" dir="auto">
+          {organization.description}
+        </p>
 
         <div className="org-detail-map">
           <LocationMap location={organization} />
@@ -104,7 +116,13 @@ const OrganizationDetail = () => {
         <h2 className="sec-title org-detail-campaigns-title">
           {t("Upcoming activities")}
         </h2>
-        <CampaignGrid campaigns={campaigns} />
+        <CampaignGrid
+          campaigns={campaigns}
+          onFavoriteChange={handleFavoriteChange}
+        />
+        <Link className="btn-link" to={`/organizations/${id}/campaigns`}>
+          {t("Browse all activities")}
+        </Link>
       </section>
     </main>
   );

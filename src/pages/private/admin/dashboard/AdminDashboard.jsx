@@ -17,6 +17,7 @@ const AdminDashboard = () => {
         <button
           type="button"
           className={`admin-tab-btn${activeTab === "organizations" ? " is-active" : ""}`}
+          aria-pressed={activeTab === "organizations"}
           onClick={() => setActiveTab("organizations")}
         >
           {t("Organizations")}
@@ -24,6 +25,7 @@ const AdminDashboard = () => {
         <button
           type="button"
           className={`admin-tab-btn${activeTab === "campaigns" ? " is-active" : ""}`}
+          aria-pressed={activeTab === "campaigns"}
           onClick={() => setActiveTab("campaigns")}
         >
           {t("Campaigns")}

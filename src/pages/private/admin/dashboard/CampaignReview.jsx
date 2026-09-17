@@ -60,13 +60,15 @@ const CampaignReviewItem = ({ campaign, busy, onReview }) => {
           </div>
           <div className="review-meta-row">
             <dt>{t("Venue")}</dt>
-            <dd>{campaign.venue}</dd>
+            <dd>
+              <bdi>{campaign.venue}</bdi>
+            </dd>
           </div>
           <div className="review-meta-row">
             <dt>{t("Address")}</dt>
             <dd>
-              {campaign.address}, {campaign.area}, {t(campaign.governorate)},{" "}
-              {t("Bahrain")}
+              <bdi>{campaign.address}</bdi>, <bdi>{campaign.area}</bdi>,{" "}
+              {t(campaign.governorate)}, {t("Bahrain")}
             </dd>
           </div>
           <div className="review-meta-row">
@@ -148,8 +150,15 @@ const CampaignReviewItem = ({ campaign, busy, onReview }) => {
         {(campaign.status === "Pending" || canRemove) && (
           <div className="review-actions">
             <div className="field">
-              <label className="field-label">{t("Review feedback")}</label>
+              <label
+                htmlFor={`campaign-feedback-${campaign._id}`}
+                className="field-label"
+              >
+                {t("Review feedback")}
+              </label>
               <textarea
+                id={`campaign-feedback-${campaign._id}`}
+                dir="auto"
                 className="review-textarea"
                 value={reason}
                 onChange={(evt) => setReason(evt.target.value)}
@@ -157,7 +166,9 @@ const CampaignReviewItem = ({ campaign, busy, onReview }) => {
               />
             </div>
             {message && (
-              <p className="review-action-error">{tError(message)}</p>
+              <p className="review-action-error" role="alert">
+                {tError(message)}
+              </p>
             )}
             <div className="review-action-btns">
               {campaign.status === "Pending" && (
@@ -245,8 +256,11 @@ const CampaignReview = () => {
       <div className="review-section-header">
         <h2 className="review-section-title">{t("Review campaigns")}</h2>
         <div className="field">
-          <label className="field-label">{t("Status")}</label>
+          <label htmlFor="campaign-review-status" className="field-label">
+            {t("Status")}
+          </label>
           <select
+            id="campaign-review-status"
             className="review-status-select"
             value={status}
             onChange={(evt) => setStatus(evt.target.value)}
@@ -269,7 +283,11 @@ const CampaignReview = () => {
         </div>
       </div>
 
-      {message && <p className="state-msg state-error">{tError(message)}</p>}
+      {message && (
+        <p className="state-msg state-error" role="alert">
+          {tError(message)}
+        </p>
+      )}
       {loading && <p className="state-msg">{t("Loading campaigns...")}</p>}
       {!loading && filteredCampaigns.length === 0 && (
         <p className="state-msg">{t("No campaigns match this status.")}</p>
