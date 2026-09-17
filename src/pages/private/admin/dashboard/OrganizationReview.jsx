@@ -11,7 +11,9 @@ const OrganizationReviewItem = ({ organization, busy, onReview }) => {
 
   const handleReview = (status) => {
     if (status !== "Approved" && !reason.trim()) {
-      setMessage("Enter feedback before rejecting or removing an organization.");
+      setMessage(
+        "Enter feedback before rejecting or removing an organization.",
+      );
       return;
     }
     setMessage("");
@@ -19,31 +21,126 @@ const OrganizationReviewItem = ({ organization, busy, onReview }) => {
   };
 
   return (
-    <article>
-      <h3><bdi>{organization.name}</bdi></h3>
-      <p>{t("Status")}: {t(organization.status)}</p>
-      {organization.logo && <img src={organization.logo} alt={t("{name} logo", { name: organization.name })} width="160" />}
-      <p dir="auto">{organization.description}</p>
-      <p>{organization.address}, {organization.area}, {t(organization.governorate)}, {t("Bahrain")}</p>
-      <LocationMap location={organization} />
-      <OrganizationContacts organization={organization} />
-      {organization.reviewReason && <p>{t("Previous feedback")}: <bdi>{organization.reviewReason}</bdi></p>}
-      {["Pending", "Approved"].includes(organization.status) && (
-        <>
-          <label>
-          {t("Review feedback")}
-          <textarea value={reason} onChange={(evt) => setReason(evt.target.value)} />
-          </label>
-          <p>{tError(message)}</p>
-          {organization.status === "Pending" && (
-            <>
-              <button disabled={busy} onClick={() => handleReview("Approved")}>{t("Approve")}</button>
-              <button disabled={busy} onClick={() => handleReview("Rejected")}>{t("Reject")}</button>
-            </>
+    <article className="review-item">
+      <div className="review-item-body">
+        {/* Header: logo + name + status */}
+        <div className="review-item-header">
+          {organization.logo ? (
+            <img
+              className="review-org-logo"
+              src={organization.logo}
+              alt={t("{name} logo", { name: organization.name })}
+            />
+          ) : (
+            <div className="review-org-logo review-org-logo-placeholder">
+              {organization.name?.[0]}
+            </div>
           )}
-          {organization.status === "Approved" && <button disabled={busy} onClick={() => handleReview("Removed")}>{t("Remove")}</button>}
-        </>
-      )}
+          <div>
+            <h3 className="review-item-title">
+              <bdi>{organization.name}</bdi>
+            </h3>
+            <span
+              className={`review-status-badge review-status-${organization.status.toLowerCase()}`}
+            >
+              {t(organization.status)}
+            </span>
+          </div>
+        </div>
+
+        {/* Description */}
+        <p className="review-item-description" dir="auto">
+          {organization.description}
+        </p>
+
+        {/* Address */}
+        <dl className="review-meta">
+          <div className="review-meta-row">
+            <dt>{t("Address")}</dt>
+            <dd>
+              <bdi>{organization.address}</bdi>, <bdi>{organization.area}</bdi>,{" "}
+              {t(organization.governorate)}, {t("Bahrain")}
+            </dd>
+          </div>
+        </dl>
+
+        {/* Map */}
+        <div className="review-item-map">
+          <LocationMap location={organization} />
+        </div>
+
+        {/* Contacts */}
+        <OrganizationContacts organization={organization} />
+
+        {/* Previous feedback */}
+        {organization.reviewReason && (
+          <div className="review-prev-feedback">
+            <span className="review-prev-feedback-label">
+              {t("Previous feedback")}
+            </span>
+            <bdi>{organization.reviewReason}</bdi>
+          </div>
+        )}
+
+        {/* Review actions */}
+        {["Pending", "Approved"].includes(organization.status) && (
+          <div className="review-actions">
+            <div className="field">
+              <label
+                htmlFor={`organization-feedback-${organization._id}`}
+                className="field-label"
+              >
+                {t("Review feedback")}
+              </label>
+              <textarea
+                id={`organization-feedback-${organization._id}`}
+                dir="auto"
+                className="review-textarea"
+                value={reason}
+                onChange={(evt) => setReason(evt.target.value)}
+                rows={3}
+              />
+            </div>
+            {message && (
+              <p className="review-action-error" role="alert">
+                {tError(message)}
+              </p>
+            )}
+            <div className="review-action-btns">
+              {organization.status === "Pending" && (
+                <>
+                  <button
+                    type="button"
+                    className="btn-review-approve"
+                    disabled={busy}
+                    onClick={() => handleReview("Approved")}
+                  >
+                    {t("Approve")}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-review-reject"
+                    disabled={busy}
+                    onClick={() => handleReview("Rejected")}
+                  >
+                    {t("Reject")}
+                  </button>
+                </>
+              )}
+              {organization.status === "Approved" && (
+                <button
+                  type="button"
+                  className="btn-review-remove"
+                  disabled={busy}
+                  onClick={() => handleReview("Removed")}
+                >
+                  {t("Remove")}
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </article>
   );
 };
@@ -74,8 +171,11 @@ const OrganizationReview = () => {
     setBusy(true);
     setMessage("");
     try {
-      const updated = await organizationService.review(id, { status, reviewReason });
-      setOrganizations(organizations.map((organization) => organization._id === id ? updated : organization));
+      const updated = await organizationService.review(id, {
+        status,
+        reviewReason,
+      });
+      setOrganizations(organizations.map((o) => (o._id === id ? updated : o)));
     } catch (err) {
       setMessage(err.message);
     } finally {
@@ -83,20 +183,53 @@ const OrganizationReview = () => {
     }
   };
 
-  const filteredOrganizations = organizations.filter((organization) => status === "All" || organization.status === status);
+  const filteredOrganizations = organizations.filter(
+    (o) => status === "All" || o.status === status,
+  );
 
   return (
-    <section>
-      <h2>{t("Review organizations")}</h2>
-      <label>
-          {t("Status")}
-          <select value={status} onChange={(evt) => setStatus(evt.target.value)}>
-          {["Pending", "Approved", "Rejected", "Removed", "All"].map((status) => <option key={status} value={status}>{t(status)}</option>)}
-        </select>
-      </label>
-      <p>{tError(message)}</p>
-      {loading ? <p>{t("Loading organizations...")}</p> : filteredOrganizations.length === 0 && <p>{t("No organizations match this status.")}</p>}
-      {filteredOrganizations.map((organization) => <OrganizationReviewItem key={organization._id} organization={organization} busy={busy} onReview={handleReview} />)}
+    <section className="review-section">
+      <div className="review-section-header">
+        <h2 className="review-section-title">{t("Review organizations")}</h2>
+        <div className="field">
+          <label htmlFor="organization-review-status" className="field-label">
+            {t("Status")}
+          </label>
+          <select
+            id="organization-review-status"
+            className="review-status-select"
+            value={status}
+            onChange={(evt) => setStatus(evt.target.value)}
+          >
+            {["Pending", "Approved", "Rejected", "Removed", "All"].map((s) => (
+              <option key={s} value={s}>
+                {t(s)}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {message && (
+        <p className="state-msg state-error" role="alert">
+          {tError(message)}
+        </p>
+      )}
+      {loading && <p className="state-msg">{t("Loading organizations...")}</p>}
+      {!loading && filteredOrganizations.length === 0 && (
+        <p className="state-msg">{t("No organizations match this status.")}</p>
+      )}
+
+      <div className="review-list">
+        {filteredOrganizations.map((organization) => (
+          <OrganizationReviewItem
+            key={organization._id}
+            organization={organization}
+            busy={busy}
+            onReview={handleReview}
+          />
+        ))}
+      </div>
     </section>
   );
 };

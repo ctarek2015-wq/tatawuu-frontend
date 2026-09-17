@@ -55,55 +55,186 @@ const OrganizationForm = ({ organization, onSubmit, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <p>{tError(message)}</p>
-      <label>
-          {t("Organization name")}
-          <input required dir="auto" name="name" value={formData.name} onChange={handleChange} />
-      </label>
-      <label>
-          {t("Description")}
-          <textarea required dir="auto" name="description" value={formData.description} onChange={handleChange} />
-      </label>
-      <p>{t("Country: Bahrain")}</p>
-      <label>
-          {t("Governorate")}
-          <select name="governorate" value={formData.governorate} onChange={handleChange}>
-          {governorates.map((governorate) => (
-            <option key={governorate} value={governorate}>{t(governorate)}</option>
-          ))}
-        </select>
-      </label>
-      <label>
-          {t("Area")}
-          <input required dir="auto" name="area" value={formData.area} onChange={handleChange} />
-      </label>
-      <label>
-          {t("Address")}
-          <input required dir="auto" name="address" value={formData.address} onChange={handleChange} />
-      </label>
-      <label>
-          {t("Public email")}
-          <input required type="email" dir="ltr" name="contactEmail" value={formData.contactEmail} onChange={handleChange} />
-      </label>
-      <label>
-          {t("Public phone (optional)")}
-          <input type="tel" dir="ltr" name="contactPhone" value={formData.contactPhone} onChange={handleChange} />
-      </label>
-      <label>
-          {t("Public WhatsApp number (optional)")}
-          <input type="tel" dir="ltr" name="whatsappNumber" value={formData.whatsappNumber} onChange={handleChange} />
-      </label>
-      <label>
-          {t("Website (optional)")}
-          <input type="url" dir="ltr" name="website" value={formData.website} onChange={handleChange} />
-      </label>
-      <MapPicker latitude={formData.latitude} longitude={formData.longitude} onChange={({ latitude, longitude }) => setFormData({ ...formData, latitude, longitude })} />
-      <ImagePicker label={t("Organization logo")} url={formData.logo} onFileChange={setFile} onRemove={handleRemoveImage} />
-      <p>{t("Saving submits your organization for review.")}</p>
-      <button disabled={submitting} type="submit">{t(submitting ? "Saving..." : "Save and submit")}</button>
-      <button disabled={submitting} type="button" onClick={onCancel}>{t("Cancel")}</button>
-    </form>
+    <div className="org-form-page">
+      <div className="org-form-card">
+        <form className="org-form" onSubmit={handleSubmit}>
+          {message && (
+            <p className="state-msg state-error" role="alert">
+              {tError(message)}
+            </p>
+          )}
+
+          <div className="org-form-section">
+            <h2 className="org-form-section-title">{t("Basic information")}</h2>
+            <div className="org-form-grid">
+              <label className="field field-span-2">
+                <span className="field-label">{t("Organization name")}</span>
+                <input
+                  required
+                  dir="auto"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="field field-span-2">
+                <span className="field-label">{t("Description")}</span>
+                <textarea
+                  required
+                  dir="auto"
+                  name="description"
+                  rows={4}
+                  value={formData.description}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="org-form-section">
+            <h2 className="org-form-section-title">{t("Location")}</h2>
+            <p className="org-form-note">{t("Country: Bahrain")}</p>
+            <div className="org-form-grid">
+              <label className="field">
+                <span className="field-label">{t("Governorate")}</span>
+                <select
+                  name="governorate"
+                  value={formData.governorate}
+                  onChange={handleChange}
+                >
+                  {governorates.map((governorate) => (
+                    <option key={governorate} value={governorate}>
+                      {t(governorate)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="field">
+                <span className="field-label">{t("Area")}</span>
+                <input
+                  required
+                  dir="auto"
+                  name="area"
+                  value={formData.area}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="field field-span-2">
+                <span className="field-label">{t("Address")}</span>
+                <input
+                  required
+                  dir="auto"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <div className="field field-span-2 map-field">
+                <MapPicker
+                  latitude={formData.latitude}
+                  longitude={formData.longitude}
+                  onChange={({ latitude, longitude }) =>
+                    setFormData({ ...formData, latitude, longitude })
+                  }
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="org-form-section">
+            <h2 className="org-form-section-title">{t("Contact")}</h2>
+            <div className="org-form-grid">
+              <label className="field">
+                <span className="field-label">{t("Public email")}</span>
+                <input
+                  required
+                  type="email"
+                  dir="ltr"
+                  name="contactEmail"
+                  value={formData.contactEmail}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="field">
+                <span className="field-label">
+                  {t("Public phone (optional)")}
+                </span>
+                <input
+                  type="tel"
+                  dir="ltr"
+                  name="contactPhone"
+                  value={formData.contactPhone}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="field">
+                <span className="field-label">
+                  {t("Public WhatsApp number (optional)")}
+                </span>
+                <input
+                  type="tel"
+                  dir="ltr"
+                  name="whatsappNumber"
+                  value={formData.whatsappNumber}
+                  onChange={handleChange}
+                />
+              </label>
+
+              <label className="field">
+                <span className="field-label">{t("Website (optional)")}</span>
+                <input
+                  type="url"
+                  dir="ltr"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="org-form-section">
+            <h2 className="org-form-section-title">{t("Organization logo")}</h2>
+            <div className="logo-field">
+              <ImagePicker
+                label={t("Organization logo")}
+                url={formData.logo}
+                onFileChange={setFile}
+                onRemove={handleRemoveImage}
+              />
+            </div>
+          </div>
+
+          <p className="org-form-note org-form-disclaimer">
+            {t("Saving submits your organization for review.")}
+          </p>
+
+          <div className="org-form-actions">
+            <button
+              className="btn-primary-dark"
+              disabled={submitting}
+              type="submit"
+            >
+              {t(submitting ? "Saving..." : "Save and submit")}
+            </button>
+            <button
+              className="btn-soft"
+              disabled={submitting}
+              type="button"
+              onClick={onCancel}
+            >
+              {t("Cancel")}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

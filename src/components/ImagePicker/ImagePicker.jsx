@@ -25,10 +25,10 @@ const ImagePicker = ({ label, url, onFileChange, onRemove }) => {
   };
 
   return (
-    <div>
-      <label>{label} <input ref={input} type="file" accept="image/jpeg,image/png,image/webp" onChange={handleChange} /></label>
+    <div className="image-picker">
+      <label className="field"><span className="field-label">{label}</span> <input ref={input} type="file" accept="image/jpeg,image/png,image/webp" onChange={handleChange} /></label>
       {(preview || url) && <p><img src={preview || url} alt={label} width="200" /></p>}
-      {(preview || url) && <button type="button" onClick={handleRemove}>{t("Remove image")}</button>}
+      {(preview || url) && <button type="button" className="btn-soft btn-sm" onClick={handleRemove}>{t("Remove image")}</button>}
     </div>
   );
 };

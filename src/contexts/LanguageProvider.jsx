@@ -9,6 +9,7 @@ const LanguageProvider = ({ children }) => {
     localStorage.setItem("language", language);
     document.documentElement.lang = language;
     document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+    document.title = language === "ar" ? "تطوّع | التطوع في البحرين" : "Tatawwu | Volunteering in Bahrain";
   }, [language]);
 
   const t = (key, params = {}) => {
@@ -21,8 +22,7 @@ const LanguageProvider = ({ children }) => {
 
   const tError = (message) => {
     if (!message) return "";
-    if (language === "en") return message;
-    return translations[message] || translations["Something went wrong. Please try again."];
+    return t(translations[message] ? message : "Something went wrong. Please try again.");
   };
 
   return <LanguageContext.Provider value={{ language, setLanguage, t, tError }}>{children}</LanguageContext.Provider>;

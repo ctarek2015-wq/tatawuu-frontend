@@ -10,7 +10,9 @@ const CampaignReviewItem = ({ campaign, busy, onReview }) => {
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
   const organization = campaign.organizationId;
-  const canRemove = campaign.wasPublished && !["Cancelled", "Removed"].includes(campaign.status);
+  const canRemove =
+    campaign.wasPublished &&
+    !["Cancelled", "Removed"].includes(campaign.status);
 
   const handleReview = (status) => {
     if (status !== "Approved" && !reason.trim()) {
@@ -22,45 +24,187 @@ const CampaignReviewItem = ({ campaign, busy, onReview }) => {
   };
 
   return (
-    <article>
-      <h3><bdi>{campaign.title}</bdi></h3>
-      <p>{t("Status")}: {t(campaign.status)}</p>
-      {campaign.coverImage && <img src={campaign.coverImage} alt={campaign.title} width="320" />}
-      <p dir="auto">{campaign.description}</p>
-      <p>{t("Category")}: {t(campaign.category)}</p>
-      <p>{t("Venue")}: {campaign.venue}</p>
-      <p>{campaign.address}, {campaign.area}, {t(campaign.governorate)}, {t("Bahrain")}</p>
-      <p>{t("Starts")}: {formatDateTime(campaign.startsAt, language)} ({t("Bahrain time")})</p>
-      <p>{t("Ends")}: {formatDateTime(campaign.endsAt, language)} ({t("Bahrain time")})</p>
-      <p>{t("Capacity")}: {campaign.capacity}</p>
-      <LocationMap location={campaign} />
-      <p>{t("Registered participants")}: {campaign.registeredCount}</p>
-      {organization ? <>
-        <h4>{t("Organization")}: {organization.name}</h4>
-        <p>{t("Organization status")}: {t(organization.status)}</p>
-        {organization.logo && <img src={organization.logo} alt={t("{name} logo", { name: organization.name })} width="160" />}
-        <p dir="auto">{organization.description}</p>
-        <p>{organization.address}, {organization.area}, {t(organization.governorate)}</p>
-        <LocationMap location={organization} />
-        <OrganizationContacts organization={organization} />
-      </> : <p>{t("Organization unavailable.")}</p>}
-      {campaign.reviewReason && <p>{t("Previous feedback")}: <bdi>{campaign.reviewReason}</bdi></p>}
-      {(campaign.status === "Pending" || canRemove) && (
-        <>
-          <label>
-          {t("Review feedback")}
-          <textarea value={reason} onChange={(evt) => setReason(evt.target.value)} />
-          </label>
-          <p>{tError(message)}</p>
-          {campaign.status === "Pending" && (
-            <>
-              <button disabled={busy || !organization} onClick={() => handleReview("Approved")}>{t("Approve")}</button>
-              <button disabled={busy} onClick={() => handleReview("Rejected")}>{t("Reject")}</button>
-            </>
-          )}
-          {canRemove && <button disabled={busy} onClick={() => handleReview("Removed")}>{t("Remove")}</button>}
-        </>
+    <article className="review-item">
+      {/* Cover image */}
+      {campaign.coverImage && (
+        <img
+          className="review-item-cover"
+          src={campaign.coverImage}
+          alt={campaign.title}
+        />
       )}
+
+      <div className="review-item-body">
+        {/* Title + status */}
+        <div className="review-item-header">
+          <h3 className="review-item-title">
+            <bdi>{campaign.title}</bdi>
+          </h3>
+          <span
+            className={`review-status-badge review-status-${campaign.status.toLowerCase()}`}
+          >
+            {t(campaign.status)}
+          </span>
+        </div>
+
+        {/* Description */}
+        <p className="review-item-description" dir="auto">
+          {campaign.description}
+        </p>
+
+        {/* Meta grid */}
+        <dl className="review-meta">
+          <div className="review-meta-row">
+            <dt>{t("Category")}</dt>
+            <dd>{t(campaign.category)}</dd>
+          </div>
+          <div className="review-meta-row">
+            <dt>{t("Venue")}</dt>
+            <dd>
+              <bdi>{campaign.venue}</bdi>
+            </dd>
+          </div>
+          <div className="review-meta-row">
+            <dt>{t("Address")}</dt>
+            <dd>
+              <bdi>{campaign.address}</bdi>, <bdi>{campaign.area}</bdi>,{" "}
+              {t(campaign.governorate)}, {t("Bahrain")}
+            </dd>
+          </div>
+          <div className="review-meta-row">
+            <dt>{t("Starts")}</dt>
+            <dd>
+              {formatDateTime(campaign.startsAt, language)}{" "}
+              <span className="review-meta-tz">({t("Bahrain time")})</span>
+            </dd>
+          </div>
+          <div className="review-meta-row">
+            <dt>{t("Ends")}</dt>
+            <dd>
+              {formatDateTime(campaign.endsAt, language)}{" "}
+              <span className="review-meta-tz">({t("Bahrain time")})</span>
+            </dd>
+          </div>
+          <div className="review-meta-row">
+            <dt>{t("Capacity")}</dt>
+            <dd>{campaign.capacity}</dd>
+          </div>
+          <div className="review-meta-row">
+            <dt>{t("Registered participants")}</dt>
+            <dd>{campaign.registeredCount}</dd>
+          </div>
+        </dl>
+
+        {/* Map */}
+        <div className="review-item-map">
+          <LocationMap location={campaign} />
+        </div>
+
+        {/* Organization block */}
+        {organization ? (
+          <div className="review-org-block">
+            <div className="review-org-header">
+              {organization.logo && (
+                <img
+                  className="review-org-logo"
+                  src={organization.logo}
+                  alt={t("{name} logo", { name: organization.name })}
+                />
+              )}
+              <div>
+                <h4 className="review-org-name">{organization.name}</h4>
+                <span
+                  className={`review-status-badge review-status-${organization.status.toLowerCase()}`}
+                >
+                  {t(organization.status)}
+                </span>
+              </div>
+            </div>
+            <p className="review-org-description" dir="auto">
+              {organization.description}
+            </p>
+            <p className="review-org-address">
+              {organization.address}, {organization.area},{" "}
+              {t(organization.governorate)}
+            </p>
+            <div className="review-item-map">
+              <LocationMap location={organization} />
+            </div>
+            <OrganizationContacts organization={organization} />
+          </div>
+        ) : (
+          <p className="state-msg">{t("Organization unavailable.")}</p>
+        )}
+
+        {/* Previous feedback */}
+        {campaign.reviewReason && (
+          <div className="review-prev-feedback">
+            <span className="review-prev-feedback-label">
+              {t("Previous feedback")}
+            </span>
+            <bdi>{campaign.reviewReason}</bdi>
+          </div>
+        )}
+
+        {/* Review actions */}
+        {(campaign.status === "Pending" || canRemove) && (
+          <div className="review-actions">
+            <div className="field">
+              <label
+                htmlFor={`campaign-feedback-${campaign._id}`}
+                className="field-label"
+              >
+                {t("Review feedback")}
+              </label>
+              <textarea
+                id={`campaign-feedback-${campaign._id}`}
+                dir="auto"
+                className="review-textarea"
+                value={reason}
+                onChange={(evt) => setReason(evt.target.value)}
+                rows={3}
+              />
+            </div>
+            {message && (
+              <p className="review-action-error" role="alert">
+                {tError(message)}
+              </p>
+            )}
+            <div className="review-action-btns">
+              {campaign.status === "Pending" && (
+                <>
+                  <button
+                    type="button"
+                    className="btn-review-approve"
+                    disabled={busy || !organization}
+                    onClick={() => handleReview("Approved")}
+                  >
+                    {t("Approve")}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-review-reject"
+                    disabled={busy}
+                    onClick={() => handleReview("Rejected")}
+                  >
+                    {t("Reject")}
+                  </button>
+                </>
+              )}
+              {canRemove && (
+                <button
+                  type="button"
+                  className="btn-review-remove"
+                  disabled={busy}
+                  onClick={() => handleReview("Removed")}
+                >
+                  {t("Remove")}
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </article>
   );
 };
@@ -91,8 +235,11 @@ const CampaignReview = () => {
     setBusy(true);
     setMessage("");
     try {
-      const updated = await campaignService.review(id, { status, reviewReason });
-      setCampaigns(campaigns.map((campaign) => campaign._id === id ? updated : campaign));
+      const updated = await campaignService.review(id, {
+        status,
+        reviewReason,
+      });
+      setCampaigns(campaigns.map((c) => (c._id === id ? updated : c)));
     } catch (err) {
       setMessage(err.message);
     } finally {
@@ -100,20 +247,62 @@ const CampaignReview = () => {
     }
   };
 
-  const filteredCampaigns = campaigns.filter((campaign) => status === "All" || campaign.status === status);
+  const filteredCampaigns = campaigns.filter(
+    (c) => status === "All" || c.status === status,
+  );
 
   return (
-    <section>
-      <h2>{t("Review campaigns")}</h2>
-      <label>
-          {t("Status")}
-          <select value={status} onChange={(evt) => setStatus(evt.target.value)}>
-          {["Pending", "Approved", "Rejected", "Removed", "Completed", "Cancelled", "Draft", "All"].map((status) => <option key={status} value={status}>{t(status)}</option>)}
-        </select>
-      </label>
-      <p>{tError(message)}</p>
-      {loading ? <p>{t("Loading campaigns...")}</p> : filteredCampaigns.length === 0 && <p>{t("No campaigns match this status.")}</p>}
-      {filteredCampaigns.map((campaign) => <CampaignReviewItem key={campaign._id} campaign={campaign} busy={busy} onReview={handleReview} />)}
+    <section className="review-section">
+      <div className="review-section-header">
+        <h2 className="review-section-title">{t("Review campaigns")}</h2>
+        <div className="field">
+          <label htmlFor="campaign-review-status" className="field-label">
+            {t("Status")}
+          </label>
+          <select
+            id="campaign-review-status"
+            className="review-status-select"
+            value={status}
+            onChange={(evt) => setStatus(evt.target.value)}
+          >
+            {[
+              "Pending",
+              "Approved",
+              "Rejected",
+              "Removed",
+              "Completed",
+              "Cancelled",
+              "Draft",
+              "All",
+            ].map((s) => (
+              <option key={s} value={s}>
+                {t(s)}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {message && (
+        <p className="state-msg state-error" role="alert">
+          {tError(message)}
+        </p>
+      )}
+      {loading && <p className="state-msg">{t("Loading campaigns...")}</p>}
+      {!loading && filteredCampaigns.length === 0 && (
+        <p className="state-msg">{t("No campaigns match this status.")}</p>
+      )}
+
+      <div className="review-list">
+        {filteredCampaigns.map((campaign) => (
+          <CampaignReviewItem
+            key={campaign._id}
+            campaign={campaign}
+            busy={busy}
+            onReview={handleReview}
+          />
+        ))}
+      </div>
     </section>
   );
 };

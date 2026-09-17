@@ -1,91 +1,254 @@
-import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useContext, useEffect, useRef, useState } from "react";
+import { Link } from "react-router";
 import { LanguageContext } from "../../contexts/LanguageContext.js";
 import * as campaignService from "../../services/campaignService.js";
-import CampaignGrid from "../CampaignGrid/CampaignGrid.jsx";
-import { categories, governorates } from "../../utils/options.js";
-import { dateOnly } from "../../utils/dates.js";
-
-const emptyFilters = { search: "", governorate: "", area: "", category: "", from: "", to: "" };
+import * as organizationService from "../../services/organizationService.js";
+import heroVideo from "../../assets/main.mp4";
+import fallbackImage from "../../assets/tatawwu-logo.svg";
+import Footer from "../Footer/Footer.jsx";
 
 const ExplorePage = () => {
-  const { orgId } = useParams();
-  const { t, tError } = useContext(LanguageContext);
+  const { t, tError, language } = useContext(LanguageContext);
   const [campaigns, setCampaigns] = useState([]);
-  const [filters, setFilters] = useState(emptyFilters);
-  const [showFilters, setShowFilters] = useState(false);
-  const [page, setPage] = useState(1);
+  const [organizations, setOrganizations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [videoPaused, setVideoPaused] = useState(
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const [marqueePaused, setMarqueePaused] = useState(
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const video = useRef(null);
 
   useEffect(() => {
-    const loadCampaigns = async () => {
+    const loadHome = async () => {
       try {
-        setCampaigns(await campaignService.index());
+        const [campaignData, organizationData] = await Promise.all([
+          campaignService.index(),
+          organizationService.index(),
+        ]);
+        setCampaigns(campaignData);
+        setOrganizations(organizationData);
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
-    loadCampaigns();
+    loadHome();
   }, []);
 
-  const handleChange = (event) => {
-    setFilters({ ...filters, [event.target.name]: event.target.value });
-    setPage(1);
-  };
+  useEffect(() => {
+    if (videoPaused) video.current.pause();
+    else video.current.play().catch(() => setVideoPaused(true));
+  }, [videoPaused]);
 
-  const filteredCampaigns = campaigns.filter((campaign) => {
-    const text = `${campaign.title} ${campaign.organizationId?.name || ""}`.toLowerCase();
-    const date = dateOnly(campaign.startsAt);
-    return new Date(campaign.startsAt) > new Date()
-      && (!orgId || campaign.organizationId?._id === orgId)
-      && text.includes(filters.search.toLowerCase())
-      && (!filters.governorate || campaign.governorate === filters.governorate)
-      && campaign.area.toLowerCase().includes(filters.area.toLowerCase())
-      && (!filters.category || campaign.category === filters.category)
-      && (!filters.from || date >= filters.from)
-      && (!filters.to || date <= filters.to);
-  });
-  const pages = Math.max(1, Math.ceil(filteredCampaigns.length / 6));
-  const shownPage = Math.min(page, pages);
-  const visibleCampaigns = filteredCampaigns.slice((shownPage - 1) * 6, shownPage * 6);
-  const hasFilters = filters.governorate || filters.area || filters.category || filters.from || filters.to;
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleMotionChange = () => {
+      if (preference.matches) {
+        setVideoPaused(true);
+        setMarqueePaused(true);
+      }
+    };
+    preference.addEventListener("change", handleMotionChange);
+    return () => preference.removeEventListener("change", handleMotionChange);
+  }, []);
+
+  const upcoming = campaigns.filter(
+    (campaign) => new Date(campaign.startsAt) > new Date(),
+  );
+  const featured = upcoming.slice(0, 10);
+  const marqueeCampaigns = [...featured, ...featured];
+  const publicLocations = [...organizations, ...upcoming];
+  const governorateCount = new Set(
+    publicLocations.map((item) => item.governorate).filter(Boolean),
+  ).size;
+  const areaCount = new Set(
+    publicLocations
+      .filter((item) => item.area)
+      .map((item) => `${item.governorate}:${item.area.trim().toLowerCase()}`),
+  ).size;
+  const stats = [
+    { label: "Approved organizations", count: organizations.length },
+    { label: "Upcoming activities", count: upcoming.length },
+    { label: "Governorates represented", count: governorateCount },
+    { label: "Areas represented", count: areaCount },
+  ];
+  const numberFormat = new Intl.NumberFormat(
+    language === "ar" ? "ar-BH" : "en-GB",
+  );
 
   return (
-    <main>
-      <h1>{t("Volunteer in Bahrain")}</h1>
-      <p>{t("Find a local activity and make time for your community.")}</p>
-      <label>{t("Search")} <input name="search" value={filters.search} onChange={handleChange} placeholder={t("Activity or organization")} /></label>
-      <button type="button" aria-expanded={showFilters} aria-controls="campaign-filters" onClick={() => setShowFilters(!showFilters)}>
-        {t(showFilters ? "Hide filters" : "Show filters")}
-      </button>
-      {!showFilters && hasFilters && <span>{t("Filters applied")}</span>}
-      <div id="campaign-filters" hidden={!showFilters}>
-        <label>{t("Governorate")} <select name="governorate" value={filters.governorate} onChange={handleChange}>
-          <option value="">{t("All governorates")}</option>
-          {governorates.map((governorate) => <option key={governorate} value={governorate}>{t(governorate)}</option>)}
-        </select></label>
-        <label>{t("Area")} <input name="area" value={filters.area} onChange={handleChange} /></label>
-        <label>{t("Category")} <select name="category" value={filters.category} onChange={handleChange}>
-          <option value="">{t("All categories")}</option>
-          {categories.map((category) => <option key={category} value={category}>{t(category)}</option>)}
-        </select></label>
-        <label>{t("From date")} <input type="date" dir="ltr" name="from" value={filters.from} onChange={handleChange} /></label>
-        <label>{t("To date")} <input type="date" dir="ltr" name="to" value={filters.to} onChange={handleChange} /></label>
-      </div>
-      <button type="button" onClick={() => { setFilters(emptyFilters); setPage(1); }}>{t("Clear filters")}</button>
-      <h2>{t("Upcoming activities")}</h2>
-      {loading && <p>{t("Loading activities...")}</p>}
-      {error && <p role="alert">{tError(error)}</p>}
-      {!loading && !error && <>
-        <CampaignGrid campaigns={visibleCampaigns} />
-        <button type="button" disabled={shownPage === 1} onClick={() => setPage(shownPage - 1)}>{t("Previous")}</button>
-        <span> {t("Page {page} of {pages}", { page: shownPage, pages })} </span>
-        <button type="button" disabled={shownPage === pages} onClick={() => setPage(shownPage + 1)}>{t("Next")}</button>
-      </>}
-    </main>
+    <>
+      <main>
+        <section className="hero">
+          <video
+            ref={video}
+            className="hero-video"
+            src={heroVideo}
+            loop
+            muted
+            playsInline
+            aria-hidden="true"
+          />
+          <div className="hero-scrim" />
+          <div className="hero-content">
+            <h1>
+              {t("Small acts, done together,")}
+              <span className="line-two">{t("move a whole community.")}</span>
+            </h1>
+            <div className="hero-btns">
+              <a href="#about" className="btn-outline-light">
+                {t("About us")}
+              </a>
+              <Link to="/activities" className="btn-primary-light">
+                {t("Explore activities")}
+              </Link>
+              <button
+                type="button"
+                className="btn-outline-light hero-motion-toggle"
+                onClick={() => setVideoPaused(!videoPaused)}
+              >
+                {t(
+                  videoPaused
+                    ? "Play background video"
+                    : "Pause background video",
+                )}
+              </button>
+            </div>
+          </div>
+          <div className="hero-scroll-cue" aria-hidden="true">
+            ↓
+          </div>
+        </section>
+
+        <section className="about-section" id="about">
+          <div className="sec-heading">
+            <h2 className="sec-title">{t("About Tatawwu")}</h2>
+            <p className="sec-desc">
+              {t(
+                "A community platform connecting volunteers with organizations in Bahrain.",
+              )}
+            </p>
+          </div>
+          <div className="about-grid">
+            <div className="about-box">
+              <h3>{t("Our mission")}</h3>
+              <p>
+                {t(
+                  "Find volunteering opportunities, join activities, and follow your participation in one place.",
+                )}
+              </p>
+              <p>
+                {t(
+                  "Organizations and campaigns are reviewed before publication. Certificates recognize attendance at completed activities.",
+                )}
+              </p>
+              <p>
+                {t(
+                  "Listings marked Demo contain fictional activities and contacts for demonstrating the platform.",
+                )}
+              </p>
+            </div>
+            <div className="about-stats">
+              {loading && (
+                <p className="state-msg">{t("Loading activities...")}</p>
+              )}
+              {error && (
+                <p className="state-msg state-error" role="alert">
+                  {tError(error)}
+                </p>
+              )}
+              {!loading &&
+                !error &&
+                stats.map((stat) => (
+                  <div className="about-stat" key={stat.label}>
+                    <div className="about-stat-num">
+                      {numberFormat.format(stat.count)}
+                    </div>
+                    <div className="about-stat-label">{t(stat.label)}</div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="explore-section" id="campaigns">
+          <div className="sec-heading">
+            <h2 className="sec-title">{t("Volunteer in Bahrain")}</h2>
+            <p className="sec-desc">
+              {t("Find a local activity and make time for your community.")}
+            </p>
+          </div>
+          {!loading && !error && featured.length === 0 && (
+            <p className="state-msg">{t("No upcoming activities.")}</p>
+          )}
+          {featured.length > 0 && (
+            <>
+              <button
+                type="button"
+                className="btn-soft marquee-motion-toggle"
+                onClick={() => setMarqueePaused(!marqueePaused)}
+              >
+                {t(
+                  marqueePaused
+                    ? "Resume activity animation"
+                    : "Pause activity animation",
+                )}
+              </button>
+              <div className="marquee">
+                <div
+                  className={`marquee-track${marqueePaused ? " is-paused" : ""}`}
+                >
+                  {marqueeCampaigns.map((campaign, index) => (
+                    <article
+                      className="campaign-card"
+                      key={`${campaign._id}-${index}`}
+                      aria-hidden={index >= featured.length ? true : undefined}
+                    >
+                      <img
+                        className="campaign-card-img"
+                        src={
+                          campaign.coverImage ||
+                          campaign.organizationId?.logo ||
+                          fallbackImage
+                        }
+                        alt={campaign.title}
+                      />
+                      <div className="campaign-card-body">
+                        <span className="campaign-card-tag">
+                          {t(campaign.category)}
+                        </span>
+                        <h3 className="campaign-card-title">
+                          <Link
+                            to={`/campaigns/${campaign._id}`}
+                            tabIndex={index >= featured.length ? -1 : undefined}
+                          >
+                            <bdi>{campaign.title}</bdi>
+                          </Link>
+                        </h3>
+                        <p className="campaign-card-meta">
+                          <bdi>{campaign.organizationId?.name}</bdi> &middot;{" "}
+                          <bdi>{campaign.area}</bdi>
+                        </p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+          <div className="explore-cta">
+            <Link to="/activities" className="btn-primary-dark">
+              {t("Browse all activities")}
+            </Link>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 };
 
