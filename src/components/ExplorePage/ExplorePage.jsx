@@ -134,7 +134,7 @@ const ExplorePage = () => {
                     />
                     <div className="campaign-card-body">
                       <span className="campaign-card-tag">
-                        {campaign.category}
+                        {t(campaign.category)}
                       </span>
                       <h3 className="campaign-card-title">{campaign.title}</h3>
                       <p className="campaign-card-meta">
