@@ -34,6 +34,10 @@ const Certificate = ({
         <div className="cert-content">
           <h1 className="cert-title">{t("CERTIFICATE")}</h1>
           <p className="cert-subtitle">{t("OF ACHIEVEMENT")}</p>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <main className="certificates-page">
