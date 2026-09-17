@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { LanguageContext } from "../../../../contexts/LanguageContext.js";
 import { formatDateTime } from "../../../../utils/dates.js";
 
-const Certificate = ({
+const Certificates = ({
   volunteerName,
   campaignTitle,
   organizationName,
@@ -107,4 +107,4 @@ const Certificate = ({
   );
 };
 
-export default Certificate;
+export default Certificates;
