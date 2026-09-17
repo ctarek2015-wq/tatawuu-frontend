@@ -138,4 +138,3 @@ const Certificates = () => {
 };
 
 export default Certificates;
-export default Certificates;
