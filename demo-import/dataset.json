@@ -1,0 +1,872 @@
+{
+  "version": 1,
+  "sourceFile": "data.md",
+  "notes": [
+    "All account names and contacts are fictional demo data. Organization background is drawn from the user-supplied source, not represented as a verified official account.",
+    "Original source dates are retained as provenance; seven session dates must be assigned immediately before import.",
+    "All fourteen upcoming campaigns use Bahrain time, 09:00 on the source first day and 17:00 on its final day.",
+    "Campaign capacities preserve the exact supplied volunteer counts.",
+    "Isa Town retains the Capital governorate supplied in data.md. No exact coordinates or real telephone contacts are included.",
+    "Upload an independent Cloudinary asset for each organization or campaign, including reused logos."
+  ],
+  "organizations": [
+    {
+      "sourceId": "1",
+      "sourceName": "Sitra Charity Association",
+      "organizer": {
+        "username": "demo_sitra_organizer",
+        "name": "Sitra Demo Coordinator",
+        "city": "Sitra",
+        "role": "Organizer"
+      },
+      "input": {
+        "name": "Sitra Charity Association (Demo)",
+        "description": "Fictional demo listing inspired by the supplied organization overview; it is not an official organization account. Overview from the source: Established to serve the residents of Sitra and neighboring areas, it is one of the active civil and charitable societies in the kingdom. It focuses on providing financial and in-kind support to needy families, scholarships and educational aid to students, and orphan sponsorship and productive family projects. Areas of focus: Social and charitable work, caring for needy families and orphans, seasonal aid (such as food baskets and Ramadan provisions), and supporting developmental projects for residents. All events, contacts, volunteers, and venues in this listing are sample data.",
+        "country": "BH",
+        "governorate": "Capital",
+        "area": "Sitra",
+        "address": "Sample community venue in Sitra, Bahrain — fictional demo address, not a real meeting point.",
+        "contactEmail": "sitra@tatawwu.example.test"
+      },
+      "logoPath": "photos/sitra charity logo.png",
+      "campaigns": [
+        {
+          "sourceId": "1-1",
+          "sourceTitle": "Ramadan Campaign (Food Baskets & Provisions)",
+          "sourceDates": {
+            "startsOn": "2027-03-10",
+            "endsOn": "2027-03-25"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Community Food Baskets and Provisions",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. A sample community activity for preparing, packing, and distributing food baskets and household provisions to families. Volunteers practice checking supplies, packing baskets, and organizing collections. The supplied Ramadan theme is presented as a nonseasonal community food project for these demonstration dates. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Food Support",
+            "country": "BH",
+            "governorate": "Capital",
+            "area": "Sitra",
+            "venue": "Sitra Sample Community Venue",
+            "address": "Sample activity space in Sitra, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 20,
+            "startsAt": "2027-03-10T09:00:00+03:00",
+            "endsAt": "2027-03-25T17:00:00+03:00"
+          },
+          "coverPath": "photos/الحملة الرمضانية.jpg",
+          "coverUsesLogo": false
+        },
+        {
+          "sourceId": "1-2",
+          "sourceTitle": "Eid and Winter Clothing Campaign",
+          "sourceDates": {
+            "startsOn": "2026-10-01",
+            "endsOn": "2026-10-15"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Winter Clothing Collection",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. A sample winter clothing collection in which volunteers sort, pack, and label new clothing and shoes for children and families. This fictional activity uses winter wording for the supplied October dates. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Community Support",
+            "country": "BH",
+            "governorate": "Capital",
+            "area": "Sitra",
+            "venue": "Sitra Sample Community Venue",
+            "address": "Sample activity space in Sitra, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 15,
+            "startsAt": "2026-10-01T09:00:00+03:00",
+            "endsAt": "2026-10-15T17:00:00+03:00"
+          },
+          "coverPath": "photos/sitra charity logo.png",
+          "coverUsesLogo": true
+        },
+        {
+          "sourceId": "1-3",
+          "sourceTitle": "Entertainment Festivals and Events for Orphans",
+          "sourceDates": {
+            "startsOn": "2026-12-15",
+            "endsOn": "2026-12-18"
+          },
+          "isSession": true,
+          "input": {
+            "title": "[Demo] Entertainment Festivals and Events for Orphans — Short Practice Session",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. A brief practice session for organizing inclusive games, educational activities, and recreational events for children. Volunteers rehearse welcoming families, setting up activities, and working as a team. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Culture",
+            "country": "BH",
+            "governorate": "Capital",
+            "area": "Sitra",
+            "venue": "Sitra Demo Community Room",
+            "address": "Sample activity space in Sitra, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 25
+          },
+          "coverPath": "photos/المهرجانات والفعاليات الخيرية الترفيهية للأيتام.jpg",
+          "coverUsesLogo": false
+        }
+      ]
+    },
+    {
+      "sourceId": "2",
+      "sourceName": "Al-Kawthar Society for Social Care",
+      "organizer": {
+        "username": "demo_kawthar_organizer",
+        "name": "Yousif Ali (Demo Organizer)",
+        "city": "Sanabis",
+        "role": "Organizer"
+      },
+      "input": {
+        "name": "Al-Kawthar Society for Social Care (Demo)",
+        "description": "Fictional demo listing inspired by the supplied organization overview; it is not an official organization account. Overview from the source: Formally established to organize charitable work, sponsor orphans, and care for underprivileged families. It is known for sustainable developmental projects such as seasonal school aid and productive projects for needy families. Areas of focus: Orphan care, family development, providing educational and in-kind assistance. All events, contacts, volunteers, and venues in this listing are sample data.",
+        "country": "BH",
+        "governorate": "Capital",
+        "area": "Sanabis",
+        "address": "Sample community venue in Sanabis, Bahrain — fictional demo address, not a real meeting point.",
+        "contactEmail": "kawthar@tatawwu.example.test"
+      },
+      "logoPath": "photos/Al-Kawthar Society for Social Care logo.jpg",
+      "campaigns": [
+        {
+          "sourceId": "2-1",
+          "sourceTitle": "School Bag Campaign (Back to School)",
+          "sourceDates": {
+            "startsOn": "2027-08-20",
+            "endsOn": "2027-08-31"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] School Bag Campaign (Back to School)",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. An educational and social project aimed at sorting, preparing, and distributing school bags and stationery to children of underprivileged families and orphans to ready them for the new academic year. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Education",
+            "country": "BH",
+            "governorate": "Capital",
+            "area": "Sanabis",
+            "venue": "Sanabis Sample Community Venue",
+            "address": "Sample activity space in Sanabis, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 30,
+            "startsAt": "2027-08-20T09:00:00+03:00",
+            "endsAt": "2027-08-31T17:00:00+03:00"
+          },
+          "coverPath": "photos/Al-Kawthar Society for Social Care logo.jpg",
+          "coverUsesLogo": true
+        },
+        {
+          "sourceId": "2-2",
+          "sourceTitle": "Annual Outstanding Orphans Award Ceremony",
+          "sourceDates": {
+            "startsOn": "2027-07-05",
+            "endsOn": "2027-07-06"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Annual Outstanding Orphans Award Ceremony",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. A major annual ceremony honoring orphan children who achieved high grades in their studies, involving logistical organization to welcome guests and manage entertainment and recognition programs. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Education",
+            "country": "BH",
+            "governorate": "Capital",
+            "area": "Sanabis",
+            "venue": "Sanabis Sample Community Venue",
+            "address": "Sample activity space in Sanabis, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 18,
+            "startsAt": "2027-07-05T09:00:00+03:00",
+            "endsAt": "2027-07-06T17:00:00+03:00"
+          },
+          "coverPath": "photos/الأيام السنوية لتكريم الأيتام المتفوقين.jpg",
+          "coverUsesLogo": false
+        },
+        {
+          "sourceId": "2-3",
+          "sourceTitle": "Relief Campaigns and Seasonal Productive Projects",
+          "sourceDates": {
+            "startsOn": "2026-11-10",
+            "endsOn": "2026-11-13"
+          },
+          "isSession": true,
+          "input": {
+            "title": "[Demo] Productive Families and Relief Booth Practice — Short Practice Session",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. A brief practice session for arranging sample productive-family booths and community relief displays. Volunteers rehearse visitor guidance, display preparation, and welcoming participants; no real fundraising or sale takes place. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Community Support",
+            "country": "BH",
+            "governorate": "Capital",
+            "area": "Sanabis",
+            "venue": "Sanabis Demo Community Room",
+            "address": "Sample activity space in Sanabis, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 12
+          },
+          "coverPath": "photos/الحملات الإغاثية والمشاريع الإنتاجية الموسمية.jpg",
+          "coverUsesLogo": false
+        }
+      ]
+    },
+    {
+      "sourceId": "3",
+      "sourceName": "Bahrain Society for the Blind",
+      "organizer": {
+        "username": "demo_blind_society_organizer",
+        "name": "Noor Salman (Demo Organizer)",
+        "city": "Isa Town",
+        "role": "Organizer"
+      },
+      "input": {
+        "name": "Bahrain Society for the Blind (Demo)",
+        "description": "Fictional demo listing inspired by the supplied organization overview; it is not an official organization account. Overview from the source: Founded in 1982 to be the primary supporter of visually impaired individuals in Bahrain. It trains the blind in Braille techniques, modern technologies, and screen-reading software, while providing cultural and sports activities to ensure their effective integration into society. Areas of focus: Serving and rehabilitating the blind and visually impaired, educational and professional integration, and community awareness. All events, contacts, volunteers, and venues in this listing are sample data.",
+        "country": "BH",
+        "governorate": "Capital",
+        "area": "Isa Town",
+        "address": "Sample community venue in Isa Town, Bahrain — fictional demo address, not a real meeting point.",
+        "contactEmail": "blind-society@tatawwu.example.test"
+      },
+      "logoPath": "demo-import/prepared-images/blind-society-demo-logo.png",
+      "campaigns": [
+        {
+          "sourceId": "3-1",
+          "sourceTitle": "Camps and Recreational Trips for the Visually Impaired",
+          "sourceDates": {
+            "startsOn": "2027-01-15",
+            "endsOn": "2027-01-17"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Camps and Recreational Trips for the Visually Impaired",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. Organizing outdoor trips, recreational camps, and sports activities dedicated to the blind and visually impaired, where volunteers assist in escorting them and ensuring safe and comfortable mobility. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Community Support",
+            "country": "BH",
+            "governorate": "Capital",
+            "area": "Isa Town",
+            "venue": "Isa Town Sample Community Venue",
+            "address": "Sample activity space in Isa Town, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 15,
+            "startsAt": "2027-01-15T09:00:00+03:00",
+            "endsAt": "2027-01-17T17:00:00+03:00"
+          },
+          "coverPath": "demo-import/prepared-images/blind-society-demo-logo.png",
+          "coverUsesLogo": true
+        },
+        {
+          "sourceId": "3-2",
+          "sourceTitle": "Braille Techniques and Talking Computer Training Workshops",
+          "sourceDates": {
+            "startsOn": "2027-02-01",
+            "endsOn": "2027-02-28"
+          },
+          "isSession": true,
+          "input": {
+            "title": "[Demo] Braille Techniques and Talking Computer Training Workshops — Short Practice Session",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. A brief practice session supporting Braille and screen-reader workshops. Volunteers rehearse accessible room setup, greeting learners, and coordinating educational materials. All participants and attendance examples are fictional. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Education",
+            "country": "BH",
+            "governorate": "Capital",
+            "area": "Isa Town",
+            "venue": "Isa Town Demo Community Room",
+            "address": "Sample activity space in Isa Town, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 10
+          },
+          "coverPath": "demo-import/prepared-images/braille-workshop-demo.png",
+          "coverUsesLogo": false
+        },
+        {
+          "sourceId": "3-3",
+          "sourceTitle": "Awareness Exhibitions (White Cane Safety Day)",
+          "sourceDates": {
+            "startsOn": "2026-10-15",
+            "endsOn": "2026-10-16"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Awareness Exhibitions (White Cane Safety Day)",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. Setting up introductory booths and exhibitions in malls and public venues to raise awareness about the rights of the blind, explain proper interaction methods, and distribute awareness brochures. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Community Support",
+            "country": "BH",
+            "governorate": "Capital",
+            "area": "Isa Town",
+            "venue": "Isa Town Sample Community Venue",
+            "address": "Sample activity space in Isa Town, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 12,
+            "startsAt": "2026-10-15T09:00:00+03:00",
+            "endsAt": "2026-10-16T17:00:00+03:00"
+          },
+          "coverPath": "demo-import/prepared-images/white-cane-awareness-demo.png",
+          "coverUsesLogo": false
+        }
+      ]
+    },
+    {
+      "sourceId": "4",
+      "sourceName": "Al-Eslah Society",
+      "organizer": {
+        "username": "demo_eslah_organizer",
+        "name": "Fatima Khalid (Demo Organizer)",
+        "city": "Riffa",
+        "role": "Organizer"
+      },
+      "input": {
+        "name": "Al-Eslah Society (Demo)",
+        "description": "Fictional demo listing inspired by the supplied organization overview; it is not an official organization account. Overview from the source: Established in 1941, it is considered one of the oldest social and charitable institutions in Bahrain. It has a long history of providing extensive community services, and its charitable committees (such as relief and humanitarian work) manage orphan sponsorships, well-digging, and aid delivery locally and internationally. Areas of focus: Charitable and humanitarian work, social and religious services, Ramadan and seasonal projects. All events, contacts, volunteers, and venues in this listing are sample data.",
+        "country": "BH",
+        "governorate": "Southern",
+        "area": "Riffa",
+        "address": "Sample community venue in Riffa, Bahrain — fictional demo address, not a real meeting point.",
+        "contactEmail": "eslah@tatawwu.example.test"
+      },
+      "logoPath": "photos/Al-Eslah Society logo.jpg",
+      "campaigns": [
+        {
+          "sourceId": "4-1",
+          "sourceTitle": "Iftar Sa'im Campaigns (Ramadan Tents)",
+          "sourceDates": {
+            "startsOn": "2027-03-11",
+            "endsOn": "2027-04-09"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Community Meal Preparation and Distribution",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. A sample community food project for preparing, packing, and sharing meals. Volunteers practice organizing packing stations and collection areas. The supplied Ramadan-tent theme is presented as a nonseasonal community meal project for these demonstration dates. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Food Support",
+            "country": "BH",
+            "governorate": "Southern",
+            "area": "Riffa",
+            "venue": "Riffa Sample Community Venue",
+            "address": "Sample activity space in Riffa, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 40,
+            "startsAt": "2027-03-11T09:00:00+03:00",
+            "endsAt": "2027-04-09T17:00:00+03:00"
+          },
+          "coverPath": "photos/حملات إفطار الصائم (المخيمات الرمضانية).jpg",
+          "coverUsesLogo": false
+        },
+        {
+          "sourceId": "4-2",
+          "sourceTitle": "Charity Food Bazaar and Public Festivals",
+          "sourceDates": {
+            "startsOn": "2026-11-20",
+            "endsOn": "2026-11-21"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Charity Food Bazaar and Public Festivals",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. An annual public charity market where proceeds support humanitarian projects and committees, requiring volunteers for organizing, sales, and supervising various booths. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Food Support",
+            "country": "BH",
+            "governorate": "Southern",
+            "area": "Riffa",
+            "venue": "Riffa Sample Community Venue",
+            "address": "Sample activity space in Riffa, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 25,
+            "startsAt": "2026-11-20T09:00:00+03:00",
+            "endsAt": "2026-11-21T17:00:00+03:00"
+          },
+          "coverPath": "photos/الأطباق الخيري والمهرجانات الجماهيرية.jpg",
+          "coverUsesLogo": false
+        },
+        {
+          "sourceId": "4-3",
+          "sourceTitle": "Seasonal Relief Projects (Sacrificial Meat / Udhiyah & Eid Clothing)",
+          "sourceDates": {
+            "startsOn": "2026-05-26",
+            "endsOn": "2026-05-30"
+          },
+          "isSession": true,
+          "input": {
+            "title": "[Demo] Community Relief and Clothing Sorting — Short Practice Session",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. A brief nonseasonal practice session for sorting clothing and packing sample family relief kits. Volunteers rehearse receiving supplies, checking labels, and preparing collections. This replaces the source past Eid-specific event with a current fictional demo session. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Community Support",
+            "country": "BH",
+            "governorate": "Southern",
+            "area": "Riffa",
+            "venue": "Riffa Demo Community Room",
+            "address": "Sample activity space in Riffa, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 30
+          },
+          "coverPath": "photos/Al-Eslah Society logo.jpg",
+          "coverUsesLogo": true
+        }
+      ]
+    },
+    {
+      "sourceId": "5",
+      "sourceName": "Bahrain Red Crescent Society",
+      "organizer": {
+        "username": "demo_red_crescent_organizer",
+        "name": "Omar Nasser (Demo Organizer)",
+        "city": "Diplomatic Area",
+        "role": "Organizer"
+      },
+      "input": {
+        "name": "Bahrain Red Crescent Society (Demo)",
+        "description": "Fictional demo listing inspired by the supplied organization overview; it is not an official organization account. Overview from the source: Established in 1971 and joined the International Federation of Red Cross and Red Crescent Societies. It plays a pivotal role in responding to disasters and emergencies inside and outside Bahrain, organizing specialized first aid training courses and qualifying volunteers for humanitarian work. Areas of focus: Local and international relief, emergency medical care, and disseminating international humanitarian law. All events, contacts, volunteers, and venues in this listing are sample data.",
+        "country": "BH",
+        "governorate": "Capital",
+        "area": "Diplomatic Area",
+        "address": "Sample community venue in Diplomatic Area, Bahrain — fictional demo address, not a real meeting point.",
+        "contactEmail": "red-crescent@tatawwu.example.test"
+      },
+      "logoPath": "photos/Bahrain Red Crescent logo.jpg",
+      "campaigns": [
+        {
+          "sourceId": "5-1",
+          "sourceTitle": "First Aid Training Courses and Programs",
+          "sourceDates": {
+            "startsOn": "2026-11-05",
+            "endsOn": "2026-11-07"
+          },
+          "isSession": true,
+          "input": {
+            "title": "[Demo] First Aid Training Courses and Programs — Short Practice Session",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. A brief logistics practice session for a sample first aid awareness workshop. Volunteers rehearse welcoming participants, arranging a teaching space, and organizing materials. Demo certificates record fictional volunteer participation and are not medical training qualifications. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Health",
+            "country": "BH",
+            "governorate": "Capital",
+            "area": "Diplomatic Area",
+            "venue": "Diplomatic Area Demo Community Room",
+            "address": "Sample activity space in Diplomatic Area, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 15
+          },
+          "coverPath": "photos/Bahrain Red Crescent logo.jpg",
+          "coverUsesLogo": true
+        },
+        {
+          "sourceId": "5-2",
+          "sourceTitle": "Blood Donation Campaigns",
+          "sourceDates": {
+            "startsOn": "2027-06-14",
+            "endsOn": "2027-06-14"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Blood Donation Campaigns",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. Field campaigns in cooperation with hospitals and health centers to encourage community blood donation, where volunteers organize queues, guide donors, and provide on-site support. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Health",
+            "country": "BH",
+            "governorate": "Capital",
+            "area": "Diplomatic Area",
+            "venue": "Diplomatic Area Sample Community Venue",
+            "address": "Sample activity space in Diplomatic Area, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 20,
+            "startsAt": "2027-06-14T09:00:00+03:00",
+            "endsAt": "2027-06-14T17:00:00+03:00"
+          },
+          "coverPath": "photos/حملات التبرع بالدم.jpg",
+          "coverUsesLogo": false
+        },
+        {
+          "sourceId": "5-3",
+          "sourceTitle": "Emergency Response and Community Awareness Projects",
+          "sourceDates": {
+            "startsOn": "2027-05-08",
+            "endsOn": "2027-05-10"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Emergency Response and Community Awareness Projects",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. Specialized awareness exhibitions and lectures introducing the community to the principles of international humanitarian law and disaster management, supported by youth support and organization teams. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Health",
+            "country": "BH",
+            "governorate": "Capital",
+            "area": "Diplomatic Area",
+            "venue": "Diplomatic Area Sample Community Venue",
+            "address": "Sample activity space in Diplomatic Area, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 18,
+            "startsAt": "2027-05-08T09:00:00+03:00",
+            "endsAt": "2027-05-10T17:00:00+03:00"
+          },
+          "coverPath": "photos/Bahrain Red Crescent logo.jpg",
+          "coverUsesLogo": true
+        }
+      ]
+    },
+    {
+      "sourceId": "6",
+      "sourceName": "Environment Friends Society",
+      "organizer": {
+        "username": "demo_environment_organizer",
+        "name": "Reem Ahmed (Demo Organizer)",
+        "city": "Buri",
+        "role": "Organizer"
+      },
+      "input": {
+        "name": "Environment Friends Society (Demo)",
+        "description": "Fictional demo listing inspired by the supplied organization overview; it is not an official organization account. Overview from the source: Established in 2000 on the initiative of environmental enthusiasts in Bahrain. It focuses on organizing beach clean-up campaigns, awareness workshops in schools and universities on recycling, and preserving marine and terrestrial wildlife in the kingdom. Areas of focus: Environmental conservation, sustainable development, spreading environmental awareness, and recycling. All events, contacts, volunteers, and venues in this listing are sample data.",
+        "country": "BH",
+        "governorate": "Northern",
+        "area": "Buri",
+        "address": "Sample community venue in Buri, Bahrain — fictional demo address, not a real meeting point.",
+        "contactEmail": "environment@tatawwu.example.test"
+      },
+      "logoPath": "photos/Environment Friends logo.jpg",
+      "campaigns": [
+        {
+          "sourceId": "6-1",
+          "sourceTitle": "Coast and Terrestrial Cleanup Campaigns",
+          "sourceDates": {
+            "startsOn": "2027-04-22",
+            "endsOn": "2027-04-22"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Coast and Terrestrial Cleanup Campaigns",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. Voluntary environmental field campaigns aimed at collecting waste, cleaning up beaches, and protecting marine and land reserves from pollution in cooperation with official and environmental authorities. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Environment",
+            "country": "BH",
+            "governorate": "Northern",
+            "area": "Buri",
+            "venue": "Buri Sample Community Venue",
+            "address": "Sample activity space in Buri, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 35,
+            "startsAt": "2027-04-22T09:00:00+03:00",
+            "endsAt": "2027-04-22T17:00:00+03:00"
+          },
+          "coverPath": "photos/حملات تنظيف السواحل والبر البحريني.jpg",
+          "coverUsesLogo": false
+        },
+        {
+          "sourceId": "6-2",
+          "sourceTitle": "School Recycling and Environmental Art Workshops",
+          "sourceDates": {
+            "startsOn": "2027-02-10",
+            "endsOn": "2027-02-12"
+          },
+          "isSession": true,
+          "input": {
+            "title": "[Demo] School Recycling and Environmental Art Workshops — Short Practice Session",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. A brief practice session for a sample recycling and environmental art workshop. Volunteers rehearse sorting paper and plastic, preparing reusable materials, and explaining creative recycling activities. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Environment",
+            "country": "BH",
+            "governorate": "Northern",
+            "area": "Buri",
+            "venue": "Buri Demo Community Room",
+            "address": "Sample activity space in Buri, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 12
+          },
+          "coverPath": "photos/Environment Friends logo.jpg",
+          "coverUsesLogo": true
+        },
+        {
+          "sourceId": "6-3",
+          "sourceTitle": "Annual Environmental Exhibition and Awareness Conferences",
+          "sourceDates": {
+            "startsOn": "2027-06-05",
+            "endsOn": "2027-06-07"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Annual Environmental Exhibition and Awareness Conferences",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. An annual conference and exhibition attracting experts and stakeholders to discuss climate change and sustainable development issues, requiring volunteers for reception and administrative organization. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Environment",
+            "country": "BH",
+            "governorate": "Northern",
+            "area": "Buri",
+            "venue": "Buri Sample Community Venue",
+            "address": "Sample activity space in Buri, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 20,
+            "startsAt": "2027-06-05T09:00:00+03:00",
+            "endsAt": "2027-06-07T17:00:00+03:00"
+          },
+          "coverPath": "photos/المعرض البيئي السنوي أو المؤتمرات التوعوية.jpg",
+          "coverUsesLogo": false
+        }
+      ]
+    },
+    {
+      "sourceId": "7",
+      "sourceName": "AlMabarah AlKhalifia",
+      "organizer": {
+        "username": "demo_mabarah_organizer",
+        "name": "Hassan Jaber (Demo Organizer)",
+        "city": "Riffa",
+        "role": "Organizer"
+      },
+      "input": {
+        "name": "AlMabarah AlKhalifia (Demo)",
+        "description": "Fictional demo listing inspired by the supplied organization overview; it is not an official organization account. Overview from the source: Established in 2011 as a non-profit charitable foundation aimed at creating a positive social impact in the education sector and empowering Bahraini youth. It launches prominent programs like the \"Reyadi\" scholarship program, along with initiatives fostering leadership and social responsibility. Areas of focus: Education, youth empowerment, social development, and providing scholarships. All events, contacts, volunteers, and venues in this listing are sample data.",
+        "country": "BH",
+        "governorate": "Southern",
+        "area": "Riffa",
+        "address": "Sample community venue in Riffa, Bahrain — fictional demo address, not a real meeting point.",
+        "contactEmail": "mabarah@tatawwu.example.test"
+      },
+      "logoPath": "photos/AlMabarah AlKhalifia logo.jpg",
+      "campaigns": [
+        {
+          "sourceId": "7-1",
+          "sourceTitle": "\"Reyadi\" Program and Youth Leadership Activities",
+          "sourceDates": {
+            "startsOn": "2027-07-01",
+            "endsOn": "2027-07-30"
+          },
+          "isSession": true,
+          "input": {
+            "title": "[Demo] Reyadi Youth Leadership Activities — Short Practice Session",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. A brief practice session for sample youth leadership and community responsibility activities inspired by the supplied Reyadi program overview. Volunteers rehearse teamwork, welcoming students, and coordinating learning stations. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Education",
+            "country": "BH",
+            "governorate": "Southern",
+            "area": "Riffa",
+            "venue": "Riffa Demo Community Room",
+            "address": "Sample activity space in Riffa, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 15
+          },
+          "coverPath": "photos/برنامج راييس والأنشطة الشبابية القيادية.jpg",
+          "coverUsesLogo": false
+        },
+        {
+          "sourceId": "7-2",
+          "sourceTitle": "Annual Career and University Fairs",
+          "sourceDates": {
+            "startsOn": "2027-04-15",
+            "endsOn": "2027-04-17"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Annual Career and University Fairs",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. Educational and career fairs bringing together university representatives and major corporations to guide beneficiary students and help them choose their academic and career paths. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Education",
+            "country": "BH",
+            "governorate": "Southern",
+            "area": "Riffa",
+            "venue": "Riffa Sample Community Venue",
+            "address": "Sample activity space in Riffa, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 20,
+            "startsAt": "2027-04-15T09:00:00+03:00",
+            "endsAt": "2027-04-17T17:00:00+03:00"
+          },
+          "coverPath": "photos/المعارض المهنية والجامعية السنوية.jpg",
+          "coverUsesLogo": false
+        },
+        {
+          "sourceId": "7-3",
+          "sourceTitle": "Annual Scholarship Graduation Ceremonies",
+          "sourceDates": {
+            "startsOn": "2027-09-10",
+            "endsOn": "2027-09-11"
+          },
+          "isSession": false,
+          "input": {
+            "title": "[Demo] Annual Scholarship Graduation Ceremonies",
+            "description": "Fictional demo activity; this listing is for exploring Tatawwu and is not a real event invitation. An annual celebration honoring graduates of scholarship programs, featuring organizing committees for guest traffic management, reception, and stage organization. The venue is a described sample only; no real contact number or precise location is provided.",
+            "category": "Education",
+            "country": "BH",
+            "governorate": "Southern",
+            "area": "Riffa",
+            "venue": "Riffa Sample Community Venue",
+            "address": "Sample activity space in Riffa, Bahrain — fictional demo venue, not a real meeting point.",
+            "capacity": 25,
+            "startsAt": "2027-09-10T09:00:00+03:00",
+            "endsAt": "2027-09-11T17:00:00+03:00"
+          },
+          "coverPath": "photos/AlMabarah AlKhalifia logo.jpg",
+          "coverUsesLogo": true
+        }
+      ]
+    }
+  ],
+  "volunteers": [
+    {
+      "username": "demo_volunteer_01",
+      "name": "Layla Yusuf",
+      "city": "Manama",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_02",
+      "name": "سارة حسن",
+      "city": "Riffa",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_03",
+      "name": "Omar علي",
+      "city": "Muharraq",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_04",
+      "name": "Abdulrahman Mohammed Yusuf Al Mahmood",
+      "city": "Hamad Town",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_05",
+      "name": "Noor Ibrahim",
+      "city": "Sitra",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_06",
+      "name": "Hamad Khalil",
+      "city": "Buri",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_07",
+      "name": "Fatima Salman",
+      "city": "Sanabis",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_08",
+      "name": "Ali Nasser",
+      "city": "Isa Town",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_09",
+      "name": "Mariam Jaber",
+      "city": "Budaiya",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_10",
+      "name": "Yousif Kareem",
+      "city": "Manama",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_11",
+      "name": "Zainab Ahmed",
+      "city": "Riffa",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_12",
+      "name": "Khalid Saeed",
+      "city": "Muharraq",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_13",
+      "name": "Hessa Mansoor",
+      "city": "Hamad Town",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_14",
+      "name": "Salman Adel",
+      "city": "Sitra",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_15",
+      "name": "Dana Rashid",
+      "city": "Buri",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_16",
+      "name": "Ahmed Fawzi",
+      "city": "Sanabis",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_17",
+      "name": "Noura Jamal",
+      "city": "Isa Town",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_18",
+      "name": "Hussain Tariq",
+      "city": "Budaiya",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_19",
+      "name": "Reem Sami",
+      "city": "Manama",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_20",
+      "name": "Faisal Mazen",
+      "city": "Riffa",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_21",
+      "name": "Aisha Nabeel",
+      "city": "Muharraq",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_22",
+      "name": "Mohammed Rami",
+      "city": "Hamad Town",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_23",
+      "name": "زينب يوسف",
+      "city": "Sitra",
+      "role": "Volunteer"
+    },
+    {
+      "username": "demo_volunteer_24",
+      "name": "Hassan يوسف",
+      "city": "Buri",
+      "role": "Volunteer"
+    }
+  ],
+  "imageSubstitutions": [
+    {
+      "target": "organization 3",
+      "sourcePath": "photos/blind charitable society logo.jpg",
+      "preparedPath": "demo-import/prepared-images/blind-society-demo-logo.png",
+      "reason": "Supplied logo contains Hebron branding; replace with neutral demo artwork."
+    },
+    {
+      "target": "campaign 3-2",
+      "sourcePath": "photos/الورش التدريبية لتقنيات لغة برايل والكمبيوتر الناطق.jpg",
+      "preparedPath": "demo-import/prepared-images/braille-workshop-demo.png",
+      "reason": "Supplied Braille banner contains Hebron branding; replace with neutral demo artwork."
+    },
+    {
+      "target": "campaign 3-3",
+      "sourcePath": "photos/المعارض التوعوية (اليوم العالمي للعصا البيضاء).jpg",
+      "preparedPath": "demo-import/prepared-images/white-cane-awareness-demo.png",
+      "reason": "Supplied white-cane banner contains Hebron contacts and branding; replace with neutral demo artwork."
+    },
+    {
+      "target": "campaign 5-3",
+      "sourcePath": "photos/الاستجابة للطوارئ والمشاريع التوعوية المجتمعية.jpg",
+      "preparedPath": "photos/Bahrain Red Crescent logo.jpg",
+      "reason": "Mismatched emergency-response banner replaced with the matching organization logo."
+    },
+    {
+      "target": "campaign 1-2",
+      "sourcePath": null,
+      "preparedPath": "photos/sitra charity logo.png",
+      "reason": "No matching supplied campaign cover; reuse this organization logo as a separately uploaded asset."
+    },
+    {
+      "target": "campaign 2-1",
+      "sourcePath": null,
+      "preparedPath": "photos/Al-Kawthar Society for Social Care logo.jpg",
+      "reason": "No matching supplied campaign cover; reuse this organization logo as a separately uploaded asset."
+    },
+    {
+      "target": "campaign 3-1",
+      "sourcePath": null,
+      "preparedPath": "demo-import/prepared-images/blind-society-demo-logo.png",
+      "reason": "No matching supplied campaign cover; reuse this organization logo as a separately uploaded asset."
+    },
+    {
+      "target": "campaign 4-3",
+      "sourcePath": null,
+      "preparedPath": "photos/Al-Eslah Society logo.jpg",
+      "reason": "No matching supplied campaign cover; reuse this organization logo as a separately uploaded asset."
+    },
+    {
+      "target": "campaign 5-1",
+      "sourcePath": null,
+      "preparedPath": "photos/Bahrain Red Crescent logo.jpg",
+      "reason": "No matching supplied campaign cover; reuse this organization logo as a separately uploaded asset."
+    },
+    {
+      "target": "campaign 6-2",
+      "sourcePath": null,
+      "preparedPath": "photos/Environment Friends logo.jpg",
+      "reason": "No matching supplied campaign cover; reuse this organization logo as a separately uploaded asset."
+    },
+    {
+      "target": "campaign 7-3",
+      "sourcePath": null,
+      "preparedPath": "photos/AlMabarah AlKhalifia logo.jpg",
+      "reason": "No matching supplied campaign cover; reuse this organization logo as a separately uploaded asset."
+    }
+  ]
+}
