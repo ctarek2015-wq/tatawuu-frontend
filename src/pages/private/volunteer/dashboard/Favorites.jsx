@@ -7,6 +7,7 @@ const Favorites = () => {
   const { t, tError } = useContext(LanguageContext);
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {

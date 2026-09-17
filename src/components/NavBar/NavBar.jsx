@@ -2,7 +2,6 @@ import { Link, NavLink, useNavigate } from "react-router";
 import { useContext, useRef, useState } from "react";
 import { UserContext } from "../../contexts/UserContext.js";
 import { LanguageContext } from "../../contexts/LanguageContext.js";
-import logo from "../../assets/logo.png";
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
