@@ -1,43 +1,57 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LanguageContext } from "../../../../contexts/LanguageContext.js";
+import { UserContext } from "../../../../contexts/UserContext.js";
+import * as campaignService from "../../../../services/campaignService.js";
 import { formatDateTime } from "../../../../utils/dates.js";
 
-const Certificate = ({
-  volunteerName,
-  campaignTitle,
-  organizationName,
-  issuedAt,
-}) => {
-  const { t, language } = useContext(LanguageContext);
-  const dateLabel = formatDateTime(issuedAt || new Date(), language);
+const Certificates = () => {
+  const { user } = useContext(UserContext);
+  const { t, tError, language } = useContext(LanguageContext);
+  const [campaigns, setCampaigns] = useState([]);
+  const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
 
-  return (
-    <div className="certificate-wrap">
-      <div className="certificate-card">
-        <div className="cert-corner cert-corner-tl">
-          <span className="cert-tri cert-tri-pink" />
-          <span className="cert-tri cert-tri-maroon" />
-          <span className="cert-tri-gold-line" />
-        </div>
-        <div className="cert-corner cert-corner-br">
-          <span className="cert-tri cert-tri-pink" />
-          <span className="cert-tri cert-tri-maroon" />
-          <span className="cert-tri-gold-line" />
-        </div>
+  useEffect(() => {
+    const loadCertificates = async () => {
+      try {
+        setCampaigns(await campaignService.certificates());
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadCertificates();
+  }, []);
 
-        <div className="cert-medal">
-          <span className="cert-medal-star">★</span>
-          <span className="cert-ribbon cert-ribbon-left" />
-          <span className="cert-ribbon cert-ribbon-right" />
-        </div>
+  useEffect(() => {
+    if (!preview) return;
+    return () => URL.revokeObjectURL(preview.url);
+  }, [preview]);
 
-        <div className="cert-content">
-          <h1 className="cert-title">{t("CERTIFICATE")}</h1>
-          <p className="cert-subtitle">{t("OF ACHIEVEMENT")}</p>
-        </div>
-      </div>
-    </div>
-  );
+  const handleCertificate = async (campaign, download) => {
+    setBusy(true);
+    setError("");
+    try {
+      const blob = await campaignService.certificate(campaign._id);
+      const url = URL.createObjectURL(blob);
+      setPreview({ url, campaign });
+      if (download) {
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `tatawwu-certificate-${campaign._id}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setBusy(false);
+    }
+  };
 
   return (
     <main className="certificates-page">
@@ -164,4 +178,4 @@ const Certificate = ({
   );
 };
 
-export default Certificate;
+export default Certificates;
